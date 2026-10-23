@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>England Children and Young People (0–24) Need and System Pressure Database: methodology</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="release"><a href="index.html">Methodology</a> · release <code>abffebbd490b-19eda0e60019</code></header>
+<h1 id="england-children-and-young-people-024-need-and-system-pressure-database-methodology">England Children and Young People (0–24) Need and System Pressure Database: methodology</h1>
+<p>Release <code>abffebbd490b-19eda0e60019</code> · composites version <code>0.1-experimental</code></p>
+<h2 id="what-this-is">What this is</h2>
+<p>A point-in-time database of indicators of need and of pressure on services for children
+and young people aged 0 to 24 in England. It covers England, children's services
+authorities, lower-tier local authorities, and neighbourhoods (MSOAs and LSOAs). Every
+value comes from an official published statistic, or is calculated from one by a documented method.</p>
+<h2 id="what-it-can-and-cannot-tell-you">What it can and cannot tell you</h2>
+<ul>
+<li>It <strong>can</strong> show how areas compare on each measure, how sure we can be of each figure,
+  and why a figure is missing.</li>
+<li>It <strong>cannot</strong> tell you about individual children, prove that one thing causes another, or show
+  trends (it is one snapshot). Area figures describe areas, not the people in them
+  (the ecological fallacy).</li>
+<li>Need and system pressure are kept separate on purpose. Service activity partly reflects
+  local practice and thresholds, so it is not treated as a measure of need.</li>
+</ul>
+<h2 id="how-to-read-a-value">How to read a value</h2>
+<ul>
+<li><strong>Value</strong>: a count, a rate (with its denominator) or a published score.</li>
+<li><strong>Uncertainty interval</strong>: for administrative counts, this reflects the random variation
+  you would expect in the underlying process, not sampling error.</li>
+<li><strong>Missing-data reason</strong>: every blank has a reason: <code>suppressed</code>, <code>not_published</code>,
+  <code>incomplete</code> or <code>not_applicable</code>.</li>
+<li><strong>Fallback (hatched)</strong>: a value shown for a larger containing area (for example a police force
+  area), clearly labelled. It is never used in calculations.</li>
+</ul>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="guide_plain_english.html">Plain-English guide</a></li>
+<li><a href="methodology_technical.html">Technical methodology</a></li>
+<li><a href="composites/methodology_composite.html">Composite indices (experimental)</a></li>
+<li><a href="decision_log.html">Decision log</a></li>
+<li><a href="qa_summary.html">QA summary</a></li>
+<li><a href="changelog.html">Changelog</a></li>
+</ul>
+<h3 id="indicators">Indicators</h3>
+<p><strong>Population</strong></p>
+<ul>
+<li><a href="indicators/ons-sape-population.html">Population</a> (denominator)</li>
+<li><a href="indicators/ons-mye-population.html">Population</a> (denominator)</li>
+<li><a href="indicators/census21-population-by-ethnicity.html">Population by ethnic group (Census 2021)</a> (denominator)</li>
+<li><a href="indicators/census21-usual-residents-by-age.html">Population (Census 2021)</a> (denominator)</li>
+<li><a href="indicators/nhse-gp-registered-patients.html">GP-registered population</a> (denominator)</li>
+<li><a href="indicators/dfe-pupils-by-ethnicity.html">Pupils by ethnic group</a> (denominator)</li>
+<li><a href="indicators/dfe-pupils-on-roll.html">Pupils</a> (denominator)</li>
+<li><a href="indicators/mhclg-iod25-population.html">Population used in the IoD 2025</a> (denominator)</li>
+<li><a href="indicators/census21-households-dependent-children.html">Households with dependent children</a> (denominator)</li>
+<li><a href="indicators/dfe-cin-episodes-with-assessment-factors.html">Assessments with factors recorded</a> (denominator)</li>
+<li><a href="indicators/dfe-cla-distance-known-at-31mar.html">Children in care (distance known)</a> (denominator)</li>
+<li><a href="indicators/dfe-cla-stability-base-at-31mar.html">Children in care (stability base)</a> (denominator)</li>
+<li><a href="indicators/dfe-pupils-total-sen-publication.html">Pupils (SEN publication)</a> (denominator)</li>
+<li><a href="indicators/dfe-absence-enrolments.html">Pupil enrolments</a> (denominator)</li>
+<li><a href="indicators/dfe-exclusions-headcount.html">Pupils (exclusions publication)</a> (denominator)</li>
+<li><a href="indicators/dfe-neet-cohort-16-17.html">16-17 year olds known to the council</a> (denominator)</li>
+<li><a href="indicators/ho-asylum-support-recipients.html">People receiving asylum support</a></li>
+</ul>
+<p><strong>Deprivation</strong></p>
+<ul>
+<li><a href="indicators/mhclg-iod25-imd-score.html">Index of Multiple Deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-imd-rank.html">Index of Multiple Deprivation (rank)</a></li>
+<li><a href="indicators/mhclg-iod25-imd-decile.html">Index of Multiple Deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-income-score.html">Income deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-income-decile.html">Income deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-employment-score.html">Employment deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-employment-decile.html">Employment deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-education-score.html">Education, skills and training deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-education-decile.html">Education, skills and training deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-health-score.html">Health deprivation and disability (score)</a></li>
+<li><a href="indicators/mhclg-iod25-health-decile.html">Health deprivation and disability (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-crime-score.html">Crime deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-crime-decile.html">Crime deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-barriers-score.html">Barriers to housing and services (score)</a></li>
+<li><a href="indicators/mhclg-iod25-barriers-decile.html">Barriers to housing and services (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-living-env-score.html">Living environment deprivation (score)</a></li>
+<li><a href="indicators/mhclg-iod25-living-env-decile.html">Living environment deprivation (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-imd-la-avg-score.html">Index of Multiple Deprivation: average score</a></li>
+<li><a href="indicators/mhclg-iod25-imd-la-avg-rank.html">Index of Multiple Deprivation: average rank</a></li>
+<li><a href="indicators/mhclg-iod25-imd-la-extent.html">Index of Multiple Deprivation: extent</a></li>
+<li><a href="indicators/mhclg-iod25-imd-la-local-concentration.html">Index of Multiple Deprivation: local concentration</a></li>
+<li><a href="indicators/mhclg-iod25-imd-la-prop-most-deprived-10pct.html">Neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-income-la-avg-score.html">Income deprivation: average score</a></li>
+<li><a href="indicators/mhclg-iod25-income-la-prop-most-deprived-10pct.html">Income deprivation: neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-employment-la-avg-score.html">Employment deprivation: average score</a></li>
+<li><a href="indicators/mhclg-iod25-employment-la-prop-most-deprived-10pct.html">Employment deprivation: neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-education-la-avg-score.html">Education, skills and training deprivation: average score</a></li>
+<li><a href="indicators/mhclg-iod25-education-la-prop-most-deprived-10pct.html">Education, skills and training deprivation: neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-health-la-avg-score.html">Health deprivation and disability: average score</a></li>
+<li><a href="indicators/mhclg-iod25-health-la-prop-most-deprived-10pct.html">Health deprivation and disability: neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-crime-la-avg-score.html">Crime (IoD domain): average score</a></li>
+<li><a href="indicators/mhclg-iod25-crime-la-prop-most-deprived-10pct.html">Crime (IoD domain): neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-barriers-la-avg-score.html">Barriers to housing and services: average score</a></li>
+<li><a href="indicators/mhclg-iod25-barriers-la-prop-most-deprived-10pct.html">Barriers to housing and services: neighbourhoods in England's most deprived 10%</a></li>
+<li><a href="indicators/mhclg-iod25-living-env-la-avg-score.html">Living environment deprivation: average score</a></li>
+<li><a href="indicators/mhclg-iod25-living-env-la-prop-most-deprived-10pct.html">Living environment deprivation: neighbourhoods in England's most deprived 10%</a></li>
+</ul>
+<p><strong>Child poverty</strong></p>
+<ul>
+<li><a href="indicators/mhclg-iod25-idaci-score.html">Income deprivation affecting children (IDACI)</a></li>
+<li><a href="indicators/mhclg-iod25-idaci-rank.html">Income deprivation affecting children (rank)</a></li>
+<li><a href="indicators/mhclg-iod25-idaci-decile.html">Income deprivation affecting children (decile)</a></li>
+<li><a href="indicators/mhclg-iod25-idaci-la-avg-score.html">Income deprivation affecting children: average score</a></li>
+<li><a href="indicators/mhclg-iod25-idaci-la-avg-rank.html">Income deprivation affecting children: average rank</a></li>
+<li><a href="indicators/mhclg-iod25-idaci-la-prop-most-deprived-10pct.html">Neighbourhoods in England's most deprived 10% for child income</a></li>
+<li><a href="indicators/dwp-cilif-relative-bhc.html">Children in relative low income families</a></li>
+<li><a href="indicators/dwp-cilif-relative-bhc-pct.html">Children in relative low income families (%)</a></li>
+<li><a href="indicators/dwp-cilif-absolute-bhc.html">Children in absolute low income families</a></li>
+<li><a href="indicators/dwp-cilif-absolute-bhc-pct.html">Children in absolute low income families (%)</a></li>
+<li><a href="indicators/dwp-uc-households-with-children.html">Households with children on Universal Credit</a></li>
+<li><a href="indicators/dfe-fsm-eligible-pupils.html">Pupils eligible for free school meals</a></li>
+</ul>
+<p><strong>Education</strong></p>
+<ul>
+<li><a href="indicators/mhclg-iod25-education-cyp-subdomain-score.html">Children's education deprivation (score)</a></li>
+<li><a href="indicators/dfe-care-leavers-19-21-neet.html">Care leavers not in education, employment or training</a></li>
+<li><a href="indicators/dfe-pupils-with-ehcp.html">Pupils with an EHC plan</a></li>
+<li><a href="indicators/dfe-pupils-sen-support.html">Pupils receiving SEN support</a></li>
+<li><a href="indicators/dfe-sen-primary-need-asd.html">Pupils with autism as their main need</a></li>
+<li><a href="indicators/dfe-persistent-absence.html">Persistent absence from school</a></li>
+<li><a href="indicators/dfe-severe-absence.html">Severe absence from school</a></li>
+<li><a href="indicators/dfe-suspensions.html">Suspensions from school</a></li>
+<li><a href="indicators/dfe-permanent-exclusions.html">Permanent exclusions from school</a></li>
+<li><a href="indicators/dfe-neet-16-17.html">16-17 year olds not in education, employment or training</a></li>
+<li><a href="indicators/dfe-neet-or-not-known-16-17.html">16-17 year olds NEET or activity not known</a></li>
+</ul>
+<p><strong>Family risk</strong></p>
+<ul>
+<li><a href="indicators/census21-lone-parent-households-dep-children.html">Lone-parent households</a></li>
+<li><a href="indicators/census21-unpaid-carers-5-24.html">Young carers</a></li>
+<li><a href="indicators/dfe-cin-factor-domestic-abuse.html">Domestic abuse identified at assessment</a></li>
+<li><a href="indicators/dfe-cin-factor-parental-mental-health.html">Parental mental health identified at assessment</a></li>
+<li><a href="indicators/dfe-cin-factor-parental-alcohol-misuse.html">Parental alcohol misuse identified at assessment</a></li>
+<li><a href="indicators/dfe-cin-factor-parental-drug-misuse.html">Parental drug misuse identified at assessment</a></li>
+<li><a href="indicators/ohid-ndtms-adults-in-treatment-living-with-children.html">Adults in drug/alcohol treatment living with children</a></li>
+<li><a href="indicators/ohid-ndtms-parents-not-living-with-children.html">Parents in drug/alcohol treatment not living with their children</a></li>
+</ul>
+<p><strong>Housing</strong></p>
+<ul>
+<li><a href="indicators/census21-overcrowded-households-dep-children.html">Overcrowded households with children</a></li>
+<li><a href="indicators/mhclg-hclic-households-with-children-in-ta.html">Households with children in temporary accommodation</a></li>
+<li><a href="indicators/mhclg-hclic-children-in-ta.html">Children in temporary accommodation</a></li>
+<li><a href="indicators/mhclg-hclic-children-in-ta-by-age.html">Children in temporary accommodation</a></li>
+<li><a href="indicators/mhclg-hclic-owed-duty-households-with-children.html">Families assessed as homeless or at risk</a></li>
+<li><a href="indicators/mhclg-hclic-owed-duty-applicants-16-24.html">Young people assessed as homeless or at risk (16-24)</a></li>
+</ul>
+<p><strong>Health</strong></p>
+<ul>
+<li><a href="indicators/census21-disabled-0-24.html">Disabled children and young people</a></li>
+<li><a href="indicators/dwp-dla-claimants-under16.html">Children receiving Disability Living Allowance</a></li>
+<li><a href="indicators/dwp-pip-claimants-16-24.html">Young people receiving PIP</a></li>
+<li><a href="indicators/dfe-sen-primary-need-semh.html">Pupils with social, emotional and mental health needs</a></li>
+<li><a href="indicators/ohid-self-harm-admissions-10-24.html">Hospital admissions for self-harm (10-24)</a></li>
+<li><a href="indicators/ohid-ae-attendances-0-4.html">A&amp;E attendances (under 5s)</a></li>
+<li><a href="indicators/ohid-infant-mortality.html">Infant mortality</a></li>
+<li><a href="indicators/ohid-under18-conceptions.html">Under-18 conceptions</a></li>
+<li><a href="indicators/ohid-low-birthweight-term.html">Low birth weight (full-term babies)</a></li>
+<li><a href="indicators/ohid-injury-admissions-0-14.html">Hospital admissions for injuries (0-14)</a></li>
+</ul>
+<p><strong>Safety</strong></p>
+<ul>
+<li><a href="indicators/police-crime-all-excl-asb.html">Recorded crime</a></li>
+<li><a href="indicators/police-crime-violence-sexual.html">Violence and sexual offences</a></li>
+<li><a href="indicators/police-asb-incidents.html">Anti-social behaviour</a></li>
+<li><a href="indicators/police-crime-weapons-possession.html">Possession of weapons</a></li>
+<li><a href="indicators/police-crime-drugs.html">Drug offences</a></li>
+<li><a href="indicators/yjb-first-time-entrants-10-17.html">First-time entrants to youth justice</a></li>
+<li><a href="indicators/yjb-custodial-sentences-10-17.html">Custodial sentences (10-17)</a></li>
+<li><a href="indicators/yjb-proven-offences-10-17.html">Proven offences by children (10-17)</a></li>
+</ul>
+<p><strong>Service demand</strong></p>
+<ul>
+<li><a href="indicators/dfe-cin-at-31mar.html">Children in need</a></li>
+<li><a href="indicators/dfe-cin-referrals.html">Referrals to children's social care</a></li>
+<li><a href="indicators/dfe-cin-rereferrals-12m.html">Re-referrals within 12 months</a></li>
+<li><a href="indicators/dfe-cin-assessments-completed.html">Social care assessments</a></li>
+<li><a href="indicators/dfe-cpp-at-31mar.html">Children on child protection plans</a></li>
+<li><a href="indicators/dfe-cpp-starts.html">New child protection plans</a></li>
+<li><a href="indicators/dfe-cla-at-31mar.html">Children in care</a></li>
+<li><a href="indicators/dfe-cla-starts.html">Children entering care</a></li>
+<li><a href="indicators/dfe-cla-uasc-at-31mar.html">Unaccompanied asylum-seeking children in care</a></li>
+<li><a href="indicators/dfe-care-leavers-17-21.html">Care leavers aged 17 to 21</a></li>
+<li><a href="indicators/dfe-care-leavers-19-21.html">Care leavers aged 19 to 21</a> (denominator)</li>
+<li><a href="indicators/dfe-cla-ceased-adoption.html">Adoptions from care</a></li>
+<li><a href="indicators/dfe-ehcps-0-25.html">EHC plans (ages 0-25)</a></li>
+<li><a href="indicators/dfe-ehcp-new-plans.html">New EHC plans</a></li>
+<li><a href="indicators/ho-nrm-referrals-under18.html">Child referrals for suspected exploitation (NRM)</a></li>
+<li><a href="indicators/nhse-mhsds-cyp-one-plus-contact-12m.html">Children supported by NHS mental health services</a></li>
+<li><a href="indicators/nhse-mhsds-cyp-open-referrals.html">Children with open mental health referrals</a></li>
+</ul>
+<p><strong>Service pressure</strong></p>
+<ul>
+<li><a href="indicators/dfe-cla-placed-20mi-plus.html">Children in care placed over 20 miles from home</a></li>
+<li><a href="indicators/dfe-cla-3plus-placements.html">Children in care with 3+ placements in the year</a></li>
+<li><a href="indicators/dfe-sw-vacancy-rate.html">Social worker vacancy rate</a></li>
+<li><a href="indicators/dfe-sw-agency-rate.html">Agency social worker rate</a></li>
+<li><a href="indicators/dfe-sw-turnover-rate.html">Social worker turnover rate</a></li>
+<li><a href="indicators/dfe-sw-average-caseload.html">Average social worker caseload</a></li>
+<li><a href="indicators/dfe-s251-cyp-services-net.html">Spending on children's services per child</a></li>
+<li><a href="indicators/dfe-s251-cla-net.html">Spending on children in care per child</a></li>
+<li><a href="indicators/dfe-s251-family-support-net.html">Spending on family support per child</a></li>
+<li><a href="indicators/dfe-s251-young-people-services-net.html">Spending on youth services per young person</a></li>
+<li><a href="indicators/ofsted-ilacs-overall-effectiveness.html">Ofsted judgement: children's services</a></li>
+<li><a href="indicators/ofsted-childrens-homes.html">Children's homes</a></li>
+<li><a href="indicators/ofsted-childrens-homes-places.html">Children's home places</a></li>
+<li><a href="indicators/dfe-ehcp-20wk-timeliness.html">EHC plans issued on time</a></li>
+</ul>
+<p><strong>Composite</strong></p>
+<ul>
+<li><a href="indicators/l5-neighbourhood-need.html">Neighbourhood need index</a></li>
+<li><a href="indicators/l5-neighbourhood-need-economic-hardship.html">Neighbourhood need: economic hardship domain</a></li>
+<li><a href="indicators/l5-neighbourhood-need-health-disability.html">Neighbourhood need: health disability domain</a></li>
+<li><a href="indicators/l5-neighbourhood-need-family-housing.html">Neighbourhood need: family housing domain</a></li>
+<li><a href="indicators/l5-neighbourhood-need-safety.html">Neighbourhood need: safety domain</a></li>
+<li><a href="indicators/l5-la-need.html">La need index</a></li>
+<li><a href="indicators/l5-la-need-economic-hardship.html">La need: economic hardship domain</a></li>
+<li><a href="indicators/l5-la-need-family-risk.html">La need: family risk domain</a></li>
+<li><a href="indicators/l5-la-need-health.html">La need: health domain</a></li>
+<li><a href="indicators/l5-la-need-education.html">La need: education domain</a></li>
+<li><a href="indicators/l5-la-need-housing.html">La need: housing domain</a></li>
+<li><a href="indicators/l5-la-need-safety.html">La need: safety domain</a></li>
+<li><a href="indicators/l5-la-system-pressure-demand.html">La system pressure: demand domain</a></li>
+<li><a href="indicators/l5-la-system-pressure-capacity.html">La system pressure: capacity domain</a></li>
+<li><a href="indicators/l5-la-system-pressure-send.html">La system pressure: send domain</a></li>
+</ul>
+<h2 id="how-to-cite">How to cite</h2>
+<blockquote>
+<p>England Children and Young People Need and System Pressure Database, release
+<code>abffebbd490b-19eda0e60019</code>. Contains public sector information licensed under the Open
+Government Licence v3.0. Source attributions are listed in <code>sources.csv</code>.</p>
+</blockquote>
+<h2 id="applying-the-code-of-practice-for-statistics-voluntarily">Applying the Code of Practice for Statistics (voluntarily)</h2>
+<ul>
+<li><strong>Trustworthiness:</strong> all code, configuration and decisions are versioned. Every release
+  can be rebuilt from its raw inputs, and every judgement is in the decision log.</li>
+<li><strong>Quality:</strong> source data is never altered. Suppression is preserved. Uncertainty and
+  missing-data reasons are published with every value, and QA gates must pass before release.</li>
+<li><strong>Value:</strong> measures are chosen for their relevance to children and young people, and are
+  documented in plain English as well as technically.</li>
+</ul>
+<h2 id="feedback">Feedback</h2>
+<p>We welcome methodological feedback, especially on the experimental composites. Contact
+details for the publishing charity are added at release.</p>
+</body></html>

@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Technical methodology</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="release"><a href="index.html">Methodology</a> · release <code>abffebbd490b-19eda0e60019</code></header>
+<h1 id="technical-methodology">Technical methodology</h1>
+<p>Release <code>abffebbd490b-19eda0e60019</code>. Every parameter below is generated from the build
+configuration.</p>
+<h2 id="1-principles">1. Principles</h2>
+<p>Source data is never altered. Values flow one way through layers L0 (raw) → L1 (staged)
+→ L2 (harmonised, observed only) → L3 (derived) → L4 (release), and L5 composites read L4 only.
+Observed and modelled values never share a table. Counts move between geographies,
+never rates. A value is never distributed from an area to the areas it contains. Published figures take precedence
+over aggregated ones. Suppression is preserved and nothing is imputed.</p>
+<h2 id="2-geography">2. Geography</h2>
+<p>The hierarchy is LSOA21 → MSOA21 → LAD (April 2025) → UTLA (April 2025) → England.
+Nesting is proven in two ways. First, every Output Area in an LSOA or MSOA must map to the same
+LAD. Second, each LSOA and MSOA polygon must lie at least 99.9% by area inside its LAD,
+using full-resolution (BFC) boundaries. Generalised boundaries are used for display only.</p>
+<p>Other geographies (Sub-ICB, ICB, youth justice services, police force areas, wards) are
+related to the hierarchy as <code>coterminous</code> (relabelled), <code>nests_within</code> (summed),
+<code>contains</code> (no conversion; shown as a labelled fallback) or <code>overlaps</code> (apportioned in L3
+on the matching age-band population, using GP-registered population for health data, and
+flagged unsuitable for spatial analysis).</p>
+<h2 id="3-sources-and-disclosure-control">3. Sources and disclosure control</h2>
+<p>Each source's statistical disclosure control (SDC) determines how closely sums of its cells
+can be expected to match its published totals.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Publisher</th>
+<th>SDC methods</th>
+<th>Rounding base</th>
+<th>Additivity</th>
+<th>Tolerance (abs)</th>
+<th>Tolerance (rel)</th>
+<th>Confirmed</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G1</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G3b</td>
+<td>NHS England</td>
+<td>none</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: check whether small LSOA counts are rounded or suppressed in this file.</td>
+</tr>
+<tr>
+<td>G4</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Geometry; no statistical values.</td>
+</tr>
+<tr>
+<td>G6</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G7</td>
+<td>Youth Justice Board (list of services); composition constructed by this project</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G8</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G9</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>G10</td>
+<td>House of Commons Library</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+<td>Lookup; no statistical values.</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>exact</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>SPEC section 8: LSOA estimates are constrained to LA mid-year totals. Confirm in the SAPE methodology.</td>
+</tr>
+<tr>
+<td>P1b</td>
+<td>Office for National Statistics</td>
+<td>none</td>
+<td>—</td>
+<td>exact</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>Published LA estimates sum exactly to UTLA and England. Confirm on load.</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>Office for National Statistics</td>
+<td>record_swapping, cell_key</td>
+<td>—</td>
+<td>approximate</td>
+<td>10</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: Census 2021 cell key perturbation means cells do not sum exactly to published totals. Set from ONS Census 2021 SDC guidance.</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression and rounding rules for this table.</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>Ministry of Housing, Communities and Local Government</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>Index values; not additive.</td>
+</tr>
+<tr>
+<td>D1b</td>
+<td>Ministry of Housing, Communities and Local Government</td>
+<td>none</td>
+<td>—</td>
+<td>none</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>Summary measures; validation tolerance = published rounding (gate 13).</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>Department for Work and Pensions</td>
+<td>cell_key</td>
+<td>—</td>
+<td>approximate</td>
+<td>10</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: Stat-Xplore perturbation; confirm the DWP method and any rounding.</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Department for Work and Pensions</td>
+<td>cell_key, suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>15</td>
+<td>0.03</td>
+<td>yes</td>
+<td>Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this.</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Department for Work and Pensions</td>
+<td>cell_key, suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>15</td>
+<td>0.03</td>
+<td>yes</td>
+<td>Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this.</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Department for Work and Pensions</td>
+<td>cell_key, suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>15</td>
+<td>0.03</td>
+<td>yes</td>
+<td>Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this.</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>Office for National Statistics</td>
+<td>record_swapping, cell_key</td>
+<td>—</td>
+<td>approximate</td>
+<td>10</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: Census 2021 cell key perturbation.</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Office for National Statistics</td>
+<td>record_swapping, cell_key</td>
+<td>—</td>
+<td>approximate</td>
+<td>10</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: Census 2021 cell key perturbation.</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>Department for Education</td>
+<td>suppression, rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression, secondary suppression and any national rounding.</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Department for Education</td>
+<td>suppression, rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE rounding (national figures may be rounded) and suppression.</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>Department for Education</td>
+<td>suppression, rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>1</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: FTEs published rounded; confirm.</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>Department for Education</td>
+<td>rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>1000</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: financial lines are rounded; confirm the units and the rounding.</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Ofsted</td>
+<td>none</td>
+<td>—</td>
+<td>exact</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>DRAFT: provider counts expected exact; confirm.</td>
+</tr>
+<tr>
+<td>E1</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression rules.</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression rules.</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression rules.</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression rules.</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>Department for Education</td>
+<td>suppression, rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>10</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: counts may be rounded; confirm.</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>Department for Education</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm DfE suppression rules.</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>NHS England</td>
+<td>rounding, suppression</td>
+<td>5</td>
+<td>approximate</td>
+<td>5</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>SPEC section 8: rounded to 5 with suppression. Confirm in the MHSDS methodology.</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>Office for Health Improvement and Disparities</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.001</td>
+<td>no (draft)</td>
+<td>DRAFT: small counts suppressed by OHID; confirm.</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>Office for Health Improvement and Disparities</td>
+<td>suppression, rounding</td>
+<td>—</td>
+<td>approximate</td>
+<td>5</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm the NDTMS disclosure rules.</td>
+</tr>
+<tr>
+<td>Ho1</td>
+<td>Ministry of Housing, Communities and Local Government</td>
+<td>suppression, imputation</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.05</td>
+<td>no (draft)</td>
+<td>DRAFT: SPEC section 8 says national totals include imputation for non-responders. Confirm in the technical note.</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>Home Office / police forces (data.police.uk)</td>
+<td>location_anonymisation</td>
+<td>—</td>
+<td>exact</td>
+<td>0</td>
+<td>0</td>
+<td>no (draft)</td>
+<td>Record-level counts; points are snapped to anonymous map points, which affects location not counts.</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>Youth Justice Board / Ministry of Justice</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.005</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm.</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>Home Office</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm.</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>Home Office</td>
+<td>suppression</td>
+<td>—</td>
+<td>approximate</td>
+<td>0</td>
+<td>0.01</td>
+<td>no (draft)</td>
+<td>DRAFT: confirm.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-suppression-and-missing-values">4. Suppression and missing values</h2>
+<p>Suppressed cells are stored as NULL with the publisher's symbol kept in <code>source_code</code>.
+An aggregate with any suppressed or missing component is NULL, with lower and upper
+bounds from the maximum value each symbol can hide, and with counts of components and
+suppressed components.</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>null_reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code></td>
+<td>Confidential / suppressed to protect individuals</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>[c]</code></td>
+<td>Confidential / suppressed to protect individuals</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>Not available</td>
+<td>not_published</td>
+</tr>
+<tr>
+<td><code>[x]</code></td>
+<td>Not available</td>
+<td>not_published</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>Not applicable</td>
+<td>not_applicable</td>
+</tr>
+<tr>
+<td><code>[z]</code></td>
+<td>Not applicable</td>
+<td>not_applicable</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>Low reliability (value withheld)</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>[u]</code></td>
+<td>Low reliability (value withheld)</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>Rounds to zero but is not zero</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>low</code></td>
+<td>Rounds to zero but is not zero</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>[low]</code></td>
+<td>Rounds to zero but is not zero</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>Suppressed (small number)</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>Not available / suppressed (confirm per source)</td>
+<td>suppressed</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>Nil or not applicable (confirm per source; NEVER read as zero without confirmation)</td>
+<td>not_applicable</td>
+</tr>
+<tr>
+<td><code>&lt;5</code></td>
+<td>Fewer than 5</td>
+<td>suppressed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-age-bands">5. Age bands</h2>
+<p>Population is held by single year of age, so a denominator can be built exactly for any
+source band. Source bands are never split or trimmed.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Label</th>
+<th>Min</th>
+<th>Max</th>
+<th>Standard</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0_4</code></td>
+<td>Ages 0–4</td>
+<td>0</td>
+<td>4</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>5_10</code></td>
+<td>Ages 5–10</td>
+<td>5</td>
+<td>10</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>11_15</code></td>
+<td>Ages 11–15</td>
+<td>11</td>
+<td>15</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>16_17</code></td>
+<td>Ages 16–17</td>
+<td>16</td>
+<td>17</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>18_20</code></td>
+<td>Ages 18–20</td>
+<td>18</td>
+<td>20</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>21_24</code></td>
+<td>Ages 21–24</td>
+<td>21</td>
+<td>24</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>0_17</code></td>
+<td>Ages 0–17 (children)</td>
+<td>0</td>
+<td>17</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>0_24</code></td>
+<td>Ages 0–24</td>
+<td>0</td>
+<td>24</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>0_25</code></td>
+<td>Ages 0–25</td>
+<td>0</td>
+<td>25</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>all_ages</code></td>
+<td>All ages</td>
+<td>—</td>
+<td>—</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>na</code></td>
+<td>Not age-specific</td>
+<td>—</td>
+<td>—</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_infant</code></td>
+<td>Under 1 (infants)</td>
+<td>0</td>
+<td>0</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_0_14</code></td>
+<td>Ages 0–14</td>
+<td>0</td>
+<td>14</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_0_15</code></td>
+<td>Ages 0–15</td>
+<td>0</td>
+<td>15</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_0_19</code></td>
+<td>Ages 0–19 (dependent children)</td>
+<td>0</td>
+<td>19</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_5_24</code></td>
+<td>Ages 5–24</td>
+<td>5</td>
+<td>24</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_10_17</code></td>
+<td>Ages 10–17</td>
+<td>10</td>
+<td>17</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_10_24</code></td>
+<td>Ages 10–24</td>
+<td>10</td>
+<td>24</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_13_19</code></td>
+<td>Ages 13–19</td>
+<td>13</td>
+<td>19</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_15_17</code></td>
+<td>Ages 15–17</td>
+<td>15</td>
+<td>17</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_16_19</code></td>
+<td>Ages 16–19 (dependent children)</td>
+<td>16</td>
+<td>19</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_16_24</code></td>
+<td>Ages 16–24</td>
+<td>16</td>
+<td>24</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_17_21</code></td>
+<td>Ages 17–21</td>
+<td>17</td>
+<td>21</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_19_21</code></td>
+<td>Ages 19–21</td>
+<td>19</td>
+<td>21</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_5_15</code></td>
+<td>Ages 5–15</td>
+<td>5</td>
+<td>15</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_20_24</code></td>
+<td>Ages 20–24</td>
+<td>20</td>
+<td>24</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_25_29</code></td>
+<td>Ages 25–29</td>
+<td>25</td>
+<td>29</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_25_49</code></td>
+<td>Ages 25–49</td>
+<td>25</td>
+<td>49</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_30_plus</code></td>
+<td>Ages 30 and over</td>
+<td>30</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_50_plus</code></td>
+<td>Ages 50 and over</td>
+<td>50</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_1_4</code></td>
+<td>Ages 1–4</td>
+<td>1</td>
+<td>4</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_5_9</code></td>
+<td>Ages 5–9</td>
+<td>5</td>
+<td>9</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_10_15</code></td>
+<td>Ages 10–15</td>
+<td>10</td>
+<td>15</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>src_pupils_all</code></td>
+<td>All pupils (school census)</td>
+<td>—</td>
+<td>—</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-rates-denominators-and-confidence-intervals">6. Rates, denominators and confidence intervals</h2>
+<p>A rate is the numerator divided by the denominator, multiplied by the indicator's
+multiplier. The denominator must match the numerator's area, age band, sex and ethnicity
+classification. Stock measures use the population estimate closest to the reference date,
+and flow measures use the mid-period population. The denominator date must be within
+<code>max_denominator_gap_days</code> of the numerator period (default 366 days).</p>
+<p>Confidence intervals:</p>
+<ul>
+<li><strong>Wilson score</strong>: person-based proportions and prevalences.</li>
+<li><strong>Byar's approximation to the exact Poisson</strong>: event counts that can repeat (OHID/PHE
+  methods).</li>
+<li><strong>Published</strong>: the publisher's own interval.</li>
+<li><strong>None</strong>: model-based, survey-calibrated and index values, and published rates without intervals.</li>
+</ul>
+<p>For full administrative counts, an interval reflects random variation in the underlying
+process, not sampling error.</p>
+<p>A rate is flagged <code>low_reliability</code> when its numerator is below the indicator's threshold
+(default 10) or its denominator is below its
+threshold (default 50).</p>
+<h2 id="7-small-area-smoothing">7. Small-area smoothing</h2>
+<p>Rates for small areas are also given as empirical Bayes estimates (Marshall's global
+method, shrinking toward the England rate). Smoothed rates never replace the crude rate.
+Where the resident population is known to misrepresent exposure (for example crime in town
+centres), the rate is flagged <code>low_validity_denominator</code>.</p>
+<h2 id="8-comparability">8. Comparability</h2>
+<p>Each indicator is given an England percentile (0–100, ties averaged, missing values excluded) and a
+z-score, calculated separately at each level from native and L2 values only. Fallback rows are
+excluded. Polarity is recorded as metadata, and signs are never flipped.</p>
+<h2 id="9-indices-of-deprivation">9. Indices of Deprivation</h2>
+<p>Published IoD 2025 LSOA values and the published LA summary measures are loaded as observed values.
+For MSOAs and custom regions, MHCLG's method is used: the population-weighted average score and
+the share of population in the most deprived national decile. The method is validated by
+recomputing the published LAD averages. Ranks and deciles are never averaged.</p>
+<h2 id="10-limitations">10. Limitations</h2>
+<ul>
+<li><strong>Period mismatches:</strong> sources range from Census 2021 to 2025. Each value carries its own period.</li>
+<li><strong>Ecological fallacy:</strong> area values describe areas, not individuals.</li>
+<li><strong>Modifiable areal unit problem:</strong> patterns can change with the choice of boundaries.</li>
+<li><strong>Practice effects:</strong> service measures reflect local thresholds and recording practice.</li>
+<li><strong>Small numbers:</strong> use the intervals and smoothed rates.</li>
+</ul>
+<h2 id="11-indicator-catalogue">11. Indicator catalogue</h2>
+<p>154 indicators are catalogued. Each has its own page, listed in the <a href="index.html">index</a>.</p>
+</body></html>

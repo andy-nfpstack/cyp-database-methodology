@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La need (experimental)</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="release"><a href="../index.html">Methodology</a> · release <code>abffebbd490b-19eda0e60019</code></header>
+<h1 id="la-need-experimental">La need (experimental)</h1>
+<p>Release <code>abffebbd490b-19eda0e60019</code> · composites version <code>0.1-experimental</code> · family <strong>need</strong>
+· levels service_area</p>
+<blockquote>
+<p><strong>Experimental.</strong> Not endorsed by any official publisher. See the
+<a href="methodology_composite.html">composite methodology</a>.</p>
+</blockquote>
+<h2 id="domains-and-indicators">Domains and indicators</h2>
+<h3 id="economic-hardship">Economic hardship</h3>
+<ul>
+<li><a href="../indicators/dwp-cilif-relative-bhc-pct.html">Children in relative low income families (%)</a> (Financial year ending March 2025)</li>
+<li><a href="../indicators/dfe-fsm-eligible-pupils.html">Pupils eligible for free school meals</a> (January 2025)</li>
+<li><a href="../indicators/mhclg-iod25-idaci-la-avg-score.html">Income deprivation affecting children: average score</a> (IoD 2025)</li>
+</ul>
+<h3 id="family-risk">Family risk</h3>
+<ul>
+<li><a href="../indicators/census21-lone-parent-households-dep-children.html">Lone-parent households</a> (Census Day, 21 March 2021)</li>
+<li><a href="../indicators/dfe-cin-factor-domestic-abuse.html">Domestic abuse identified at assessment</a> (1 April 2024 to 31 March 2025): <em>practice-sensitive</em></li>
+<li><a href="../indicators/dfe-cin-factor-parental-mental-health.html">Parental mental health identified at assessment</a> (1 April 2024 to 31 March 2025): <em>practice-sensitive</em></li>
+<li><a href="../indicators/dfe-cin-factor-parental-alcohol-misuse.html">Parental alcohol misuse identified at assessment</a> (1 April 2024 to 31 March 2025): <em>practice-sensitive</em></li>
+<li><a href="../indicators/dfe-cin-factor-parental-drug-misuse.html">Parental drug misuse identified at assessment</a> (1 April 2024 to 31 March 2025): <em>practice-sensitive</em></li>
+</ul>
+<h3 id="health">Health</h3>
+<ul>
+<li><a href="../indicators/ohid-self-harm-admissions-10-24.html">Hospital admissions for self-harm (10-24)</a> (Latest year ending on or before 31 March 2025)</li>
+<li><a href="../indicators/ohid-injury-admissions-0-14.html">Hospital admissions for injuries (0-14)</a> (Latest year ending on or before 31 March 2025)</li>
+<li><a href="../indicators/census21-disabled-0-24.html">Disabled children and young people</a> (Census Day, 21 March 2021)</li>
+</ul>
+<h3 id="education">Education</h3>
+<ul>
+<li><a href="../indicators/dfe-persistent-absence.html">Persistent absence from school</a> (Academic year 2024/25)</li>
+<li><a href="../indicators/dfe-suspensions.html">Suspensions from school</a> (Academic year 2024/25 (check))</li>
+<li><a href="../indicators/dfe-neet-or-not-known-16-17.html">16-17 year olds NEET or activity not known</a> (End 2024 (Dec 2024 - Feb 2025 average))</li>
+</ul>
+<h3 id="housing">Housing</h3>
+<ul>
+<li><a href="../indicators/mhclg-hclic-children-in-ta-by-age.html">Children in temporary accommodation</a> (At 31 March 2025)</li>
+<li><a href="../indicators/census21-overcrowded-households-dep-children.html">Overcrowded households with children</a> (Census Day, 21 March 2021)</li>
+</ul>
+<h3 id="safety">Safety</h3>
+<ul>
+<li><a href="../indicators/yjb-first-time-entrants-10-17.html">First-time entrants to youth justice</a> (Year ending 31 December 2024)</li>
+<li><a href="../indicators/police-crime-violence-sexual.html">Violence and sexual offences</a> (1 April 2024 to 31 March 2025)</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>Census and police inputs enter at service_area as aggregated L2 counts (exact nesting), never apportioned.</p>
+<h2 id="results">Results</h2>
+<h3 id="la-need-service-area">La need: service area</h3>
+<p>149 of 153 areas have a score.</p>
+<p>Areas without a score are <code>incomplete</code> because a domain could not be scored:</p>
+<ul>
+<li>family_risk: City of London</li>
+<li>health: Rutland, Isles of Scilly, City of London</li>
+<li>safety: Rutland, Telford and Wrekin, Isles of Scilly, City of London</li>
+</ul>
+<p><strong>Indicators not eligible at this level:</strong></p>
+<ul>
+<li><code>mhclg_hclic_children_in_ta_by_age</code>: coverage 92.8% &lt; 95%</li>
+</ul>
+<p><strong>Domain checks</strong> (Spearman ρ between indicators; Cronbach's α; first component):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Indicators</th>
+<th>α</th>
+<th>PC1 share</th>
+<th>Weakest fit with rest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship</td>
+<td>3</td>
+<td>0.92</td>
+<td>0.86</td>
+<td>dwp_cilif_relative_bhc_pct (+0.79)</td>
+</tr>
+<tr>
+<td>family_risk</td>
+<td>5</td>
+<td>0.85</td>
+<td>0.69</td>
+<td>census21_lone_parent_households_dep_children (+0.17)</td>
+</tr>
+<tr>
+<td>health</td>
+<td>3</td>
+<td>0.79</td>
+<td>0.70</td>
+<td>ohid_injury_admissions_0_14 (+0.57)</td>
+</tr>
+<tr>
+<td>education</td>
+<td>3</td>
+<td>0.70</td>
+<td>0.62</td>
+<td>dfe_persistent_absence (+0.49)</td>
+</tr>
+<tr>
+<td>housing</td>
+<td>1</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>safety</td>
+<td>2</td>
+<td>0.44</td>
+<td>0.64</td>
+<td>yjb_first_time_entrants_10_17 (+0.31)</td>
+</tr>
+</tbody>
+</table>
+<p>Redundant pairs kept on purpose: dfe_cin_factor_parental_alcohol_misuse ~ dfe_cin_factor_parental_drug_misuse (ρ 0.92): kept on purpose</p>
+<p><strong>Convergent validity:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Spearman ρ</th>
+<th>Areas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index of Multiple Deprivation: average score</td>
+<td>0.846</td>
+<td>149</td>
+</tr>
+<tr>
+<td>Income deprivation affecting children: average score</td>
+<td>0.775</td>
+<td>149</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stability</strong> (primary method, each indicator dropped in turn):</p>
+<p>| Indicator dropped | Median |rank change| | Largest |rank change| | Areas changing decile |
+|---|---|---|---|
+| dwp_cilif_relative_bhc_pct | 2 | 17 | 15 of 149 |
+| dfe_fsm_eligible_pupils | 1 | 11 | 22 of 149 |
+| mhclg_iod25_idaci_la_avg_score | 1 | 13 | 18 of 149 |
+| census21_lone_parent_households_dep_children | 2 | 25 | 35 of 149 |
+| dfe_cin_factor_domestic_abuse | 2 | 15 | 22 of 149 |
+| dfe_cin_factor_parental_mental_health | 1 | 14 | 24 of 149 |
+| dfe_cin_factor_parental_alcohol_misuse | 1 | 6 | 12 of 149 |
+| dfe_cin_factor_parental_drug_misuse | 1 | 6 | 10 of 149 |
+| ohid_self_harm_admissions_10_24 | 2 | 23 | 26 of 149 |
+| ohid_injury_admissions_0_14 | 2 | 14 | 34 of 149 |
+| census21_disabled_0_24 | 2 | 22 | 29 of 149 |
+| dfe_persistent_absence | 2 | 21 | 34 of 149 |
+| dfe_suspensions | 2 | 22 | 36 of 149 |
+| dfe_neet_or_not_known_16_17 | 2 | 26 | 32 of 149 |
+| census21_overcrowded_households_dep_children | – | – | not droppable (only indicator in its domain) |
+| yjb_first_time_entrants_10_17 | 4 | 22 | 51 of 149 |
+| police_crime_violence_sexual | 4 | 30 | 45 of 149 |</p>
+<p><strong>Face validity:</strong> highest and lowest ranked areas:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Area</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Blackpool</td>
+<td>67.06</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Middlesbrough</td>
+<td>54.48</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Newcastle upon Tyne</td>
+<td>49.41</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Knowsley</td>
+<td>46.80</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Birmingham</td>
+<td>45.50</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Torbay</td>
+<td>44.01</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Hartlepool</td>
+<td>43.16</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Northumberland</td>
+<td>42.62</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Kingston upon Hull, City of</td>
+<td>42.45</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Liverpool</td>
+<td>41.99</td>
+</tr>
+<tr>
+<td>140</td>
+<td>Kingston upon Thames</td>
+<td>6.58</td>
+</tr>
+<tr>
+<td>141</td>
+<td>Leicestershire</td>
+<td>6.55</td>
+</tr>
+<tr>
+<td>142</td>
+<td>Central Bedfordshire</td>
+<td>6.32</td>
+</tr>
+<tr>
+<td>143</td>
+<td>Bracknell Forest</td>
+<td>6.19</td>
+</tr>
+<tr>
+<td>144</td>
+<td>Bromley</td>
+<td>6.04</td>
+</tr>
+<tr>
+<td>145</td>
+<td>West Berkshire</td>
+<td>5.38</td>
+</tr>
+<tr>
+<td>146</td>
+<td>Windsor and Maidenhead</td>
+<td>5.27</td>
+</tr>
+<tr>
+<td>147</td>
+<td>Richmond upon Thames</td>
+<td>4.89</td>
+</tr>
+<tr>
+<td>148</td>
+<td>Trafford</td>
+<td>4.08</td>
+</tr>
+<tr>
+<td>149</td>
+<td>Wokingham</td>
+<td>1.64</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Criterion validity</strong> (LA need against children's services rates):</p>
+<table>
+<thead>
+<tr>
+<th>Pressure measure</th>
+<th>Spearman ρ with need</th>
+<th>Slope (per need score point)</th>
+<th>Areas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Children in need</td>
+<td>0.625</td>
+<td>5.005</td>
+<td>149</td>
+</tr>
+<tr>
+<td>Children in care</td>
+<td>0.688</td>
+<td>1.762</td>
+<td>149</td>
+</tr>
+<tr>
+<td>Children on child protection plans</td>
+<td>0.496</td>
+<td>0.751</td>
+<td>149</td>
+</tr>
+</tbody>
+</table>
+<p>Largest differences between children in need and what need predicts (standardised residuals):</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Observed rate</th>
+<th>Predicted</th>
+<th>Standardised residual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leicester</td>
+<td>232.4</td>
+<td>411.0</td>
+<td>-2.64</td>
+</tr>
+<tr>
+<td>Hartlepool</td>
+<td>635.8</td>
+<td>463.6</td>
+<td>+2.55</td>
+</tr>
+<tr>
+<td>Tameside</td>
+<td>553.1</td>
+<td>385.8</td>
+<td>+2.48</td>
+</tr>
+<tr>
+<td>Croydon</td>
+<td>493.6</td>
+<td>330.9</td>
+<td>+2.41</td>
+</tr>
+<tr>
+<td>Birmingham</td>
+<td>317.6</td>
+<td>475.3</td>
+<td>-2.33</td>
+</tr>
+<tr>
+<td>Herefordshire, County of</td>
+<td>457.0</td>
+<td>301.8</td>
+<td>+2.30</td>
+</tr>
+<tr>
+<td>Essex</td>
+<td>178.1</td>
+<td>309.4</td>
+<td>-1.94</td>
+</tr>
+<tr>
+<td>Redcar and Cleveland</td>
+<td>582.2</td>
+<td>452.4</td>
+<td>+1.92</td>
+</tr>
+<tr>
+<td>Reading</td>
+<td>444.5</td>
+<td>317.7</td>
+<td>+1.88</td>
+</tr>
+<tr>
+<td>Lewisham</td>
+<td>479.1</td>
+<td>357.4</td>
+<td>+1.80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Uncertainty:</strong> share of rank variance explained by each choice (first-order):</p>
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>First-order share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normalisation</td>
+<td>0.028</td>
+</tr>
+<tr>
+<td>aggregation</td>
+<td>0.440</td>
+</tr>
+<tr>
+<td>missing_threshold</td>
+<td>0.002</td>
+</tr>
+<tr>
+<td>inclusion</td>
+<td>0.179</td>
+</tr>
+<tr>
+<td>weights</td>
+<td>0.082 to 0.276</td>
+</tr>
+</tbody>
+</table>
+<p>Areas with a robust decile (same decile in at least 80% of runs): 10.7% over all runs; 26.2% over the 366 runs that use the primary aggregation (IoD exponential transformation). Areas whose decile stays within one decile in at least 80% of runs: 70.5%.</p>
+<p><strong>Domain stability</strong> (share of areas):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Same decile (robust)</th>
+<th>Within one decile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship</td>
+<td>90.2%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>family_risk</td>
+<td>15.8%</td>
+<td>43.4%</td>
+</tr>
+<tr>
+<td>health</td>
+<td>80.0%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>education</td>
+<td>68.0%</td>
+<td>98.7%</td>
+</tr>
+<tr>
+<td>housing (one indicator: stable by construction)</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>safety</td>
+<td>43.6%</td>
+<td>94.6%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a href="../index.html">Methodology index</a></p>
+</body></html>
