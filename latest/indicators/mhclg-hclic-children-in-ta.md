@@ -1,6 +1,6 @@
 # Children in temporary accommodation
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_hclic_children_in_ta` · concept `temporary_accommodation`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_hclic_children_in_ta` · concept `temporary_accommodation`
 
 
 The number of children living in temporary accommodation arranged by the council.

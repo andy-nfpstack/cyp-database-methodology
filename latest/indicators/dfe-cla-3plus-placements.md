@@ -1,6 +1,6 @@
 # Children in care with 3+ placements in the year
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_3plus_placements` · concept `cla_placement_stability`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_3plus_placements` · concept `cla_placement_stability`
 
 
 The share of children in care who moved home three or more times during the year.

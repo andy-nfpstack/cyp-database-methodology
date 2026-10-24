@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation: local concentration
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_la_local_concentration` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_la_local_concentration` · concept `imd`
 
 
 How deprived the authority's most deprived neighbourhoods are. Higher means more deprived.

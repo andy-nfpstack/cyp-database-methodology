@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighbourhood need (experimental)</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="release"><a href="../index.html">Methodology</a> · release <code>2dda583978fb-19eda0e60019</code></header>
+<h1 id="neighbourhood-need-experimental">Neighbourhood need (experimental)</h1>
+<p>Release <code>2dda583978fb-19eda0e60019</code> · composites version <code>0.1-experimental</code> · family <strong>need</strong>
+· levels small_area, intermediate_area</p>
+<blockquote>
+<p><strong>Experimental.</strong> Not endorsed by any official publisher. See the
+<a href="methodology_composite.html">composite methodology</a>.</p>
+</blockquote>
+<h2 id="domains-and-indicators">Domains and indicators</h2>
+<h3 id="economic-hardship">Economic hardship</h3>
+<ul>
+<li><a href="../indicators/mhclg-iod25-idaci-score.html">Income deprivation affecting children (IDACI)</a> (IoD 2025 (most inputs 2022/23))</li>
+</ul>
+<h3 id="health-disability">Health disability</h3>
+<ul>
+<li><a href="../indicators/dwp-dla-claimants-under16.html">Children receiving Disability Living Allowance</a> (February 2025)</li>
+<li><a href="../indicators/dwp-pip-claimants-16-24.html">Young people receiving PIP</a> (March 2025)</li>
+<li><a href="../indicators/census21-disabled-0-24.html">Disabled children and young people</a> (Census Day, 21 March 2021)</li>
+</ul>
+<h3 id="family-housing">Family housing</h3>
+<ul>
+<li><a href="../indicators/census21-overcrowded-households-dep-children.html">Overcrowded households with children</a> (Census Day, 21 March 2021)</li>
+<li><a href="../indicators/census21-lone-parent-households-dep-children.html">Lone-parent households</a> (Census Day, 21 March 2021)</li>
+<li><a href="../indicators/census21-unpaid-carers-5-24.html">Young carers</a> (Census Day, 21 March 2021)</li>
+</ul>
+<h3 id="safety">Safety</h3>
+<ul>
+<li><a href="../indicators/police-crime-violence-sexual.html">Violence and sexual offences</a> (1 April 2024 to 31 March 2025)</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>Overlaps with IMD by design (IDACI is benefit-based). Report alongside IMD, not instead of it (12.7).</p>
+<h2 id="results">Results</h2>
+<h3 id="neighbourhood-need-small-area">Neighbourhood need: small area</h3>
+<p>33,723 of 33,755 areas have a score.</p>
+<p>Areas without a score are <code>incomplete</code> because a domain could not be scored:</p>
+<ul>
+<li>health_disability: 32 areas</li>
+</ul>
+<p><strong>Indicators not eligible at this level:</strong></p>
+<ul>
+<li><code>dwp_pip_claimants_16_24</code>: coverage 92.0% &lt; 95%</li>
+</ul>
+<p><strong>Domain checks</strong> (Spearman ρ between indicators; Cronbach's α; first component):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Indicators</th>
+<th>α</th>
+<th>PC1 share</th>
+<th>Weakest fit with rest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship</td>
+<td>1</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>health_disability</td>
+<td>2</td>
+<td>0.76</td>
+<td>0.81</td>
+<td>dwp_dla_claimants_under16 (+0.61)</td>
+</tr>
+<tr>
+<td>family_housing</td>
+<td>3</td>
+<td>0.61</td>
+<td>0.57</td>
+<td>census21_unpaid_carers_5_24 (+0.32)</td>
+</tr>
+<tr>
+<td>safety</td>
+<td>1</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Convergent validity:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Spearman ρ</th>
+<th>Areas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index of Multiple Deprivation (score)</td>
+<td>0.886</td>
+<td>33,723</td>
+</tr>
+<tr>
+<td>Income deprivation affecting children (IDACI)</td>
+<td>0.899</td>
+<td>33,723</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stability</strong> (primary method, each indicator dropped in turn):</p>
+<p>| Indicator dropped | Median |rank change| | Largest |rank change| | Areas changing decile |
+|---|---|---|---|
+| mhclg_iod25_idaci_score | – | – | not droppable (only indicator in its domain) |
+| dwp_dla_claimants_under16 | 639 | 16212 | 9,205 of 33,715 |
+| census21_disabled_0_24 | 707 | 13300 | 8,752 of 32,945 |
+| census21_overcrowded_households_dep_children | 617 | 8818 | 8,597 of 33,723 |
+| census21_lone_parent_households_dep_children | 598 | 13341 | 7,799 of 33,723 |
+| census21_unpaid_carers_5_24 | 656 | 10198 | 8,980 of 33,723 |
+| police_crime_violence_sexual | – | – | not droppable (only indicator in its domain) |</p>
+<p><strong>Face validity:</strong> highest and lowest ranked areas:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Area</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Tendring 018A</td>
+<td>95.71</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Wirral 016G</td>
+<td>90.32</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Wirral 016C</td>
+<td>89.17</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Liverpool 024B</td>
+<td>88.74</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Birmingham 125E</td>
+<td>88.19</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Tendring 016B</td>
+<td>88.05</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Halton 013F</td>
+<td>86.69</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Middlesbrough 011B</td>
+<td>86.53</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Tendring 015D</td>
+<td>86.36</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Great Yarmouth 006A</td>
+<td>86.13</td>
+</tr>
+<tr>
+<td>33,714</td>
+<td>Trafford 026A</td>
+<td>0.41</td>
+</tr>
+<tr>
+<td>33,715</td>
+<td>Trafford 021A</td>
+<td>0.39</td>
+</tr>
+<tr>
+<td>33,716</td>
+<td>Wandsworth 017B</td>
+<td>0.37</td>
+</tr>
+<tr>
+<td>33,717</td>
+<td>Bromley 027C</td>
+<td>0.36</td>
+</tr>
+<tr>
+<td>33,718</td>
+<td>Richmond upon Thames 012A</td>
+<td>0.33</td>
+</tr>
+<tr>
+<td>33,719</td>
+<td>Trafford 028A</td>
+<td>0.33</td>
+</tr>
+<tr>
+<td>33,720</td>
+<td>Trafford 023B</td>
+<td>0.29</td>
+</tr>
+<tr>
+<td>33,721</td>
+<td>Trafford 021C</td>
+<td>0.24</td>
+</tr>
+<tr>
+<td>33,722</td>
+<td>Trafford 021B</td>
+<td>0.23</td>
+</tr>
+<tr>
+<td>33,723</td>
+<td>Trafford 026B</td>
+<td>0.20</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Uncertainty:</strong> share of rank variance explained by each choice (first-order):</p>
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>First-order share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normalisation</td>
+<td>0.075</td>
+</tr>
+<tr>
+<td>aggregation</td>
+<td>0.528</td>
+</tr>
+<tr>
+<td>missing_threshold</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>inclusion</td>
+<td>0.003</td>
+</tr>
+<tr>
+<td>weights</td>
+<td>0.084 to 0.242</td>
+</tr>
+</tbody>
+</table>
+<p>Areas with a robust decile (same decile in at least 80% of runs): 19.9% over all runs; 42.1% over the 319 runs that use the primary aggregation (IoD exponential transformation). Areas whose decile stays within one decile in at least 80% of runs: 91.3%.</p>
+<p><strong>Domain stability</strong> (share of areas):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Same decile (robust)</th>
+<th>Within one decile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship (one indicator: stable by construction)</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>health_disability</td>
+<td>80.7%</td>
+<td>99.6%</td>
+</tr>
+<tr>
+<td>family_housing</td>
+<td>37.9%</td>
+<td>92.9%</td>
+</tr>
+<tr>
+<td>safety (one indicator: stable by construction)</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="neighbourhood-need-intermediate-area">Neighbourhood need: intermediate area</h3>
+<p>6,856 of 6,856 areas have a score.</p>
+<p><strong>Domain checks</strong> (Spearman ρ between indicators; Cronbach's α; first component):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Indicators</th>
+<th>α</th>
+<th>PC1 share</th>
+<th>Weakest fit with rest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship</td>
+<td>1</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>health_disability</td>
+<td>3</td>
+<td>0.87</td>
+<td>0.79</td>
+<td>census21_disabled_0_24 (+0.72)</td>
+</tr>
+<tr>
+<td>family_housing</td>
+<td>3</td>
+<td>0.69</td>
+<td>0.62</td>
+<td>census21_overcrowded_households_dep_children (+0.44)</td>
+</tr>
+<tr>
+<td>safety</td>
+<td>1</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Convergent validity:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Spearman ρ</th>
+<th>Areas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index of Multiple Deprivation (score)</td>
+<td>0.909</td>
+<td>6,856</td>
+</tr>
+<tr>
+<td>Income deprivation affecting children (IDACI)</td>
+<td>0.921</td>
+<td>6,856</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stability</strong> (primary method, each indicator dropped in turn):</p>
+<p>| Indicator dropped | Median |rank change| | Largest |rank change| | Areas changing decile |
+|---|---|---|---|
+| mhclg_iod25_idaci_score | – | – | not droppable (only indicator in its domain) |
+| dwp_dla_claimants_under16 | 61 | 1237 | 865 of 6,856 |
+| dwp_pip_claimants_16_24 | 64 | 1664 | 1,013 of 6,856 |
+| census21_disabled_0_24 | 62 | 1060 | 836 of 6,856 |
+| census21_overcrowded_households_dep_children | 125 | 1171 | 1,677 of 6,856 |
+| census21_lone_parent_households_dep_children | 101 | 2002 | 1,360 of 6,856 |
+| census21_unpaid_carers_5_24 | 121 | 1371 | 1,690 of 6,856 |
+| police_crime_violence_sexual | – | – | not droppable (only indicator in its domain) |</p>
+<p><strong>Face validity:</strong> highest and lowest ranked areas:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Area</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Wirral 016</td>
+<td>92.52</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Tendring 016</td>
+<td>90.96</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Great Yarmouth 006</td>
+<td>90.74</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Blackpool 010</td>
+<td>87.25</td>
+</tr>
+<tr>
+<td>5</td>
+<td>North East Lincolnshire 002</td>
+<td>85.76</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bradford 052</td>
+<td>85.30</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Sefton 037</td>
+<td>84.92</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Blackpool 013</td>
+<td>84.40</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Sheffield 048</td>
+<td>83.51</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Swale 002</td>
+<td>82.58</td>
+</tr>
+<tr>
+<td>6,847</td>
+<td>Wandsworth 017</td>
+<td>0.57</td>
+</tr>
+<tr>
+<td>6,848</td>
+<td>Bromley 025</td>
+<td>0.56</td>
+</tr>
+<tr>
+<td>6,849</td>
+<td>North Tyneside 001</td>
+<td>0.53</td>
+</tr>
+<tr>
+<td>6,850</td>
+<td>Elmbridge 018</td>
+<td>0.53</td>
+</tr>
+<tr>
+<td>6,851</td>
+<td>Bristol 009</td>
+<td>0.47</td>
+</tr>
+<tr>
+<td>6,852</td>
+<td>Wandsworth 009</td>
+<td>0.44</td>
+</tr>
+<tr>
+<td>6,853</td>
+<td>Trafford 020</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td>6,854</td>
+<td>Trafford 023</td>
+<td>0.27</td>
+</tr>
+<tr>
+<td>6,855</td>
+<td>Trafford 021</td>
+<td>0.26</td>
+</tr>
+<tr>
+<td>6,856</td>
+<td>Trafford 026</td>
+<td>0.13</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Uncertainty:</strong> share of rank variance explained by each choice (first-order):</p>
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>First-order share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normalisation</td>
+<td>0.064</td>
+</tr>
+<tr>
+<td>aggregation</td>
+<td>0.613</td>
+</tr>
+<tr>
+<td>missing_threshold</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>inclusion</td>
+<td>0.003</td>
+</tr>
+<tr>
+<td>weights</td>
+<td>0.095 to 0.258</td>
+</tr>
+</tbody>
+</table>
+<p>Areas with a robust decile (same decile in at least 80% of runs): 27.1% over all runs; 56.1% over the 324 runs that use the primary aggregation (IoD exponential transformation). Areas whose decile stays within one decile in at least 80% of runs: 92.0%.</p>
+<p><strong>Domain stability</strong> (share of areas):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Same decile (robust)</th>
+<th>Within one decile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>economic_hardship (one indicator: stable by construction)</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+<tr>
+<td>health_disability</td>
+<td>91.4%</td>
+<td>99.7%</td>
+</tr>
+<tr>
+<td>family_housing</td>
+<td>59.5%</td>
+<td>96.9%</td>
+</tr>
+<tr>
+<td>safety (one indicator: stable by construction)</td>
+<td>100.0%</td>
+<td>100.0%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a href="../index.html">Methodology index</a></p>
+</body></html>

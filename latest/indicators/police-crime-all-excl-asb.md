@@ -1,6 +1,6 @@
 # Recorded crime
 
-Release `abffebbd490b-19eda0e60019` · indicator `police_crime_all_excl_asb` · concept `recorded_crime`
+Release `2dda583978fb-19eda0e60019` · indicator `police_crime_all_excl_asb` · concept `recorded_crime`
 
 
 Crimes recorded by the police in the neighbourhood per 1,000 residents over the year. This describes the area, not crimes against children.

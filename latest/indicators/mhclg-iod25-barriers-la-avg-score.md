@@ -1,6 +1,6 @@
 # Barriers to housing and services: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_barriers_la_avg_score` · concept `iod_barriers`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_barriers_la_avg_score` · concept `iod_barriers`
 
 
 The average barriers to housing and services score of the authority's neighbourhoods, weighted by how many people live in each.

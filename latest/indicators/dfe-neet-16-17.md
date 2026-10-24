@@ -1,6 +1,6 @@
 # 16-17 year olds not in education, employment or training
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_neet_16_17` · concept `neet`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_neet_16_17` · concept `neet`
 
 
 The share of 16 and 17 year olds known to the council who are not in education, employment or training.

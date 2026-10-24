@@ -1,6 +1,6 @@
 # Income deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_income_score` · concept `iod_income`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_income_score` · concept `iod_income`
 
 
 The share of people in the neighbourhood on low incomes, measured through benefits.

@@ -1,6 +1,6 @@
 # Families assessed as homeless or at risk
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_hclic_owed_duty_households_with_children` · concept `homelessness_duties`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_hclic_owed_duty_households_with_children` · concept `homelessness_duties`
 
 
 The number of households with children the council assessed as homeless or threatened with homelessness during the year.

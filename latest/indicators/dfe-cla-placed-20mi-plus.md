@@ -1,6 +1,6 @@
 # Children in care placed over 20 miles from home
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_placed_20mi_plus` · concept `cla_placement_distance`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_placed_20mi_plus` · concept `cla_placement_distance`
 
 
 The share of children in care who live more than 20 miles from their home area.

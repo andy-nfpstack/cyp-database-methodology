@@ -1,6 +1,6 @@
 # Adoptions from care
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_ceased_adoption` · concept `adoption`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_ceased_adoption` · concept `adoption`
 
 
 The number of children adopted from the council's care during the year.

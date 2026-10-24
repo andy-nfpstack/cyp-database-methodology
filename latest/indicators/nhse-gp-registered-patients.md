@@ -1,6 +1,6 @@
 # GP-registered population
 
-Release `abffebbd490b-19eda0e60019` · indicator `nhse_gp_registered_patients` · concept `population_gp_registered`
+Release `2dda583978fb-19eda0e60019` · indicator `nhse_gp_registered_patients` · concept `population_gp_registered`
 
 
 The number of people registered with a GP who live in each neighbourhood.

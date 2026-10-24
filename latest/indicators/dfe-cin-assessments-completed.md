@@ -1,6 +1,6 @@
 # Social care assessments
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_assessments_completed` · concept `cin_assessments`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_assessments_completed` · concept `cin_assessments`
 
 
 Social care assessments completed during the year, per 10,000 children.

@@ -1,6 +1,6 @@
 # Barriers to housing and services (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_barriers_score` · concept `iod_barriers`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_barriers_score` · concept `iod_barriers`
 
 
 How hard it is to get to local services and to afford a decent home.

@@ -1,6 +1,6 @@
 # Employment deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_employment_decile` · concept `iod_employment`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_employment_decile` · concept `iod_employment`
 
 
 Which tenth of neighbourhoods this one falls in for employment deprivation; 1 is the most deprived.

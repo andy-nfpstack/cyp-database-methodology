@@ -1,6 +1,6 @@
 # Education, skills and training deprivation: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_education_la_avg_score` · concept `iod_education`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_education_la_avg_score` · concept `iod_education`
 
 
 The average education, skills and training deprivation score of the authority's neighbourhoods, weighted by how many people live in each.

@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation (rank)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_rank` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_rank` · concept `imd`
 
 
 Where the neighbourhood ranks among all neighbourhoods in England; 1 is the most deprived.

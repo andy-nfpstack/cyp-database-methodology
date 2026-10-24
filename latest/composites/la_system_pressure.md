@@ -1,6 +1,6 @@
-# La system pressure (experimental)
+# LA system pressure (experimental)
 
-Release `abffebbd490b-19eda0e60019` · composites version `0.1-experimental` · family **pressure**
+Release `2dda583978fb-19eda0e60019` · composites version `0.1-experimental` · family **pressure**
 · levels service_area
 
 > **Experimental.** Not endorsed by any official publisher. See the
@@ -34,7 +34,7 @@ Published as three domain scores (demand, capacity, SEND); the combined index is
 
 ## Results
 
-### La system pressure: service area
+### LA system pressure: service area
 
 > **Domains only.** The combined index below is computed to document its robustness, and is not published (D-0090). The published outputs are the domain scores.
 

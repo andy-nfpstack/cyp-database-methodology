@@ -1,6 +1,6 @@
 # Living environment deprivation: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_living_env_la_avg_score` · concept `iod_living_env`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_living_env_la_avg_score` · concept `iod_living_env`
 
 
 The average living environment deprivation score of the authority's neighbourhoods, weighted by how many people live in each.

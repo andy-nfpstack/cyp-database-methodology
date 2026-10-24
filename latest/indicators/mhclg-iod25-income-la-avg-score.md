@@ -1,6 +1,6 @@
 # Income deprivation: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_income_la_avg_score` · concept `iod_income`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_income_la_avg_score` · concept `iod_income`
 
 
 The average income deprivation score of the authority's neighbourhoods, weighted by how many people live in each.

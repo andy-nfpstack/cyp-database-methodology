@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Composite indices: methodology (experimental)</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="release"><a href="../index.html">Methodology</a> · release <code>abffebbd490b-19eda0e60019</code></header>
+<body><header class="release"><a href="../index.html">Methodology</a> · release <code>2dda583978fb-19eda0e60019</code></header>
 <h1 id="composite-indices-methodology-experimental">Composite indices: methodology (experimental)</h1>
-<p>Release <code>abffebbd490b-19eda0e60019</code> · composites version <code>0.1-experimental</code></p>
+<p>Release <code>2dda583978fb-19eda0e60019</code> · composites version <code>0.1-experimental</code></p>
 <blockquote>
 <p><strong>Experimental.</strong> These indices are not endorsed by any official publisher. We welcome
 methodological feedback.</p>
@@ -16,8 +16,9 @@ methodological feedback.</p>
   reflects local thresholds and practice. Keeping it separate from need avoids circularity,
   and lets the two be compared.</li>
 </ul>
-<p>The construction follows MHCLG's Indices of Deprivation method and the OECD/JRC
-<em>Handbook on Constructing Composite Indicators</em> (2008).</p>
+<p>The construction follows MHCLG's Indices of Deprivation method (McLennan, Noble et al., 2025) and the
+OECD/JRC <em>Handbook on Constructing Composite Indicators</em> (2008); the uncertainty and sensitivity analysis
+follows Saisana, Saltelli and Tarantola (2005). Full citations are in <a href="../references.html">References</a>.</p>
 <h2 id="eligibility">Eligibility</h2>
 <p>An indicator enters a composite only if it is native to the composite's level (an observed value,
 or a rate built from observed counts), it covers at least 95.0% of areas, and its
@@ -79,16 +80,16 @@ with residuals published), stability (dropping each indicator in turn) and face 
 <ul>
 <li><strong>Neighbourhood need</strong> (small area): 33,723 of 33,755 areas scored; robust decile for 19.9% of areas over all runs and 42.1% over runs with the primary aggregation; within one decile for 91.3%.</li>
 <li><strong>Neighbourhood need</strong> (intermediate area): 6,856 of 6,856 areas scored; robust decile for 27.1% of areas over all runs and 56.1% over runs with the primary aggregation; within one decile for 92.0%.</li>
-<li><strong>La need</strong> (service area): 149 of 153 areas scored; robust decile for 10.7% of areas over all runs and 26.2% over runs with the primary aggregation; within one decile for 70.5%.</li>
-<li><strong>La system pressure</strong> (service area): 144 of 153 areas scored; robust decile for 10.4% of areas over all runs and 13.9% over runs with the primary aggregation; within one decile for 52.8%. <strong>Index not published: domains only (D-0090).</strong></li>
+<li><strong>LA need</strong> (service area): 149 of 153 areas scored; robust decile for 10.7% of areas over all runs and 26.2% over runs with the primary aggregation; within one decile for 70.5%.</li>
+<li><strong>LA system pressure</strong> (service area): 144 of 153 areas scored; robust decile for 10.4% of areas over all runs and 13.9% over runs with the primary aggregation; within one decile for 52.8%. <strong>Index not published: domains only (D-0090).</strong></li>
 </ul>
 <p>Spearman ρ between LA need and LA system pressure: 0.297 (142 areas). The two are never combined. The pressure score here is the combined index, computed internally; only its domains are published (D-0090).</p>
 <p>Each composite's page has its full results; the whole report is <code>l5/l5_validation.md</code> in the release.</p>
 <h2 id="composites">Composites</h2>
 <ul>
 <li><a href="neighbourhood_need.html">Neighbourhood need</a> (need; small_area, intermediate_area)</li>
-<li><a href="la_need.html">La need</a> (need; service_area)</li>
-<li><a href="la_system_pressure.html">La system pressure</a> (pressure; service_area)</li>
+<li><a href="la_need.html">LA need</a> (need; service_area)</li>
+<li><a href="la_system_pressure.html">LA system pressure</a> (pressure; service_area)</li>
 </ul>
 <h2 id="limitations">Limitations</h2>
 <p>The inputs come from different periods. The neighbourhood need index overlaps with IMD by design,

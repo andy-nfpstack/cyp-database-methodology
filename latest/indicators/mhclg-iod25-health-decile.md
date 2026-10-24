@@ -1,6 +1,6 @@
 # Health deprivation and disability (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_health_decile` · concept `iod_health`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_health_decile` · concept `iod_health`
 
 
 Which tenth of neighbourhoods this one falls in for health deprivation; 1 is the most deprived.

@@ -1,6 +1,6 @@
 # Income deprivation affecting children: average rank
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_la_avg_rank` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_la_avg_rank` · concept `child_poverty`
 
 
 The average national ranking of the authority's neighbourhoods on child income deprivation. Higher means more deprived.

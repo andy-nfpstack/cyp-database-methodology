@@ -1,6 +1,6 @@
-# La system pressure: demand domain
+# LA system pressure: demand domain
 
-Release `abffebbd490b-19eda0e60019` · indicator `l5_la_system_pressure_demand` · concept `la_system_pressure_demand`
+Release `2dda583978fb-19eda0e60019` · indicator `l5_la_system_pressure_demand` · concept `la_system_pressure_demand`
 
 > **Experimental.** Not endorsed by any official publisher.
 > **Draft:** this indicator definition has not yet been reviewed.
@@ -51,10 +51,10 @@ Shows which domain drives an area's composite score.
   Disclosure control: suppression, rounding; additivity approximate;
   tolerance 1 absolute / 0.005 relative.
 - **E2: Education, health and care plans (SEN2), January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 - **S4: National Referral Mechanism and Duty to Notify statistics** (Home Office). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.01 relative.
 
 ## Quality and known biases

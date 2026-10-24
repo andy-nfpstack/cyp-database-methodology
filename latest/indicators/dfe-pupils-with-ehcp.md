@@ -1,6 +1,6 @@
 # Pupils with an EHC plan
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_pupils_with_ehcp` · concept `send`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_pupils_with_ehcp` · concept `send`
 
 
 The share of pupils with a legal plan setting out the support they need for special educational needs.
@@ -40,7 +40,7 @@ Prevalence of the highest level of identified SEND in schools.
 ## Sources
 
 - **E1: Special educational needs in England, January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

@@ -1,6 +1,6 @@
 # Pupils (exclusions publication)
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_exclusions_headcount` · concept `pupils`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_exclusions_headcount` · concept `pupils`
 
 
 The number of pupils used to calculate suspension and exclusion rates.
@@ -40,7 +40,7 @@ Same-file denominator.
 ## Sources
 
 - **E4: Suspensions and permanent exclusions in England** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

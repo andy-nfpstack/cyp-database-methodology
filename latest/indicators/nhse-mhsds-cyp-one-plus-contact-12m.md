@@ -1,6 +1,6 @@
 # Children supported by NHS mental health services
 
-Release `abffebbd490b-19eda0e60019` · indicator `nhse_mhsds_cyp_one_plus_contact_12m` · concept `cyp_mental_health_access`
+Release `2dda583978fb-19eda0e60019` · indicator `nhse_mhsds_cyp_one_plus_contact_12m` · concept `cyp_mental_health_access`
 
 
 Children and young people who had at least one contact with NHS mental health services in the past year, per 10,000 registered with a GP.

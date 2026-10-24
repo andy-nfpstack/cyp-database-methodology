@@ -1,6 +1,6 @@
 # Referrals to children's social care
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_referrals` · concept `cin_referrals`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_referrals` · concept `cin_referrals`
 
 
 The number of times children were referred to the council's children's social care during the year, per 10,000 children.

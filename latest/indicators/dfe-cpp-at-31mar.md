@@ -1,6 +1,6 @@
 # Children on child protection plans
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cpp_at_31mar` · concept `child_protection`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cpp_at_31mar` · concept `child_protection`
 
 
 Children on a plan because they are at risk of significant harm, per 10,000 children.

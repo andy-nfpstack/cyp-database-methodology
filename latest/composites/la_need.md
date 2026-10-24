@@ -1,6 +1,6 @@
-# La need (experimental)
+# LA need (experimental)
 
-Release `abffebbd490b-19eda0e60019` · composites version `0.1-experimental` · family **need**
+Release `2dda583978fb-19eda0e60019` · composites version `0.1-experimental` · family **need**
 · levels service_area
 
 > **Experimental.** Not endorsed by any official publisher. See the
@@ -45,7 +45,7 @@ Census and police inputs enter at service_area as aggregated L2 counts (exact ne
 
 ## Results
 
-### La need: service area
+### LA need: service area
 
 149 of 153 areas have a score.
 

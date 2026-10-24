@@ -1,6 +1,6 @@
 # Neighbourhood need: safety domain
 
-Release `abffebbd490b-19eda0e60019` · indicator `l5_neighbourhood_need_safety` · concept `neighbourhood_need_safety`
+Release `2dda583978fb-19eda0e60019` · indicator `l5_neighbourhood_need_safety` · concept `neighbourhood_need_safety`
 
 > **Experimental.** Not endorsed by any official publisher.
 > **Draft:** this indicator definition has not yet been reviewed.

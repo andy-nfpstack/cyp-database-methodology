@@ -1,6 +1,6 @@
 # Composite indices: methodology (experimental)
 
-Release `abffebbd490b-19eda0e60019` · composites version `0.1-experimental`
+Release `2dda583978fb-19eda0e60019` · composites version `0.1-experimental`
 
 > **Experimental.** These indices are not endorsed by any official publisher. We welcome
 > methodological feedback.
@@ -14,8 +14,9 @@ There are two families of index, and they are **never combined**:
   reflects local thresholds and practice. Keeping it separate from need avoids circularity,
   and lets the two be compared.
 
-The construction follows MHCLG's Indices of Deprivation method and the OECD/JRC
-*Handbook on Constructing Composite Indicators* (2008).
+The construction follows MHCLG's Indices of Deprivation method (McLennan, Noble et al., 2025) and the
+OECD/JRC *Handbook on Constructing Composite Indicators* (2008); the uncertainty and sensitivity analysis
+follows Saisana, Saltelli and Tarantola (2005). Full citations are in [References](../references.md).
 
 ## Eligibility
 
@@ -86,8 +87,8 @@ with residuals published), stability (dropping each indicator in turn) and face 
 
 - **Neighbourhood need** (small area): 33,723 of 33,755 areas scored; robust decile for 19.9% of areas over all runs and 42.1% over runs with the primary aggregation; within one decile for 91.3%.
 - **Neighbourhood need** (intermediate area): 6,856 of 6,856 areas scored; robust decile for 27.1% of areas over all runs and 56.1% over runs with the primary aggregation; within one decile for 92.0%.
-- **La need** (service area): 149 of 153 areas scored; robust decile for 10.7% of areas over all runs and 26.2% over runs with the primary aggregation; within one decile for 70.5%.
-- **La system pressure** (service area): 144 of 153 areas scored; robust decile for 10.4% of areas over all runs and 13.9% over runs with the primary aggregation; within one decile for 52.8%. **Index not published: domains only (D-0090).**
+- **LA need** (service area): 149 of 153 areas scored; robust decile for 10.7% of areas over all runs and 26.2% over runs with the primary aggregation; within one decile for 70.5%.
+- **LA system pressure** (service area): 144 of 153 areas scored; robust decile for 10.4% of areas over all runs and 13.9% over runs with the primary aggregation; within one decile for 52.8%. **Index not published: domains only (D-0090).**
 
 Spearman ρ between LA need and LA system pressure: 0.297 (142 areas). The two are never combined. The pressure score here is the combined index, computed internally; only its domains are published (D-0090).
 
@@ -96,8 +97,8 @@ Each composite's page has its full results; the whole report is `l5/l5_validatio
 ## Composites
 
 - [Neighbourhood need](neighbourhood_need.md) (need; small_area, intermediate_area)
-- [La need](la_need.md) (need; service_area)
-- [La system pressure](la_system_pressure.md) (pressure; service_area)
+- [LA need](la_need.md) (need; service_area)
+- [LA system pressure](la_system_pressure.md) (pressure; service_area)
 
 ## Limitations
 

@@ -1,12 +1,12 @@
 # Technical methodology
 
-Release `abffebbd490b-19eda0e60019`. Every parameter below is generated from the build
+Release `2dda583978fb-19eda0e60019`. Every parameter below is generated from the build
 configuration.
 
 ## 1. Principles
 
 Source data is never altered. Values flow one way through layers L0 (raw) → L1 (staged)
-→ L2 (harmonised, observed only) → L3 (derived) → L4 (release), and L5 composites read L4 only.
+→ L2 (harmonised, observed only) → L3 (derived) → L4 (release). L5 composites read the snapshot's L2–L3 values read-only and never change L0–L4 (D-0086).
 Observed and modelled values never share a table. Counts move between geographies,
 never rates. A value is never distributed from an area to the areas it contains. Published figures take precedence
 over aggregated ones. Suppression is preserved and nothing is imputed.
@@ -27,52 +27,57 @@ flagged unsuitable for spatial analysis).
 ## 3. Sources and disclosure control
 
 Each source's statistical disclosure control (SDC) determines how closely sums of its cells
-can be expected to match its published totals.
+can be expected to match its published totals. The profile below is taken from each publisher's own
+data guidance, read when the file was inspected, and confirmed against the published totals where
+these exist. A sum is "within tolerance" when |sum − published| ≤ absolute tolerance + relative
+tolerance × published. Tolerances were fixed before the comparison and not tuned to it (except DWP
+Stat-Xplore, F2–F4, set from observed differences in Phase 2). A difference outside tolerance is
+reported, never corrected: the published figure is always the value used.
 
-| Source | Publisher | SDC methods | Rounding base | Additivity | Tolerance (abs) | Tolerance (rel) | Confirmed | Basis |
-|---|---|---|---|---|---|---|---|---|
-| G1 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G2 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G3 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G3b | NHS England | none | — | approximate | 0 | 0.005 | no (draft) | DRAFT: check whether small LSOA counts are rounded or suppressed in this file. |
-| G4 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G5 | Office for National Statistics | none | — | none | 0 | 0 | yes | Geometry; no statistical values. |
-| G6 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G7 | Youth Justice Board (list of services); composition constructed by this project | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G8 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G9 | Office for National Statistics | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| G10 | House of Commons Library | none | — | none | 0 | 0 | yes | Lookup; no statistical values. |
-| P1 | Office for National Statistics | none | — | exact | 0 | 0 | no (draft) | SPEC section 8: LSOA estimates are constrained to LA mid-year totals. Confirm in the SAPE methodology. |
-| P1b | Office for National Statistics | none | — | exact | 0 | 0 | no (draft) | Published LA estimates sum exactly to UTLA and England. Confirm on load. |
-| P4 | Office for National Statistics | record_swapping, cell_key | — | approximate | 10 | 0.01 | no (draft) | DRAFT: Census 2021 cell key perturbation means cells do not sum exactly to published totals. Set from ONS Census 2021 SDC guidance. |
-| P7 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression and rounding rules for this table. |
-| D1 | Ministry of Housing, Communities and Local Government | none | — | none | 0 | 0 | no (draft) | Index values; not additive. |
-| D1b | Ministry of Housing, Communities and Local Government | none | — | none | 0 | 0 | no (draft) | Summary measures; validation tolerance = published rounding (gate 13). |
-| F1 | Department for Work and Pensions | cell_key | — | approximate | 10 | 0.01 | no (draft) | DRAFT: Stat-Xplore perturbation; confirm the DWP method and any rounding. |
-| F2 | Department for Work and Pensions | cell_key, suppression | — | approximate | 15 | 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. |
-| F3 | Department for Work and Pensions | cell_key, suppression | — | approximate | 15 | 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. |
-| F4 | Department for Work and Pensions | cell_key, suppression | — | approximate | 15 | 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. |
-| F6 | Office for National Statistics | record_swapping, cell_key | — | approximate | 10 | 0.01 | no (draft) | DRAFT: Census 2021 cell key perturbation. |
-| F7 | Office for National Statistics | record_swapping, cell_key | — | approximate | 10 | 0.01 | no (draft) | DRAFT: Census 2021 cell key perturbation. |
-| C1 | Department for Education | suppression, rounding | — | approximate | 0 | 0.005 | no (draft) | DRAFT: confirm DfE suppression, secondary suppression and any national rounding. |
-| C2 | Department for Education | suppression, rounding | — | approximate | 0 | 0.005 | no (draft) | DRAFT: confirm DfE rounding (national figures may be rounded) and suppression. |
-| C3 | Department for Education | suppression, rounding | — | approximate | 1 | 0.005 | no (draft) | DRAFT: FTEs published rounded; confirm. |
-| C4 | Department for Education | rounding | — | approximate | 1000 | 0.001 | no (draft) | DRAFT: financial lines are rounded; confirm the units and the rounding. |
-| C5 | Ofsted | none | — | exact | 0 | 0 | no (draft) | DRAFT: provider counts expected exact; confirm. |
-| E1 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression rules. |
-| E2 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression rules. |
-| E3 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression rules. |
-| E4 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression rules. |
-| E5 | Department for Education | suppression, rounding | — | approximate | 10 | 0.005 | no (draft) | DRAFT: counts may be rounded; confirm. |
-| E6 | Department for Education | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: confirm DfE suppression rules. |
-| H1 | NHS England | rounding, suppression | 5 | approximate | 5 | 0.01 | no (draft) | SPEC section 8: rounded to 5 with suppression. Confirm in the MHSDS methodology. |
-| H2 | Office for Health Improvement and Disparities | suppression | — | approximate | 0 | 0.001 | no (draft) | DRAFT: small counts suppressed by OHID; confirm. |
-| H3 | Office for Health Improvement and Disparities | suppression, rounding | — | approximate | 5 | 0.01 | no (draft) | DRAFT: confirm the NDTMS disclosure rules. |
-| Ho1 | Ministry of Housing, Communities and Local Government | suppression, imputation | — | approximate | 0 | 0.05 | no (draft) | DRAFT: SPEC section 8 says national totals include imputation for non-responders. Confirm in the technical note. |
-| S1 | Home Office / police forces (data.police.uk) | location_anonymisation | — | exact | 0 | 0 | no (draft) | Record-level counts; points are snapped to anonymous map points, which affects location not counts. |
-| S3 | Youth Justice Board / Ministry of Justice | suppression | — | approximate | 0 | 0.005 | no (draft) | DRAFT: confirm. |
-| S4 | Home Office | suppression | — | approximate | 0 | 0.01 | no (draft) | DRAFT: confirm. |
-| S5 | Home Office | suppression | — | approximate | 0 | 0.01 | no (draft) | DRAFT: confirm. |
+| Source | Publisher | SDC methods | Additivity | Tolerance (abs / rel) | Confirmed | Publisher's disclosure control and checks | Checked in this release |
+|---|---|---|---|---|---|---|---|
+| G1 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G2 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G3 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G3b | NHS England | none | approximate | 0 / 0.005 | yes | NHS England GP registrations: counts by practice x LSOA21 and sex, no suppression or rounding symbols (inspection, Phase 4); female + male sum exactly to every published total. Patients of unknown sex are excluded by the publisher. Used only as weights and Sub-ICB denominators. | no published total compared |
+| G4 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G5 | Office for National Statistics | none | none | 0 / 0 | yes | Geometry; no statistical values. | no published total compared |
+| G6 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G7 | Youth Justice Board (list of services); composition constructed by this project | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G8 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G9 | Office for National Statistics | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| G10 | House of Commons Library | none | none | 0 / 0 | yes | Lookup; no statistical values. | no published total compared |
+| P1 | Office for National Statistics | none | exact | 0 / 0 | yes | ONS small area population estimates are constrained to MSOA and local authority mid-year estimates (ONS SAPE quality and methodology information, https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/smallareapopulationestimatesqmi). Checked: LSOA single-year sums equal the published MSOA estimates exactly. | 1,254,648 published totals compared; 1,254,648 within tolerance; largest difference 0 |
+| P1b | Office for National Statistics | none | exact | 0 / 0 | yes | Published LA mid-year estimates. Checked: LAD sums equal the published UTLA and England figures exactly in every age and sex cell. | 82,350 published totals compared; 82,350 within tolerance; largest difference 0 |
+| P4 | Office for National Statistics | record_swapping, cell_key | approximate | 10 / 0.01 | yes | Census 2021: targeted record swapping and cell key perturbation (ONS, 'Protecting personal data in Census 2021 results', https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/protectingpersonaldataincensus2021results). Small cells are perturbed, so sums of cells differ slightly from published totals; differences are reported in reconciliation.csv. | 313,110 published totals compared; 313,092 within tolerance; largest difference 55 |
+| P7 | Department for Education | none | approximate | 0 / 0.001 | yes | School census (SPC) data guidance: no suppression or rounding applied; 'x' not applicable, 'z' unknown. Checked: LA sums equal the published England figures exactly. | 20 published totals compared; 20 within tolerance; largest difference 0 |
+| D1 | Ministry of Housing, Communities and Local Government | none | none | 0 / 0 | yes | Index values (scores, ranks, deciles): not additive; no disclosure control. | no published total compared |
+| D1b | Ministry of Housing, Communities and Local Government | none | none | 0 / 0 | yes | MHCLG published LA summaries: not additive. Checked: recomputed LAD averages match the published values within published rounding (gate 13). | no published total compared |
+| F1 | Department for Work and Pensions | cell_key | approximate | 10 / 0.01 | yes | CiLIF data guidance: DWP applies disclosure control, and totals may not sum because of rounding and disclosure control; percentages rounded to 1 decimal place; no symbols. Checked: LA sums within tolerance of the published England totals. | 10 published totals compared; 10 within tolerance; largest difference 43 |
+| F2 | Department for Work and Pensions | cell_key, suppression | approximate | 15 / 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. | 7,144 published totals compared; 7,144 within tolerance; largest difference 88 |
+| F3 | Department for Work and Pensions | cell_key, suppression | approximate | 15 / 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. | 14,623 published totals compared; 14,617 within tolerance; largest difference 58 |
+| F4 | Department for Work and Pensions | cell_key, suppression | approximate | 15 / 0.03 | yes | Stat-Xplore adds small random adjustments to every cell and publishes counts below 5 as 0 (D-0053). DWP: no reliance on small cells; use published data for larger areas (Stat-Xplore Data Confidentiality note). Observed: complete LSOA sums differ from published figures by about 5 x sqrt(areas summed) at the 99th percentile; 15 + 3% covers this. | 8,752 published totals compared; 8,750 within tolerance; largest difference 40 |
+| F6 | Office for National Statistics | record_swapping, cell_key | approximate | 10 / 0.01 | yes | Census 2021: targeted record swapping and cell key perturbation (ONS, 'Protecting personal data in Census 2021 results', https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/protectingpersonaldataincensus2021results). Small cells are perturbed, so sums of cells differ slightly from published totals; differences are reported in reconciliation.csv. | 21,918 published totals compared; 21,907 within tolerance; largest difference 129 |
+| F7 | Office for National Statistics | record_swapping, cell_key | approximate | 10 / 0.01 | yes | Census 2021: targeted record swapping and cell key perturbation (ONS, 'Protecting personal data in Census 2021 results', https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/protectingpersonaldataincensus2021results). Small cells are perturbed, so sums of cells differ slightly from published totals; differences are reported in reconciliation.csv. | 27,550 published totals compared; 27,529 within tolerance; largest difference 135 |
+| C1 | Department for Education | suppression, rounding | approximate | 0 / 0.005 | yes | CIN data guidance: 'c' suppression (secondary suppression may apply); England and regional totals rounded to the nearest 10, LA figures unrounded. Checked: LA sums within 5 of the rounded England totals. | 6 published totals compared; 6 within tolerance; largest difference 5 |
+| C2 | Department for Education | suppression, rounding | approximate | 0 / 0.005 | yes | CLA data guidance: 'c' suppression; national and regional figures rounded to the nearest 10, LA figures unrounded. Checked: LA sums within tolerance of the rounded England totals. | 1 published totals compared; 1 within tolerance; largest difference 4 |
+| C3 | Department for Education | suppression, rounding | approximate | 1 / 0.005 | yes | Children's social work workforce data guidance: 'c' suppression, 'low' rounds to 0; FTEs, rates and caseloads rounded to one decimal place. | no published total compared |
+| C4 | Department for Education | suppression | approximate | 1000 / 0.001 | yes | Section 251 outturn: unrounded GBP; 'c' (confidential) and 'x' (not available) take the GSS meanings. No published total is reconciled. | no published total compared |
+| C5 | Ofsted | none | exact | 0 / 0 | yes | Ofsted provider list: every registered provider at 31 March 2025, no symbols. Checked: LA sums equal Ofsted's published national homes and places exactly. | no published total compared |
+| E1 | Department for Education | none | approximate | 0 / 0.001 | yes | SEN data guidance: no suppression or rounding applied; release convention 'x' not applicable, 'z' not available. Checked: LA sums equal the published England figures exactly. | 5 published totals compared; 5 within tolerance; largest difference 0 |
+| E2 | Department for Education | none | approximate | 0 / 0.001 | yes | SEN2 data guidance: no suppression; 'z' not applicable, 'x' unavailable (Lewisham 2024 timeliness withheld by DfE). Checked: LA sums equal the published England figures exactly. | 8 published totals compared; 8 within tolerance; largest difference 0 |
+| E3 | Department for Education | none | approximate | 0 / 0.001 | yes | Absence data guidance: no suppression or rounding applied (except PLAA tables, not used). Checked: LA sums equal the published England figures exactly. | 3 published totals compared; 3 within tolerance; largest difference 0 |
+| E4 | Department for Education | none | approximate | 0 / 0.001 | yes | Exclusions data guidance: no suppression or rounding applied (except PLAA tables, not used). Checked: LA sums equal the published England figures exactly. | 3 published totals compared; 3 within tolerance; largest difference 0 |
+| E5 | Department for Education | suppression, rounding | approximate | 10 / 0.005 | yes | NEET data guidance: indicators on a cohort of 5 or fewer suppressed ('c'); national and regional numbers rounded to the nearest 10. | no published total compared |
+| E6 | Department for Education | none | approximate | 0 / 0.001 | yes | School census (SPC) data guidance: no suppression or rounding applied; 'x' not applicable, 'z' unknown. Checked: LA sums equal the published England figures exactly. | 2 published totals compared; 2 within tolerance; largest difference 0 |
+| H1 | NHS England | rounding, suppression (base 5) | approximate | 5 / 0.01 | yes | MHSDS: '*' marks a suppressed small value; Sub-ICB and provider figures rounded to the nearest 5, England unrounded. | no published total compared |
+| H2 | Office for Health Improvement and Disparities | suppression | approximate | 0 / 0.001 | yes | Fingertips: no symbols; a missing value carries a 'Value note' (suppressed small count, combined area, not presented), mapped to null_reason. | no published total compared |
+| H3 | Office for Health Improvement and Disparities | suppression, rounding | approximate | 5 / 0.01 | no | Not loaded (D-0091): disclosure control not assessed. | no published total compared |
+| Ho1 | Ministry of Housing, Communities and Local Government | suppression, imputation | approximate | 0 / 0.05 | yes | H-CLIC table footnotes: '..' authority did not submit; '-' breakdown suppressed (fewer than 5); England and regional totals include MHCLG estimates for non-responding authorities, so LA sums fall short of them. | no published total compared |
+| S1 | Home Office / police forces (data.police.uk) | location_anonymisation | exact | 0 / 0 | yes | data.police.uk: record-level counts with no suppression; points are snapped to anonymous map points, which affects location, not counts. Checked: published LSOA code agrees with point-in-polygon for 96.5% of England records (T4). | no published total compared |
+| S3 | Youth Justice Board / Ministry of Justice | suppression | approximate | 0 / 0.005 | yes | YJB/MoJ supplementary tables: '..' fewer than ten first-time entrants (suppressed); '*' LA boundary change. Open data tables have no symbols. | no published total compared |
+| S4 | Home Office | none | approximate | 0 / 0.01 | yes | NRM quarterly tables: whole numbers, no symbols. Checked: police force rows sum to the published UK total in every quarter. | no published total compared |
+| S5 | Home Office | none | approximate | 0 / 0.01 | yes | Asy_D11: counts of people, no symbols. Checked: England LA rows sum to the published English regional totals exactly (D-0084). | no published total compared |
 
 ## 4. Suppression and missing values
 
@@ -190,7 +195,14 @@ recomputing the published LAD averages. Ranks and deciles are never averaged.
 - **Ecological fallacy:** area values describe areas, not individuals.
 - **Modifiable areal unit problem:** patterns can change with the choice of boundaries.
 - **Practice effects:** service measures reflect local thresholds and recording practice.
+- **Interval coverage:** confidence intervals describe random variation only; they do not cover bias from
+  recording practice, coverage gaps, survey calibration or the period mismatch between numerator and
+  denominator.
+- **Point in time:** this is one snapshot (reference date 31 March 2025), not a time series; differences
+  between areas are not trends.
 - **Small numbers:** use the intervals and smoothed rates.
+
+Full references for every method are in [References](references.md).
 
 ## 11. Indicator catalogue
 

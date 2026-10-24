@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation: average rank
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_la_avg_rank` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_la_avg_rank` · concept `imd`
 
 
 The average national ranking of the authority's neighbourhoods, weighted by population. Higher means more deprived.

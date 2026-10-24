@@ -1,6 +1,6 @@
 # Care leavers aged 17 to 21
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_care_leavers_17_21` · concept `care_leavers`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_care_leavers_17_21` · concept `care_leavers`
 
 
 The number of young people aged 17 to 21 who have left care and are supported by the council.

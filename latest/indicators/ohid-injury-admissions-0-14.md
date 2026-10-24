@@ -1,6 +1,6 @@
 # Hospital admissions for injuries (0-14)
 
-Release `abffebbd490b-19eda0e60019` · indicator `ohid_injury_admissions_0_14` · concept `child_injuries`
+Release `2dda583978fb-19eda0e60019` · indicator `ohid_injury_admissions_0_14` · concept `child_injuries`
 
 
 Hospital admissions for injuries among children aged 0 to 14, per 10,000 children.

@@ -1,6 +1,6 @@
 # Neighbourhoods in England's most deprived 10% for child income
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_la_prop_most_deprived_10pct` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_la_prop_most_deprived_10pct` · concept `child_poverty`
 
 
 The share of the authority's neighbourhoods among England's most deprived 10% for child income deprivation.

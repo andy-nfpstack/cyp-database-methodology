@@ -1,6 +1,6 @@
 # Health deprivation and disability: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_health_la_avg_score` · concept `iod_health`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_health_la_avg_score` · concept `iod_health`
 
 
 The average health deprivation and disability score of the authority's neighbourhoods, weighted by how many people live in each.

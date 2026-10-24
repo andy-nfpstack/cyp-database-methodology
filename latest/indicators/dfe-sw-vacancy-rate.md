@@ -1,6 +1,6 @@
 # Social worker vacancy rate
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_sw_vacancy_rate` · concept `social_work_workforce`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_sw_vacancy_rate` · concept `social_work_workforce`
 
 
 The share of children's social worker posts that are vacant.

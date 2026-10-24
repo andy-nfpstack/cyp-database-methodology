@@ -1,6 +1,6 @@
 # 16-17 year olds NEET or activity not known
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_neet_or_not_known_16_17` · concept `neet`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_neet_or_not_known_16_17` · concept `neet`
 
 
 The share of 16 and 17 year olds who are not in education, employment or training, or whose activity the council does not know.

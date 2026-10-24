@@ -1,6 +1,6 @@
 # Hospital admissions for self-harm (10-24)
 
-Release `abffebbd490b-19eda0e60019` · indicator `ohid_self_harm_admissions_10_24` · concept `self_harm`
+Release `2dda583978fb-19eda0e60019` · indicator `ohid_self_harm_admissions_10_24` · concept `self_harm`
 
 
 Hospital admissions caused by self-harm among young people aged 10 to 24, per 100,000 young people.

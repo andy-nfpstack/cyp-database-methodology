@@ -1,6 +1,6 @@
 # Child referrals for suspected exploitation (NRM)
 
-Release `abffebbd490b-19eda0e60019` · indicator `ho_nrm_referrals_under18` · concept `modern_slavery`
+Release `2dda583978fb-19eda0e60019` · indicator `ho_nrm_referrals_under18` · concept `modern_slavery`
 
 
 Children referred as potential victims of modern slavery or exploitation, per 10,000 children. This shows how actively agencies identify and refer cases.
@@ -40,7 +40,7 @@ Proxy for identified child exploitation (incl. county lines). Theme service_dema
 ## Sources
 
 - **S4: National Referral Mechanism and Duty to Notify statistics** (Home Office). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.01 relative.
 
 ## Quality and known biases

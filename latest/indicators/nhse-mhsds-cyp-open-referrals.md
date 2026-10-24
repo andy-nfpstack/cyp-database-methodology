@@ -1,6 +1,6 @@
 # Children with open mental health referrals
 
-Release `abffebbd490b-19eda0e60019` · indicator `nhse_mhsds_cyp_open_referrals` · concept `cyp_mental_health_caseload`
+Release `2dda583978fb-19eda0e60019` · indicator `nhse_mhsds_cyp_open_referrals` · concept `cyp_mental_health_caseload`
 
 
 Children and young people in contact with NHS mental health services at the end of March 2025.

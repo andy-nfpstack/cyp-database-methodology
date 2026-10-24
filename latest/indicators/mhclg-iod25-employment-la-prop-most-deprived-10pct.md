@@ -1,6 +1,6 @@
 # Employment deprivation: neighbourhoods in England's most deprived 10%
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_employment_la_prop_most_deprived_10pct` · concept `iod_employment`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_employment_la_prop_most_deprived_10pct` · concept `iod_employment`
 
 
 The share of the authority's neighbourhoods that are among England's most deprived 10% on this domain.

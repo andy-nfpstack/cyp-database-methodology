@@ -1,6 +1,6 @@
 # Social worker turnover rate
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_sw_turnover_rate` · concept `social_work_workforce`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_sw_turnover_rate` · concept `social_work_workforce`
 
 
 The share of children's social workers who left during the year.

@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_score` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_score` · concept `imd`
 
 
 The official overall measure of how deprived a neighbourhood is, combining income, jobs, education, health, crime, housing and living environment.

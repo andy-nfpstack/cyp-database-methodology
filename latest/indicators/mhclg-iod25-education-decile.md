@@ -1,6 +1,6 @@
 # Education, skills and training deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_education_decile` · concept `iod_education`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_education_decile` · concept `iod_education`
 
 
 Which tenth of neighbourhoods this one falls in for education deprivation; 1 is the most deprived.

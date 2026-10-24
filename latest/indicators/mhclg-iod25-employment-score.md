@@ -1,6 +1,6 @@
 # Employment deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_employment_score` · concept `iod_employment`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_employment_score` · concept `iod_employment`
 
 
 The share of working-age people in the neighbourhood who are kept out of work by unemployment, sickness, disability or caring.

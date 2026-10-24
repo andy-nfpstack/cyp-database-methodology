@@ -1,6 +1,6 @@
 # Population used in the IoD 2025
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_population` · concept `iod_population`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_population` · concept `iod_population`
 
 
 The population figures MHCLG used to build the Indices of Deprivation 2025.

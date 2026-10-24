@@ -1,6 +1,6 @@
 # Average social worker caseload
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_sw_average_caseload` · concept `social_work_workforce`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_sw_average_caseload` · concept `social_work_workforce`
 
 
 The average number of children's cases held by each social worker.

@@ -1,6 +1,6 @@
 # Crime deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_crime_score` · concept `iod_crime`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_crime_score` · concept `iod_crime`
 
 
 The neighbourhood's risk of personal and material victimisation, compared with other areas.

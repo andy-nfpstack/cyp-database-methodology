@@ -1,6 +1,6 @@
 # Young people assessed as homeless or at risk (16-24)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_hclic_owed_duty_applicants_16_24` · concept `youth_homelessness`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_hclic_owed_duty_applicants_16_24` · concept `youth_homelessness`
 
 
 Young people aged 16 to 24 whose household the council assessed as homeless or threatened with homelessness, per 10,000 young people.

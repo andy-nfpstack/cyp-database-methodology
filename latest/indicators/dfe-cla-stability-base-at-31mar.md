@@ -1,6 +1,6 @@
 # Children in care (stability base)
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_stability_base_at_31mar` · concept `cla_placement_stability`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_stability_base_at_31mar` · concept `cla_placement_stability`
 
 
 Children in care at 31 March, as counted in DfE's placement stability table; the base for the share with 3 or more placements.

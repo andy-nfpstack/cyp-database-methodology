@@ -1,6 +1,6 @@
 # Income deprivation affecting children (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_decile` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_decile` · concept `child_poverty`
 
 
 Which tenth of neighbourhoods this one falls in for child income deprivation; 1 is the most deprived 10%.

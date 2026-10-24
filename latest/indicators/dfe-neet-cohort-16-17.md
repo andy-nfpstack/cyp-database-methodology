@@ -1,6 +1,6 @@
 # 16-17 year olds known to the council
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_neet_cohort_16_17` · concept `neet`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_neet_cohort_16_17` · concept `neet`
 
 
 The number of 16 and 17 year olds the council tracks, used to calculate NEET rates.

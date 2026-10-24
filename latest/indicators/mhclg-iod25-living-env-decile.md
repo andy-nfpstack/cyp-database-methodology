@@ -1,6 +1,6 @@
 # Living environment deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_living_env_decile` · concept `iod_living_environment`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_living_env_decile` · concept `iod_living_environment`
 
 
 Which tenth of neighbourhoods this one falls in for living environment; 1 is the most deprived.

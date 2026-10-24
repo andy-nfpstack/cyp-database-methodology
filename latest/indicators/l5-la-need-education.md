@@ -1,6 +1,6 @@
-# La need: education domain
+# LA need: education domain
 
-Release `abffebbd490b-19eda0e60019` · indicator `l5_la_need_education` · concept `la_need_education`
+Release `2dda583978fb-19eda0e60019` · indicator `l5_la_need_education` · concept `la_need_education`
 
 > **Experimental.** Not endorsed by any official publisher.
 > **Draft:** this indicator definition has not yet been reviewed.
@@ -48,16 +48,16 @@ Shows which domain drives an area's composite score.
   Disclosure control: none; additivity none;
   tolerance 0 absolute / 0 relative.
 - **E3: Pupil absence in schools in England, 2024/25** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 - **E4: Suspensions and permanent exclusions in England** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 - **E5: Participation in education, training and NEET age 16 to 17 by local authority** (Department for Education). Licence: Open Government Licence v3.0.
   Disclosure control: suppression, rounding; additivity approximate;
   tolerance 10 absolute / 0.005 relative.
 - **E6: Schools, pupils and their characteristics, January 2025 (FSM by pupil residence)** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 - **F1: Children in Low Income Families: local area statistics (FYE 2025)** (Department for Work and Pensions). Licence: Open Government Licence v3.0.
   Disclosure control: cell_key; additivity approximate;

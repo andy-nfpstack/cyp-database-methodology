@@ -1,6 +1,6 @@
 # Children receiving Disability Living Allowance
 
-Release `abffebbd490b-19eda0e60019` · indicator `dwp_dla_claimants_under16` · concept `disability_benefit`
+Release `2dda583978fb-19eda0e60019` · indicator `dwp_dla_claimants_under16` · concept `disability_benefit`
 
 
 The share of children under 16 receiving Disability Living Allowance, a benefit for children with extra care or mobility needs.

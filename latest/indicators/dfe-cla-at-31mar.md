@@ -1,6 +1,6 @@
 # Children in care
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_at_31mar` · concept `looked_after_children`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_at_31mar` · concept `looked_after_children`
 
 
 Children in the care of the council, per 10,000 children.

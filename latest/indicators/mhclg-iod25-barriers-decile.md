@@ -1,6 +1,6 @@
 # Barriers to housing and services (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_barriers_decile` · concept `iod_barriers`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_barriers_decile` · concept `iod_barriers`
 
 
 Which tenth of neighbourhoods this one falls in for barriers to housing and services; 1 is the most deprived.

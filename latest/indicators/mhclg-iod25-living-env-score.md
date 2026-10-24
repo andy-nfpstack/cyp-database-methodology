@@ -1,6 +1,6 @@
 # Living environment deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_living_env_score` · concept `iod_living_environment`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_living_env_score` · concept `iod_living_environment`
 
 
 The quality of housing and the local environment, such as air quality and road traffic accidents.

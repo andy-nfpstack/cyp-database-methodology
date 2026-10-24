@@ -1,6 +1,6 @@
 # Income deprivation affecting children (IDACI)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_score` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_score` · concept `child_poverty`
 
 
 The share of children aged 0 to 15 in the neighbourhood who live in income-deprived families.

@@ -1,6 +1,6 @@
 # Lone-parent households
 
-Release `abffebbd490b-19eda0e60019` · indicator `census21_lone_parent_households_dep_children` · concept `lone_parent_households`
+Release `2dda583978fb-19eda0e60019` · indicator `census21_lone_parent_households_dep_children` · concept `lone_parent_households`
 
 
 The share of households with dependent children headed by a single parent.

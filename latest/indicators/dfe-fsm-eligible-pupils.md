@@ -1,6 +1,6 @@
 # Pupils eligible for free school meals
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_fsm_eligible_pupils` · concept `fsm_eligibility`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_fsm_eligible_pupils` · concept `fsm_eligibility`
 
 
 The share of pupils at schools in the authority who are eligible for free school meals.
@@ -40,7 +40,7 @@ Timely, administrative indicator of low family income for school-age children.
 ## Sources
 
 - **E6: Schools, pupils and their characteristics, January 2025 (FSM by pupil residence)** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

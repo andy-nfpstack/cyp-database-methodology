@@ -1,6 +1,6 @@
 # People receiving asylum support
 
-Release `abffebbd490b-19eda0e60019` · indicator `ho_asylum_support_recipients` · concept `asylum_support`
+Release `2dda583978fb-19eda0e60019` · indicator `ho_asylum_support_recipients` · concept `asylum_support`
 
 
 The number of people seeking asylum who receive housing or financial support from the Home Office in the council area. All ages.
@@ -40,7 +40,7 @@ Context for families seeking asylum, who may need children's services.
 ## Sources
 
 - **S5: Asylum support by local authority (Home Office immigration statistics)** (Home Office). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.01 relative.
 
 ## Quality and known biases

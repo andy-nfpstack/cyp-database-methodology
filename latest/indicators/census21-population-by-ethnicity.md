@@ -1,6 +1,6 @@
 # Population by ethnic group (Census 2021)
 
-Release `abffebbd490b-19eda0e60019` · indicator `census21_population_by_ethnicity` · concept `population_by_ethnicity`
+Release `2dda583978fb-19eda0e60019` · indicator `census21_population_by_ethnicity` · concept `population_by_ethnicity`
 
 
 The number of people in each neighbourhood by ethnic group and age, from the 2021 Census.

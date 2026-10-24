@@ -1,6 +1,6 @@
 # Income deprivation affecting children (rank)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_rank` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_rank` · concept `child_poverty`
 
 
 Where the neighbourhood ranks on child income deprivation; 1 is the most deprived.

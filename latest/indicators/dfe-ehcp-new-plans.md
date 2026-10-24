@@ -1,6 +1,6 @@
 # New EHC plans
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_ehcp_new_plans` · concept `send`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_ehcp_new_plans` · concept `send`
 
 
 New EHC plans the council issued during the year, per 10,000 young people aged 0 to 25.
@@ -40,7 +40,7 @@ Flow of SEND statutory demand.
 ## Sources
 
 - **E2: Education, health and care plans (SEN2), January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

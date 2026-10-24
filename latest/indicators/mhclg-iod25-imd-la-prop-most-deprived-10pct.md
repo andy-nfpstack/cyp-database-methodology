@@ -1,6 +1,6 @@
 # Neighbourhoods in England's most deprived 10%
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_la_prop_most_deprived_10pct` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_la_prop_most_deprived_10pct` · concept `imd`
 
 
 The share of the authority's neighbourhoods that are among the most deprived 10% in England.

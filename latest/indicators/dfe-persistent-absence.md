@@ -1,6 +1,6 @@
 # Persistent absence from school
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_persistent_absence` · concept `school_absence`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_persistent_absence` · concept `school_absence`
 
 
 The share of pupils who missed at least 1 in 10 school sessions during the year.
@@ -40,7 +40,7 @@ Strong marker of disengagement, unmet need and risk.
 ## Sources
 
 - **E3: Pupil absence in schools in England, 2024/25** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

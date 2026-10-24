@@ -1,6 +1,6 @@
 # Children entering care
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_starts` · concept `looked_after_children`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_starts` · concept `looked_after_children`
 
 
 Children who came into care during the year, per 10,000 children.

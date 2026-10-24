@@ -1,6 +1,6 @@
 # Children's education deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_education_cyp_subdomain_score` · concept `iod_education_cyp`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_education_cyp_subdomain_score` · concept `iod_education_cyp`
 
 
 How far children and young people in the neighbourhood fall behind in attainment, staying on in education and going on to higher education.

@@ -1,6 +1,6 @@
 # Young people receiving PIP
 
-Release `abffebbd490b-19eda0e60019` · indicator `dwp_pip_claimants_16_24` · concept `disability_benefit`
+Release `2dda583978fb-19eda0e60019` · indicator `dwp_pip_claimants_16_24` · concept `disability_benefit`
 
 
 The share of young people aged 16 to 24 receiving Personal Independence Payment, a disability benefit.

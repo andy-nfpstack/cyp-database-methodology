@@ -1,6 +1,6 @@
 # Neighbourhood need index
 
-Release `abffebbd490b-19eda0e60019` · indicator `l5_neighbourhood_need` · concept `neighbourhood_need`
+Release `2dda583978fb-19eda0e60019` · indicator `l5_neighbourhood_need` · concept `neighbourhood_need`
 
 > **Experimental.** Not endorsed by any official publisher.
 > **Draft:** this indicator definition has not yet been reviewed.

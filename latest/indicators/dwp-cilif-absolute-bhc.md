@@ -1,6 +1,6 @@
 # Children in absolute low income families
 
-Release `abffebbd490b-19eda0e60019` · indicator `dwp_cilif_absolute_bhc` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `dwp_cilif_absolute_bhc` · concept `child_poverty`
 
 
 The number of children living in families whose income is below a fixed poverty line (60% of the 2024/25 UK average, adjusted for inflation), before housing costs.

@@ -1,6 +1,6 @@
 # Decision log
 
-Release `abffebbd490b-19eda0e60019`. Generated from `DECISIONS.md`: every assumption and
+Release `2dda583978fb-19eda0e60019`. Generated from `DECISIONS.md`: every assumption and
 judgement made in building this release, with its date, its reason and its effect on the outputs.
 
 ## D-0001: Repository root is the existing git repository
@@ -70,7 +70,7 @@ judgement made in building this release, with its date, its reason and its effec
 ## D-0009: SDC profiles and tolerances are drafts
 
 - **Date:** 2026-10-19
-- **Status:** proposed; confirmed per source as each is loaded. Confirmed so far: P1/P1b (exact, Phase 1), F2–F4 (D-0053: perturbation plus counts below 5 published as 0; tolerance 15 + 3% from observed reconciliation). Census tolerances stay draft until ONS's guidance is cited.
+- **Status:** decided; every loaded source's SDC profile confirmed in D-0094 (Census guidance cited). F2–F4 tolerances were set from observed reconciliation (D-0053); all others were set in advance and not changed.
 - **Decision:** Each source has an SDC profile following SPEC section 8's expected table. Every profile not yet checked against publisher guidance has `confirmed: false`, and its tolerance_reason starts with `DRAFT`. Draft tolerances: Census 10 abs / 1% rel; Stat-Xplore LSOA 10 / 2%; DfE 0 / 0.1-0.5%; MHSDS 5 / 1% (rounding base 5); H-CLIC 0 / 5% (national imputation); ONS population exact (0 / 0). Each is confirmed, with the guidance cited, before that source's phase QA.
 - **Reason:** SPEC 13 Phase 0 asks for SDC profiles. No file or guidance has been read yet, so the numbers are placeholders for review.
 - **Effect on outputs:** Gates 2 and 7 use these tolerances once confirmed.
@@ -198,7 +198,7 @@ judgement made in building this release, with its date, its reason and its effec
 ## D-0025: Composite Monte Carlo settings not given by the spec
 
 - **Date:** 2026-10-19
-- **Status:** proposed
+- **Status:** decided (superseded in detail by D-0088, Phase 6)
 - **Decision:** `config/composites.yaml` drafts the values the spec leaves open: seed 20250331; Dirichlet concentration 20 around equal weights; missing-data thresholds {0.5, 0.6667, 0.75}. Domain membership follows SPEC 12.1, mapped to draft indicator_ids. Final values are set in Phase 6.
 - **Reason:** SPEC 12.4 fixes 1,000 runs and a fixed seed, but not the concentration or the threshold grid.
 - **Effect on outputs:** L5 uncertainty intervals (Phase 6).
@@ -845,7 +845,7 @@ judgement made in building this release, with its date, its reason and its effec
 ## D-0087: Composite domain assignment and eligibility (Phase 6)
 
 - **Date:** 2026-10-22
-- **Status:** decided (for review)
+- **Status:** decided (user accepted, 2026-10-23)
 - **Decision:** The SPEC 12.1 starting point, with these changes. Eligibility is re-tested at every level for every release, so the indicators that are ineligible today stay listed and enter once they qualify.
   - **Removed:**
     - `dwp_uc_households_with_children` (neighbourhood economic hardship): a count with no same-period denominator. Census 2021 households are four years older than the counts, beyond the 366-day rule. IDACI already measures benefit-based income deprivation.
@@ -949,6 +949,83 @@ judgement made in building this release, with its date, its reason and its effec
   - **Links:** `serve_indicator_meta.methodology_url` gives each indicator's page for the release, and the release README links to the online pack.
 - **Reason:** SPEC 11.1 ("published ... alongside the dashboard"; versioned) without making the code public or upgrading the account.
 - **Effect on outputs:** `methodology_url` in `serve_indicator_meta`, and an online link in the README.
+
+## D-0093: Fabric files shipped as a private GitHub release
+
+- **Date:** 2026-10-24
+- **Status:** decided (user, 2026-10-24)
+- **Decision:**   - **Why a GitHub release:** the dashboard is built in another organisation's Microsoft Fabric. Its machines cannot reach the build machine's storage or take the D: drive, but the user can sign in to GitHub there.
+  - **Command:** `cypneed package-release [--snapshot S] [--upload]` zips only what Fabric needs into `dist/<snapshot>/<snapshot>_fabric.zip`:
+    - the Delta tables (every table and view);
+    - the TopoJSON maps;
+    - `serve_indicator_meta.json`, the data dictionaries, `sources.csv` and the README.
+  - **Checksums:** it writes `SHA256SUMS.txt` alongside the zip.
+  - **Upload:** with `--upload`, it creates a release `data-<snapshot>` in the private code repo, tagged at the release's own commit.
+  - **Left out:** the CSV, Parquet and DuckDB copies, which Fabric does not need.
+- **Reason:** GitHub limits release assets to 2 GiB per file with no total limit; the Fabric zip is about 0.26 GB. The private repo keeps the data off the public web until the user decides to publish it, and the checksum lets the receiving organisation verify the download.
+- **Effect on outputs:** one zip and one checksum file per release in `dist/` (not committed), and a GitHub release when uploaded.
+
+## D-0094: Final rigour review: disclosure control confirmed, references, open items closed
+
+- **Date:** 2026-10-24
+- **Status:** decided (user request, 2026-10-24: "full final review ... academic rigour")
+- **Decision:**   - **Disclosure control (closes D-0009):** every loaded source's SDC profile in `config/sources.yaml` is now stated from its publisher's own data guidance, as read at inspection and recorded in `config/suppression_codes.yaml`, and marked confirmed.
+    - The Census tables (P4, F6, F7) cite ONS's Census 2021 disclosure control page.
+    - The population estimates (P1) cite the ONS small area population estimates quality and methodology information.
+    - Method lists are corrected where the guidance says nothing is suppressed: E1–E4, E6, P7, S4 and S5 are `none`; C4 is suppression only.
+    - The "DRAFT" wording no longer appears anywhere in the config or the published methodology.
+  - **Tolerances unchanged:** tolerances were set in advance and are not changed, so they are not fitted to the results. The F2–F4 exception (set from observed differences, D-0053) is stated in the methodology. The technical methodology now shows, for each source, the publisher's disclosure control and what this release checked (totals compared, within tolerance, largest difference). The results are generated at release from `reconciliation`.
+  - **References:** a References page cites every method used:
+    - confidence intervals: Wilson; Byar, via Breslow and Day;
+    - smoothing and transformation: Marshall's empirical Bayes; Blom's normal scores;
+    - consistency checks: Cronbach's alpha;
+    - composites: the OECD/JRC handbook; Saisana, Saltelli and Tarantola; Sobol';
+    - deprivation: the IoD 2025 technical report;
+    - inference: the ecological fallacy (Robinson); the modifiable areal unit problem (Openshaw);
+    - the hotspot statistic and false discovery rate in the README guidance;
+    - official sources: the ONS disclosure and population pages; the Code of Practice for Statistics, version 3.0.
+    - Every URL was verified on 2026-10-24.
+  - **Limitations:** the technical methodology adds that confidence intervals cover random variation only, and that the release is a single point in time.
+  - **Open items closed:**
+    - five `needs_decision` notes resolved by D-0085, D-0087 and D-0091 (youth services spend keeps the 13–19 band it was built with);
+    - H3's verified landing page recorded;
+    - D-0009 and D-0025 marked decided;
+    - D-0087 marked accepted.
+  - **Composite titles:** "LA" is capitalised (it had been rendered as "La need").
+- **Reason:** SPEC 11.1 and the Code of Practice: every number traceable, every method cited, no draft wording in published outputs, and promised checks (D-0009) actually done.
+- **Effect on outputs:** No change to data values. The methodology pack gains `references.md` and the evidence columns in the disclosure-control table.
+
+## D-0095: Fabric-ready release: long serving tables, England level, kit, single-file methodology, transformation specification
+
+- **Date:** 2026-10-24
+- **Status:** decided (user request, 2026-10-24)
+- **Decision:**   - **England comparator:** `nation` is added as a serving level (`serve_nation`, `profile_nation`).
+  - **`serve_all`** stacks every serving level and the other geographies into one fact table, so the Power BI model is a star on two keys (`geo_key`, `column_prefix`).
+  - **`l5_area_scores`** holds every composite and domain score with:
+    - a fifth band and its label;
+    - the number of deciles its 5th–95th rank interval spans;
+    - `show_exact_rank` (the interval spans two deciles or fewer, the SPEC 12.6 display rule);
+    - the stability measures.
+  - **Area labels:** `serve_dim_area` gains `level_label` and `level_order`.
+  - **Fabric kit (`release/fabric_kit.py`):** one definition of the model is used to write everything else:
+    - the six model tables, five relationships and 18 DAX measures;
+    - a load notebook (unzip, save each Delta table, check row counts against `manifest.json`; an optional cell builds the Direct Lake model with semantic-link-labs);
+    - `measures.dax`;
+    - `FABRIC_GUIDE.md`: setup, the manual modelling steps, six report pages field by field, rules for every visual.
+    - The notebook's model cell and the DAX were not run in Fabric or Power BI from the build machine; the guide gives a manual fallback.
+  - **Council GeoJSON:** written beside the TopoJSON, for Azure Maps reference layers.
+  - **`methodology_complete.md`:** the whole methodology pack in one Markdown file. It has a table of contents, an anchor for each page and internal links rewritten to those anchors. It is published with the pack and attached to the GitHub release.
+  - **Transformation specification (`transformations.md`):** generated from config and DECISIONS.md. It covers:
+    - layers, invariants and the stage table (T1–T12 with code and QA gates);
+    - the shared rules, with the exact formulas used (Wilson, Byar, Marshall's empirical Bayes, percentiles, IoD summaries);
+    - every source: files, staging and harmonise code, symbols, disclosure control, decisions;
+    - every indicator: formula, the exact category-map entry or the code that builds it, decisions;
+    - guidance for moving to live pipelines.
+- **Reason:** least work in Fabric (one upload, one notebook), clear modelling and report steps, and documentation complete enough to rebuild the pipelines from (user request).
+- **Effect on outputs:**   - England rows in serving.
+  - `serve_all`, `l5_area_scores` and the new `serve_dim_area` columns in every export.
+  - `transformations.md`, `references.md` and `methodology_complete.md` in the pack.
+  - The Fabric bundle carries the kit; the GitHub release carries the guide, notebook and methodology as separate files.
 
 ---
 

@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_la_avg_score` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_la_avg_score` · concept `imd`
 
 
 The average deprivation of the local authority, weighted by how many people live in each neighbourhood.

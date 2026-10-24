@@ -1,6 +1,6 @@
 # Disabled children and young people
 
-Release `abffebbd490b-19eda0e60019` · indicator `census21_disabled_0_24` · concept `disability`
+Release `2dda583978fb-19eda0e60019` · indicator `census21_disabled_0_24` · concept `disability`
 
 
 The share of children and young people whose day-to-day activities are limited by a long-term health problem or disability.

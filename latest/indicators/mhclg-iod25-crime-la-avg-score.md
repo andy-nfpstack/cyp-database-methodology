@@ -1,6 +1,6 @@
 # Crime (IoD domain): average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_crime_la_avg_score` · concept `iod_crime`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_crime_la_avg_score` · concept `iod_crime`
 
 
 The average crime (iod domain) score of the authority's neighbourhoods, weighted by how many people live in each.

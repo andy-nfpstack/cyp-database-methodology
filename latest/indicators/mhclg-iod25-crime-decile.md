@@ -1,6 +1,6 @@
 # Crime deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_crime_decile` · concept `iod_crime`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_crime_decile` · concept `iod_crime`
 
 
 Which tenth of neighbourhoods this one falls in for crime; 1 is the most deprived.

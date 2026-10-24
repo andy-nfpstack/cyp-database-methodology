@@ -1,6 +1,6 @@
 # Education, skills and training deprivation (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_education_score` · concept `iod_education`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_education_score` · concept `iod_education`
 
 
 How far the neighbourhood lacks attainment and skills, among both children and adults.

@@ -1,6 +1,6 @@
 # Children in care (distance known)
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cla_distance_known_at_31mar` · concept `cla_placement_distance`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cla_distance_known_at_31mar` · concept `cla_placement_distance`
 
 
 Children in care whose distance from home to placement is recorded; the base for the share placed over 20 miles away.

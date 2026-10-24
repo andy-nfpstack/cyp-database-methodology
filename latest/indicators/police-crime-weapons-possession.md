@@ -1,6 +1,6 @@
 # Possession of weapons
 
-Release `abffebbd490b-19eda0e60019` · indicator `police_crime_weapons_possession` · concept `recorded_crime_weapons`
+Release `2dda583978fb-19eda0e60019` · indicator `police_crime_weapons_possession` · concept `recorded_crime_weapons`
 
 
 Weapon possession offences recorded in the neighbourhood per 1,000 residents over the year. Area context.

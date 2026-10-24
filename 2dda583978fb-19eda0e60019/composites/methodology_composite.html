@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Composite indices: methodology (experimental)</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="release"><a href="../index.html">Methodology</a> · release <code>2dda583978fb-19eda0e60019</code></header>
+<h1 id="composite-indices-methodology-experimental">Composite indices: methodology (experimental)</h1>
+<p>Release <code>2dda583978fb-19eda0e60019</code> · composites version <code>0.1-experimental</code></p>
+<blockquote>
+<p><strong>Experimental.</strong> These indices are not endorsed by any official publisher. We welcome
+methodological feedback.</p>
+</blockquote>
+<h2 id="framework">Framework</h2>
+<p>There are two families of index, and they are <strong>never combined</strong>:</p>
+<ul>
+<li><strong>Need</strong>: the underlying circumstances of children, young people and families.</li>
+<li><strong>System pressure</strong>: demand on services and their capacity. Service activity partly
+  reflects local thresholds and practice. Keeping it separate from need avoids circularity,
+  and lets the two be compared.</li>
+</ul>
+<p>The construction follows MHCLG's Indices of Deprivation method (McLennan, Noble et al., 2025) and the
+OECD/JRC <em>Handbook on Constructing Composite Indicators</em> (2008); the uncertainty and sensitivity analysis
+follows Saisana, Saltelli and Tarantola (2005). Full citations are in <a href="../references.html">References</a>.</p>
+<h2 id="eligibility">Eligibility</h2>
+<p>An indicator enters a composite only if it is native to the composite's level (an observed value,
+or a rate built from observed counts), it covers at least 95.0% of areas, and its
+polarity is higher-is-worse or higher-is-better (neutral indicators cannot be aligned). Apportioned,
+converted, recoded and fallback values are never used. At LSOA and MSOA level, rates are
+eb smoothed (Marshall global empirical Bayes), so small numbers do not drive the
+result. Eligibility is tested at every level for every release, so an indicator can be eligible at MSOA but
+not at LSOA. Survey-calibrated inputs (child poverty) are allowed and flagged.</p>
+<h2 id="primary-method">Primary method</h2>
+<ol>
+<li><strong>Checks within each domain.</strong> Spearman correlations. A pair with |ρ| &gt; 0.9 is
+   redundant (one is kept, with the reason recorded; pairs kept on purpose are listed below). An indicator with ρ &lt; 0.2 against its
+   domain is reviewed. Cronbach's alpha and the first principal component's variance share are reported.</li>
+<li><strong>Normalisation.</strong> Polarity is aligned so that higher means more need or pressure. Values are ranked within
+   England and converted to normal scores (rank inverse normal).</li>
+<li><strong>Within a domain.</strong> equal weight mean of the normal scores. Exceptions:
+   <code>dfe_cin_factor_parental_alcohol_misuse</code> has weight 0.5,    <code>dfe_cin_factor_parental_drug_misuse</code> has weight 0.5.4. <strong>Domain transformation.</strong> IoD exponential transformation:
+   <code>X = −23 × ln(1 − R × (1 − exp(−100/23)))</code>, where R is the
+   rank scaled to (0, 1] and 1 is the highest need. This limits how far low need in one domain can offset high need in another.</li>
+<li><strong>Combining domains.</strong> Equal domain weights. No stakeholder weighting exercise
+   was available, and equal weights are the most transparent default. Correlated domains
+   carry extra weight implicitly.</li>
+<li><strong>Missing data.</strong> Nothing is imputed. At LSOA and MSOA level a domain is scored when any of its indicators is
+   present. At LA level a domain needs at least 66.7% of its indicators
+   (by weight). Every composite needs every domain; otherwise it is NULL with <code>null_reason = 'incomplete'</code>.</li>
+<li><strong>Ranks and deciles.</strong> As in the IoD, rank 1 is the area with the most need (or pressure) in England,
+   and decile 1 is the 10% of areas with the most.</li>
+</ol>
+<p>Redundant pairs kept on purpose:
+- <code>dfe_cin_factor_parental_alcohol_misuse</code> and <code>dfe_cin_factor_parental_drug_misuse</code>: One factor (parental substance misuse) published as two series; each has weight 0.5, so together they count once (D-0056, D-0087).</p>
+<h2 id="uncertainty">Uncertainty</h2>
+<p>A seeded Monte Carlo with 1000 runs (seed 20250331). Each run varies:</p>
+<ul>
+<li>domain weights: dirichlet draws centred on equal weights, each weight with a
+  coefficient of variation of 0.25,</li>
+<li>normalisation: rank_inverse_normal, z_score, min_max,</li>
+<li>domain aggregation: iod_exponential, arithmetic_mean, geometric_mean,</li>
+<li>missing-data threshold (LA composites): 0.5, 0.6667, 0.75,</li>
+<li>inclusion: all indicators, drop one indicator, drop practice sensitive.</li>
+</ul>
+<p>For each area we report the median rank, the 5th–95th percentile rank interval, the probability
+of being in the highest-need decile, and whether its decile is robust (the same decile in at
+least 80% of runs). The share of rank variance explained by each
+choice is estimated with first-order Sobol' indices; for the weights, which are a vector, a lower and an
+upper bound are given. Per-run settings are in <code>l5_runs</code>, and results per choice in <code>l5_sensitivity</code>.</p>
+<p><strong>Reading the uncertainty.</strong> Where an area's 5th–95th percentile rank interval spans more than two deciles,
+show its decile with the interval, not an exact rank.</p>
+<p>Practice-sensitive indicators tested by exclusion:
+- <a href="../indicators/dfe-ehcps-0-25.html">EHC plans (ages 0-25)</a>
+- <a href="../indicators/dfe-pupils-with-ehcp.html">Pupils with an EHC plan</a>
+- <a href="../indicators/ohid-ae-attendances-0-4.html">A&amp;E attendances (under 5s)</a>
+- <a href="../indicators/dfe-cin-factor-domestic-abuse.html">Domestic abuse identified at assessment</a>
+- <a href="../indicators/dfe-cin-factor-parental-mental-health.html">Parental mental health identified at assessment</a>
+- <a href="../indicators/dfe-cin-factor-parental-alcohol-misuse.html">Parental alcohol misuse identified at assessment</a>
+- <a href="../indicators/dfe-cin-factor-parental-drug-misuse.html">Parental drug misuse identified at assessment</a></p>
+<h2 id="validation">Validation</h2>
+<p>Convergent validity (against IMD and IDACI 2025), criterion validity (LA need against system pressure,
+with residuals published), stability (dropping each indicator in turn) and face validity.</p>
+<ul>
+<li><strong>Neighbourhood need</strong> (small area): 33,723 of 33,755 areas scored; robust decile for 19.9% of areas over all runs and 42.1% over runs with the primary aggregation; within one decile for 91.3%.</li>
+<li><strong>Neighbourhood need</strong> (intermediate area): 6,856 of 6,856 areas scored; robust decile for 27.1% of areas over all runs and 56.1% over runs with the primary aggregation; within one decile for 92.0%.</li>
+<li><strong>LA need</strong> (service area): 149 of 153 areas scored; robust decile for 10.7% of areas over all runs and 26.2% over runs with the primary aggregation; within one decile for 70.5%.</li>
+<li><strong>LA system pressure</strong> (service area): 144 of 153 areas scored; robust decile for 10.4% of areas over all runs and 13.9% over runs with the primary aggregation; within one decile for 52.8%. <strong>Index not published: domains only (D-0090).</strong></li>
+</ul>
+<p>Spearman ρ between LA need and LA system pressure: 0.297 (142 areas). The two are never combined. The pressure score here is the combined index, computed internally; only its domains are published (D-0090).</p>
+<p>Each composite's page has its full results; the whole report is <code>l5/l5_validation.md</code> in the release.</p>
+<h2 id="composites">Composites</h2>
+<ul>
+<li><a href="neighbourhood_need.html">Neighbourhood need</a> (need; small_area, intermediate_area)</li>
+<li><a href="la_need.html">LA need</a> (need; service_area)</li>
+<li><a href="la_system_pressure.html">LA system pressure</a> (pressure; service_area)</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<p>The inputs come from different periods. The neighbourhood need index overlaps with IMD by design,
+because IDACI is built from benefits data, so it is reported alongside IMD rather than instead of it. A
+sub-LA composite can only use indicators that exist below LA level.</p>
+<hr />
+<p><a href="../index.html">Methodology index</a></p>
+</body></html>

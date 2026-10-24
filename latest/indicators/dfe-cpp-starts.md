@@ -1,6 +1,6 @@
 # New child protection plans
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cpp_starts` · concept `child_protection`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cpp_starts` · concept `child_protection`
 
 
 Child protection plans started during the year, per 10,000 children.

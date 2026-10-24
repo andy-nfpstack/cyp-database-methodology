@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision log</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="release"><a href="index.html">Methodology</a> · release <code>2dda583978fb-19eda0e60019</code></header>
+<h1 id="decision-log">Decision log</h1>
+<p>Release <code>2dda583978fb-19eda0e60019</code>. Generated from <code>DECISIONS.md</code>: every assumption and
+judgement made in building this release, with its date, its reason and its effect on the outputs.</p>
+<h2 id="d-0001-repository-root-is-the-existing-git-repository">D-0001: Repository root is the existing git repository</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> The existing repository (<code>CYP Database</code>, already under git with the spec committed) is the project root in place of a new <code>uk-cyp-need/</code> directory, so <code>git init</code> was not needed. The spec was copied to <code>SPEC.md</code>. The original <code>uk-cyp-need-database-spec.md</code> is left untouched as the committed v1.2 record. <code>SPEC.md</code> is the working copy.</li>
+<li><strong>Reason:</strong> The folder was already initialised for this project. A nested repository would split history.</li>
+<li><strong>Effect on outputs:</strong> None. Paths in SPEC section 5 are relative to this root.</li>
+</ul>
+<h2 id="d-0002-python-312-via-uv-polars-as-the-dataframe-library">D-0002: Python 3.12 via uv; polars as the dataframe library</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> <code>.python-version</code> pins 3.12 (uv-managed CPython 3.12.15). The machine's default Python 3.13 is not used. <code>requires-python = "&gt;=3.12,&lt;3.13"</code>. Tabular work uses polars; pandas is present only as a dependency of geopandas.</li>
+<li><strong>Reason:</strong> SPEC section 5 names Python 3.12. Choosing a single dataframe library keeps parsers consistent.</li>
+<li><strong>Effect on outputs:</strong> None.</li>
+</ul>
+<h2 id="d-0003-unverified-urls-are-left-null">D-0003: Unverified URLs are left null</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> In <code>config/sources.yaml</code>, <code>landing_url</code> is filled only for the eight pages verified in SPEC 8.5. All other sources have <code>landing_url: null</code>, <code>verify: true</code> and a <code>where_to_look</code> note naming the publisher page to search. The validator enforces this. <code>dim_source</code> (where landing_url is NOT NULL) is loaded per phase, only after verification.</li>
+<li><strong>Reason:</strong> Principle 11: never guess URLs, file names or layouts.</li>
+<li><strong>Effect on outputs:</strong> None until each source's phase, when URLs are recorded on verification.</li>
+</ul>
+<h2 id="d-0004-working-database-location">D-0004: Working database location</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> L2 and L3 tables are built in a working DuckDB at <code>data/cyp_need.duckdb</code> (gitignored). The release copy is <code>release/&lt;snapshot_id&gt;/cyp_need_&lt;snapshot_id&gt;.duckdb</code>. <code>make schema</code> recreates the working DB from <code>sql/schema.sql</code> and the config dimensions.</li>
+<li><strong>Reason:</strong> SPEC section 5 places L2/L3 in DuckDB but does not name the working file.</li>
+<li><strong>Effect on outputs:</strong> None.</li>
+</ul>
+<h2 id="d-0005-dirty-tree-guard-and-development-runs">D-0005: Dirty-tree guard and development runs</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Every pipeline stage refuses to run on a git tree with uncommitted or untracked changes. Stages other than <code>release</code> accept <code>--allow-dirty</code> for development runs. That flag appends <code>-dirty</code> to code_version, so the resulting snapshot_id can never be mistaken for a release. <code>release</code> has no such flag.</li>
+<li><strong>Reason:</strong> Principle 10 requires refusing a dirty tree. Parser development in Phases 1-4 needs to iterate without committing on every run.</li>
+<li><strong>Effect on outputs:</strong> Only clean-tree builds can produce a release.</li>
+</ul>
+<h2 id="d-0006-age-band-code-conventions">D-0006: Age band code conventions</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Standard bands and totals use the SPEC codes (<code>0_4</code> … <code>0_25</code>, <code>all_ages</code>). A source band that does not map exactly is coded <code>src_&lt;min&gt;_&lt;max&gt;</code> (e.g. <code>src_10_24</code>), with <code>src_infant</code> for under-1 and <code>src_pupils_all</code> for school-census populations, which are not age bands. <code>na</code> marks rows that are not age-specific (households, births, workforce, spend, judgements). Where a source band equals a standard band exactly (e.g. CiLIF 0-4), the standard code is used. Codes are quoted in YAML because YAML 1.1 reads <code>0_17</code> as an octal integer; the validator catches unquoted codes.</li>
+<li><strong>Reason:</strong> SPEC section 3 (never split or trim a band). Clear, sortable codes.</li>
+<li><strong>Effect on outputs:</strong> <code>dim_age_band</code> codes as listed in <code>config/age_bands.yaml</code>.</li>
+</ul>
+<h2 id="d-0007-single-year-of-age-codes">D-0007: Single-year-of-age codes</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Population single years are coded <code>y00</code> … <code>y89</code>, plus <code>y90plus</code>, with <code>is_standard = true</code> and <code>rolls_into</code> computed (e.g. <code>y17</code> → <code>0_17,0_24,0_25</code>; <code>y25</code> → <code>0_25</code>).</li>
+<li><strong>Reason:</strong> SPEC section 3: population stored by single year (0-90+), and denominators are exact sums of single years.</li>
+<li><strong>Effect on outputs:</strong> 91 single-year rows in <code>dim_age_band</code>.</li>
+</ul>
+<h2 id="d-0008-indicator-catalogue-conventions">D-0008: Indicator catalogue conventions</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> <code>config/indicators.yaml</code> holds the <code>dim_indicator</code> fields plus config-only fields (<code>framework_role</code>, <code>published_levels</code>, <code>age_bands</code>, <code>period</code>, <code>verify</code>, <code>needs_decision</code>). The loader applies documented defaults, <code>methodology_anchor</code> defaults to the indicator_id with hyphens, and source_ids are written as a comma list. <code>framework_role</code> separates need from pressure: pressure indicators must have theme <code>service_demand</code> or <code>service_pressure</code>, and need indicators must not. The user approved all 123 indicators on 2026-10-20 (<code>catalogue_reviewed_date</code>, applied as each indicator's <code>reviewed_date</code>).</li>
+<li><strong>Reason:</strong> SPEC 13 Phase 0 deliverable. The framework split implements SPEC 12.1 from the start.</li>
+<li><strong>Effect on outputs:</strong> Feeds <code>dim_indicator</code>, the profile and serving metadata, and the methodology pages.</li>
+</ul>
+<h2 id="d-0009-sdc-profiles-and-tolerances-are-drafts">D-0009: SDC profiles and tolerances are drafts</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided; every loaded source's SDC profile confirmed in D-0094 (Census guidance cited). F2–F4 tolerances were set from observed reconciliation (D-0053); all others were set in advance and not changed.</li>
+<li><strong>Decision:</strong> Each source has an SDC profile following SPEC section 8's expected table. Every profile not yet checked against publisher guidance has <code>confirmed: false</code>, and its tolerance_reason starts with <code>DRAFT</code>. Draft tolerances: Census 10 abs / 1% rel; Stat-Xplore LSOA 10 / 2%; DfE 0 / 0.1-0.5%; MHSDS 5 / 1% (rounding base 5); H-CLIC 0 / 5% (national imputation); ONS population exact (0 / 0). Each is confirmed, with the guidance cited, before that source's phase QA.</li>
+<li><strong>Reason:</strong> SPEC 13 Phase 0 asks for SDC profiles. No file or guidance has been read yet, so the numbers are placeholders for review.</li>
+<li><strong>Effect on outputs:</strong> Gates 2 and 7 use these tolerances once confirmed.</li>
+</ul>
+<h2 id="d-0010-census-sex-vs-dfe-gender">D-0010: Census "sex" vs DfE "gender"</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Census 2021 records sex, while DfE collections record gender as recorded by the school or LA. Both are mapped to the <code>dim_sex</code> codes (<code>female</code>, <code>male</code>) for display. The concepts are not identical, so a rate never combines a DfE numerator split by gender with a Census or ONS denominator split by sex. Per-source maps are filled at inspection.</li>
+<li><strong>Reason:</strong> SPEC section 3 asks for this to be recorded.</li>
+<li><strong>Effect on outputs:</strong> Sex-specific rates are only built where numerator and denominator use the same concept.</li>
+</ul>
+<h2 id="d-0011-ethnicity-categories-come-only-from-inspected-files">D-0011: Ethnicity categories come only from inspected files</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> <code>config/ethnicity_classifications.yaml</code> defines the classifications (<code>none</code>, <code>census21_ew_20cat</code>, <code>dfe_ethnicity</code>) and their totals only. Category lists are copied verbatim from the P4 file (Phase 2) and the P7 file (Phase 3). The Census classification name assumes 20 categories and is renamed if ONS allows a different level at LSOA x age.</li>
+<li><strong>Reason:</strong> Principles 11 and 15: no guessed labels, no grouping.</li>
+<li><strong>Effect on outputs:</strong> <code>dim_ethnicity</code> has 3 total rows until Phase 2.</li>
+</ul>
+<h2 id="d-0012-which-ci-method-for-which-measure">D-0012: Which CI method for which measure</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Person-based stocks and prevalences use Wilson intervals even when shown per 10,000 (CIN, CLA and CP plans at 31 March, EHCPs, UASC, children in TA, CYP MH access). Event counts that can repeat use Byar (referrals, assessments, CLA starts, CP starts, suspensions, exclusions, crime, FTEs, NRM, homelessness duties). Published rates keep the publisher's CI or none. Model-based, survey-calibrated and index values get no derived CI.</li>
+<li><strong>Reason:</strong> SPEC T7 names Wilson for proportions and Byar for crude rates. Whether a measure is a proportion depends on whether each person is counted once.</li>
+<li><strong>Effect on outputs:</strong> <code>ci_method</code> per indicator.</li>
+</ul>
+<h2 id="d-0013-iod-2025-catalogue-scope">D-0013: IoD 2025 catalogue scope</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> At LSOA level: IMD and IDACI score, rank and decile; the seven domain scores and deciles; the Education Children and Young People sub-domain score; and the IoD population denominators (weights for T6c, assuming IoD 2025 publishes them as IoD 2019 did). At LA level (D1b): the five summary measures for IMD and IDACI. IDAOPI, domain ranks and the other sub-domains are left out. The published LA proportions (extent, share in decile 1) are typed <code>percent_published</code>.</li>
+<li><strong>Reason:</strong> These are the measures relevant to CYP and needed for the dashboard and T6c. The spec asks for "all domains incl. IDACI", so domain scores are included. Domain ranks add nothing for display.</li>
+<li><strong>Effect on outputs:</strong> 32 IoD indicators (22 LSOA, 10 LA summary). Easy to extend.</li>
+</ul>
+<h2 id="d-0014-ons-population-estimates-typed-as-model_based">D-0014: ONS population estimates typed as model_based</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> SAPE (P1), MYE (P1b) and the IoD population denominators have <code>estimate_type = 'model_based'</code> and <code>ci_method = 'none'</code>.</li>
+<li><strong>Reason:</strong> They are demographic estimates (cohort-component and small-area models), not counts. The schema vocabulary has no separate "demographic estimate" type.</li>
+<li><strong>Effect on outputs:</strong> Shown as estimates in the serving layer.</li>
+</ul>
+<h2 id="d-0015-police-indicators">D-0015: Police indicators</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Five data.police.uk indicators: all crime excluding ASB; violence and sexual offences; ASB; possession of weapons; drugs. Each is a rate per 1,000 usual residents of all ages (multiplier 1000, the usual convention for crime), with Byar intervals. <code>framework_role = context</code>, because these are not CYP-specific.</li>
+<li><strong>Reason:</strong> SPEC 8.4 S1 lists these separately as area context. Excluding ASB keeps "all crime" to crimes.</li>
+<li><strong>Effect on outputs:</strong> Five indicators at small_area, aggregated upward by exact nesting.</li>
+</ul>
+<h2 id="d-0016-published-rates-are-stored-as-published">D-0016: Published rates are stored as published</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Fingertips indicators, the social worker workforce rates, EHCP 20-week timeliness, the CiLIF percentages and the IoD LA proportions are stored as <code>rate_published</code> or <code>percent_published</code> (in <code>value</code>, with published CIs). The count is stored alongside where published. They are not re-derived and cannot be aggregated to custom regions (<code>custom_aggregation = none</code>).</li>
+<li><strong>Reason:</strong> Principle 6 (published first). Several use denominators or standardisation not reproducible from our inputs.</li>
+<li><strong>Effect on outputs:</strong> These indicators have no derived rate, and no value for custom regions.</li>
+</ul>
+<h2 id="d-0017-per-head-spend-uses-rate_multiplier-1">D-0017: Per-head spend uses rate_multiplier 1</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Section 251 spend lines are <code>currency_gbp</code>, with a derived per-child value (multiplier 1; GBP per child aged 0-17, or per 13-19 for youth services). The multiplier vocabulary is extended to {1, 100, 1000, 10000}.</li>
+<li><strong>Reason:</strong> SPEC 12.1 uses "Section 251 per child". GBP per child is the natural unit.</li>
+<li><strong>Effect on outputs:</strong> The serving layer shows GBP per child.</li>
+</ul>
+<h2 id="d-0018-permanent-exclusions-shown-per-10000-pupils">D-0018: Permanent exclusions shown per 10,000 pupils</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Suspensions are shown per 100 pupils (as DfE publishes). Permanent exclusions are shown per 10,000 pupils (DfE publishes per 100).</li>
+<li><strong>Reason:</strong> Per 100, permanent exclusion rates are around 0.1, which is hard to read on a map. Per 10,000 gives whole numbers.</li>
+<li><strong>Effect on outputs:</strong> Display unit only.</li>
+</ul>
+<h2 id="d-0019-config-validation-is-strict">D-0019: Config validation is strict</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> The YAML loader rejects duplicate keys (merge-key overrides are allowed). <code>validate_config()</code> checks cross-references and measure/CI/aggregation consistency. Loading the dimensions into DuckDB enforces every CHECK vocabulary in <code>sql/schema.sql</code>. All three run in <code>make qa</code>.</li>
+<li><strong>Reason:</strong> Principle 9 (mappings are data) only works if the data is validated.</li>
+<li><strong>Effect on outputs:</strong> None. Prevents bad config from reaching the build.</li>
+</ul>
+<h2 id="d-0020-tables-loaded-in-primary-key-order-logical-hashes-defined-now">D-0020: Tables loaded in primary-key order; logical hashes defined now</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Loaders sort rows by primary key before inserting (SPEC 7.1). The gate 17 logical content hash is SHA-256 over the column names, then each row as compact JSON (floats as <code>repr</code>, dates as ISO 8601), sorted by primary key (all columns if a table has none).</li>
+<li><strong>Reason:</strong> A fixed serialisation is needed before any data is loaded so that rebuilds can be compared.</li>
+<li><strong>Effect on outputs:</strong> Gate 17.</li>
+</ul>
+<h2 id="d-0021-uc-households-with-children-choice-of-denominator">D-0021: UC households with children: choice of denominator</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Accepted draft position: UC households with children is count-only (no derived rate). Revisit in Phase 6 if the neighbourhood need composite requires a rate. Options considered: (a) count only; (b) rate on Census 2021 households with dependent children, with a <code>max_denominator_gap_days</code> override and a flag; (c) a per-child rate (unit mismatch; not recommended). Draft catalogue entry is count only.</li>
+<li><strong>Reason:</strong> No timely household denominator exists at LSOA. The neighbourhood need index (SPEC 12.1) needs a rate.</li>
+<li><strong>Effect on outputs:</strong> Decides whether UC can enter the neighbourhood need composite.</li>
+</ul>
+<h2 id="d-0022-cilif-rate">D-0022: CiLIF rate</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Accepted draft position: use DWP's published LA percentages if published; otherwise no rate (no approximate denominator) until decided again. Use DWP's published percentages (<code>dwp_cilif_*_bhc_pct</code>, percent_published) if DWP publishes them at LA level. Otherwise, either have no rate or use a stated approximate denominator, flagged.</li>
+<li><strong>Reason:</strong> CiLIF counts dependent children aged up to 19. No population band matches, and SPEC 3 forbids trimming bands.</li>
+<li><strong>Effect on outputs:</strong> The LA-level child poverty rate shown on the dashboard.</li>
+</ul>
+<h2 id="d-0023-ndtms-parents-in-treatment-rate-or-count">D-0023: NDTMS parents in treatment: rate or count</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Accepted draft position: count-only. Revisit in Phase 6 if the LA need composite requires a rate. Options considered: Keep it as a count, or express it per 10,000 children aged 0-17 (a ratio across different populations, clearly labelled).</li>
+<li><strong>Reason:</strong> SPEC 12.1 includes it in the LA need index, which needs a rate.</li>
+<li><strong>Effect on outputs:</strong> Eligibility for the LA need composite.</li>
+</ul>
+<h2 id="d-0024-spend-polarity-and-the-youth-services-denominator">D-0024: Spend polarity and the youth services denominator</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user sign-off of the indicator catalogue, 2026-10-20)</li>
+<li><strong>Decision:</strong> Accepted draft position: spend polarity stays <code>neutral</code> in the catalogue; youth services per-head denominator is ages 13-19. Composite direction is set in Phase 6. Section 251 spend polarity is <code>neutral</code> in the catalogue. If spend enters the system pressure index, it is read as "higher = more pressure". The youth services per-head denominator is ages 13-19.</li>
+<li><strong>Reason:</strong> Spend is not intrinsically better or worse. The composite needs a direction.</li>
+<li><strong>Effect on outputs:</strong> L5 pressure index direction; display wording.</li>
+</ul>
+<h2 id="d-0025-composite-monte-carlo-settings-not-given-by-the-spec">D-0025: Composite Monte Carlo settings not given by the spec</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (superseded in detail by D-0088, Phase 6)</li>
+<li><strong>Decision:</strong> <code>config/composites.yaml</code> drafts the values the spec leaves open: seed 20250331; Dirichlet concentration 20 around equal weights; missing-data thresholds {0.5, 0.6667, 0.75}. Domain membership follows SPEC 12.1, mapped to draft indicator_ids. Final values are set in Phase 6.</li>
+<li><strong>Reason:</strong> SPEC 12.4 fixes 1,000 runs and a fixed seed, but not the concentration or the threshold grid.</li>
+<li><strong>Effect on outputs:</strong> L5 uncertainty intervals (Phase 6).</li>
+</ul>
+<h2 id="d-0026-storage-safeguards-for-the-usb-project-drive">D-0026: Storage safeguards for the USB project drive</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Raw files stream to a <code>.part</code> file, are fsynced, renamed, then re-read and re-hashed before acceptance; manifests and staged Parquet are written atomically. The working DuckDB is built in <code>data/cyp_need.duckdb.building</code> and only replaces the working database after a complete, successful build. USB selective suspend was turned off on the build machine (user approval, 2026-10-19).</li>
+<li><strong>Reason:</strong> The project drive (USB, exFAT) dropped off the bus repeatedly on 2026-10-19 (System log: disk event 51). It was stable after a port change (5-minute 256 MB write/hash soak test, no errors).</li>
+<li><strong>Effect on outputs:</strong> None. Prevents corrupt L0 files or a half-written database.</li>
+</ul>
+<h2 id="d-0027-g1-is-built-from-two-ons-oa-level-lookups">D-0027: G1 is built from two ONS OA-level lookups</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> ONS publishes no exact-fit OA21 → LSOA21 → MSOA21 → LAD lookup for 2025 LADs. OA → LSOA → MSOA membership comes from the exact-fit December 2021 lookup (V3). Each OA's 2025 LAD comes from the OA21 → Ward (2025) → LAD (May 2025) lookup (V3). OA unanimity is tested against those 2025 LADs, and the BFC polygon test (≥ 99.9%) provides independent geometric proof. Neither lookup is used as nesting evidence on its own.</li>
+<li><strong>Reason:</strong> LAD boundaries changed in April 2023 (Cumbria, North Yorkshire, Somerset). SPEC 4.2 forbids best-fit lookups as nesting evidence, so geometry is the proof.</li>
+<li><strong>Effect on outputs:</strong> <code>dim_geography.nesting_evidence</code> records both tests for every LSOA and MSOA.</li>
+</ul>
+<h2 id="d-0028-upper-tier-boundaries-use-the-december-2024-edition">D-0028: Upper-tier boundaries use the December 2024 edition</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> ONS has no April or May 2025 Counties and Unitary Authorities boundary set. The December 2025 edition (BFC, BGC) is used: its 153 England codes exactly equal the April 2025 LAD → CTYUA lookup (G2), and every LAD lies ≥ 99.946% inside its service-area polygon. The December 2024 edition was tried first and rejected by the code-set check: it predates the April 2025 recoding of Barnsley (E08000016 → E08000038) and Sheffield (E08000019 → E08000039). It remains in L0 but is not registered or used. LAD boundaries are published as "May 2025" (codes checked equal to G2's April 2025 LADs).</li>
+<li><strong>Reason:</strong> SPEC 3 boundary vintage is April 2025. The build verifies that the edition used matches it exactly.</li>
+<li><strong>Effect on outputs:</strong> Service-area polygons for the nesting proof and for display.</li>
+</ul>
+<h2 id="d-0029-la-population-is-mid-2024-not-mid-2025">D-0029: LA population is mid-2024, not mid-2025</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> P1b uses the mid-2024 UK estimates (<code>mye24tablesuk.xlsx</code>, 26 Sep 2025), although mid-2025 LA estimates now exist.</li>
+<li><strong>Reason:</strong> SPEC 8.1 fixes mid-2024. LSOA estimates exist only to mid-2024, and gate 6 requires LSOA and LA figures from the same vintage (the SAPE notes state mid-2024 SAPE is coherent with this release). Mid-2024 is also the mid-period point for 2024/25 flow measures.</li>
+<li><strong>Effect on outputs:</strong> All denominators are mid-2024. For 31 March 2025 stock measures the gap is 274 days (within <code>max_denominator_gap_days</code>).</li>
+</ul>
+<h2 id="d-0030-population-is-stored-exactly-as-published">D-0030: Population is stored exactly as published</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> LSOA and MSOA facts hold what SAPE publishes: female and male by single year (<code>y00</code>–<code>y89</code>, <code>y90plus</code>) plus the persons all-ages total. Persons by single year is not published below LA level, so it is not stored. A persons denominator for any band is built at T7 as the exact sum of the female and male single years (both observed). LA, service area and England facts hold the published MYE2 Persons, Females and Males by single year and all ages. Unitary, metropolitan and London authorities appear once in the source and are loaded at both <code>lad</code> and <code>service_area</code> (same published figure).</li>
+<li><strong>Reason:</strong> Principles 3 and 6 (observed values only; published first) and SPEC 4.3 (shared codes).</li>
+<li><strong>Effect on outputs:</strong> <code>fact_small_area</code> and <code>fact_intermediate_area</code> have no persons single-year rows; T7 sums the two sexes.</li>
+</ul>
+<h2 id="d-0031-staging-scope-in-phase-1">D-0031: Staging scope in Phase 1</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Only the period taken is staged (the mid-2024 sheets of the SAPE files and the MYE2 sheets of P1b); the other sheets stay in L0. NSPL (G4) is ingested now but staged in Phase 2, where it is first used. Boundaries are staged with every feature, including Wales, Scotland and NI where present (L1 is lossless). BSC boundaries and the ward, Sub-ICB and PFA boundary layers are deferred to the phases that need them.</li>
+<li><strong>Reason:</strong> L1 is lossless for what is used. Unused periods add size without value.</li>
+<li><strong>Effect on outputs:</strong> None.</li>
+</ul>
+<h2 id="d-0032-how-neighbours-are-computed">D-0032: How neighbours are computed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Queen contiguity is computed from BFC geometry with a GEOS spatial-index <code>intersects</code> query (polygons sharing at least one boundary point). k-nearest neighbours (k = 6, 8) use libpysal on polygon centroids in British National Grid. Neighbours are England only, so English areas on the Welsh border have no Welsh neighbours.</li>
+<li><strong>Reason:</strong> libpysal's vertex-matching contiguity keeps every vertex in memory; full-resolution LSOA boundaries would need several GB on a 15.5 GB machine. The predicate approach gives the same queen definition on exact shared boundaries.</li>
+<li><strong>Effect on outputs:</strong> The <code>neighbours</code> table. Areas with no queen neighbour are listed in D-0034.</li>
+</ul>
+<h2 id="d-0033-msoa-display-names-are-applied-at-the-serving-layer">D-0033: MSOA display names are applied at the serving layer</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> <code>dim_geography.area_name</code> keeps the official ONS names. House of Commons Library MSOA names (G10 v2.3, Open Parliament Licence) are staged now and joined into the serving views and boundaries in Phase 5, with attribution.</li>
+<li><strong>Reason:</strong> The schema has one name column. ONS names are the official identifiers, and the HoCL names are a display aid under a different licence.</li>
+<li><strong>Effect on outputs:</strong> Dashboard labels for MSOAs (Phase 5).</li>
+</ul>
+<h2 id="d-0034-nesting-rule-oa-unanimity-proves-membership-geometry-is-a-90-sanity-check">D-0034: Nesting rule: OA unanimity proves membership; geometry is a 90% sanity check</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided (user decision, 2026-10-19; amends SPEC 4.2 step 2)</li>
+<li><strong>Decision:</strong> Membership is proven by OA unanimity, which is exact. The BFC geometry test is an independent sanity check: each area must have ≥ 90% of its area in its assigned parent and ≤ 10% in any other parent (<code>config/geography.yaml</code>). SPEC 4.2's 99.9% is kept as a flag threshold. Flagged areas are written with their shares to <code>data/harmonised/nesting_flags.csv</code> and are not failures. <code>nesting_evidence</code> records, for every test, the shares in the assigned parent, in another parent and in no parent (e.g. <code>polygon_lad_99.730(other_0.270,none_0.000)</code>). The investigation that led to this rule (it halted Phase 1 under SPEC 4.2 step 3) found the following, from exact overlays of full-resolution (BFC) boundaries:</li>
+<li><strong>Passes:</strong> OA unanimity for all 33,755 LSOAs and 6,856 MSOAs. LSOA in its MSOA ≥ 99.9991% for all. LAD in its service area ≥ 99.946% for all. Codes match across all lookups and boundaries.</li>
+<li><strong>Fails at 99.9%:</strong> 2,360 LSOAs in their LAD (min 90.18%, median failing share 99.73%) and 779 MSOAs (min 95.00%).</li>
+<li>For 2,234 of the 2,360 LSOAs, the uncovered part lies in a neighbouring LAD; the median sliver is about 1,700 m², concentrated in dense urban boroughs (Newham, Hackney, Kensington and Chelsea, Birmingham, Solihull). The rest lies in no LAD at all: coastline and estuary differences (Sunderland, Durham, Northumberland, Cornwall, Plymouth). No LSOA has more than 6.1% of its area in another LAD.</li>
+<li><strong>Cause:</strong> ONS statistical boundaries (OA/LSOA/MSOA) and administrative LAD boundaries trace the same line slightly differently. The failure count is essentially the same against the December 2021 LAD boundaries (99 vs 102 failures among 993 LSOAs in Newham, Birmingham and Hackney), so this is not caused by boundary changes since 2021. Membership is unambiguous.</li>
+<li><strong>Listing:</strong> The full list of failing areas, with their shares, is written by every build to <code>data/harmonised/nesting_failures.csv</code>. Listing all 3,139 codes here is impractical, so this entry records the counts and the method.</li>
+<li><strong>Reason:</strong> SPEC 4.2 requires ≥ 99.9% polygon overlap. Official ONS boundaries cannot meet that for about 7% of LSOAs.</li>
+<li><strong>Effect on outputs:</strong> Phase 1 cannot pass gate 4 until a rule is chosen.</li>
+</ul>
+<h2 id="d-0036-barnsley-and-sheffield-mye-relabelled-to-their-april-2025-codes">D-0036: Barnsley and Sheffield MYE relabelled to their April 2025 codes</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> The mid-2024 MYE (April 2024 boundaries) publishes Barnsley as E08000016 and Sheffield as E08000019; from April 2025 they are E08000038 and E08000039. The old → new pairs are recorded as data in <code>config/geography.yaml</code> (<code>code_successors</code>) and applied to P1b rows (<code>method_flag = 'relabelled'</code>), only where the source has no row for the new code.</li>
+<li><strong>Reason:</strong>   - At the 2021 OA/LSOA resolution the change is a pure recode: no 2021 OA changed LAD, and the LSOA sums under the new codes equal the published MYE under the old codes exactly (251,770 and 582,493).</li>
+<li>SPEC section 6 allows relabelling at L2.</li>
+<li>The build re-asserts the exact equality for every relabelled cell, and gate 6 covers it.</li>
+<li><strong>Effect on outputs:</strong> Barnsley and Sheffield get published LA population figures under their current codes. Any future successor pair must pass the same exact-equality check.</li>
+</ul>
+<h2 id="d-0037-areas-with-no-queen-neighbour">D-0037: Areas with no queen neighbour</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Two areas have no queen-contiguous neighbour: LSOA E01019077 (Isles of Scilly 001A) and MSOA E02006781 (Isles of Scilly 001). Each is the only area of its level in the Isles of Scilly (E06000053, flagged <code>is_small_authority</code>). Both have knn6 and knn8 rows.</li>
+<li><strong>Reason:</strong> SPEC section 7 requires islands to be listed and to have knn rows. Hotspot analysis should use knn for these areas.</li>
+<li><strong>Effect on outputs:</strong> The <code>neighbours</code> table.</li>
+</ul>
+<h2 id="d-0038-census-ethnic-group-at-lsoa-uses-the-6-category-classification">D-0038: Census ethnic group at LSOA uses the 6-category classification</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> P4 is Census 2021 <code>ethnic_group_tb_6a</code> × <code>resident_age_7a</code> (ages 0–4, 5–15, 16–17, 18–20, 21–24, 25–29, 30+), classification <code>census21_ew_6a</code>. Published MSOA, LTLA 2023, UTLA 2023 and England tables of the same specification are loaded at those levels.</li>
+<li><strong>Reason:</strong> ONS disclosure rules block the 20-category ethnic group crossed with any age banding at LSOA (it is released at MSOA and LA). SPEC 8.1 asks for the most detailed classification allowed at LSOA × age; the 6-category version is that. D-0011 anticipated the rename.</li>
+<li><strong>Effect on outputs:</strong> Ethnicity rows use the 6-category classification at every level, so comparisons stay within one classification (principle 15).</li>
+</ul>
+<h2 id="d-0039-census-tables-chosen-for-f6-and-f7">D-0039: Census tables chosen for F6 and F7</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - F6 is one table, household composition (15) × bedroom occupancy rating (5). It gives all three household indicators, so their numerators and base come from the same perturbed cells.</li>
+<li>F7a is disability × <code>resident_age_7a</code>.</li>
+<li>F7b is unpaid care × <code>resident_age_3c</code>. Unpaid care × <code>age_7a</code> or <code>age_6b</code> is blocked at LSOA. Under-5s are coded "Does not apply", so carers aged 24 and under are carers aged 5–24, and the 5–24 base is the six non-"Does not apply" categories of the same table.</li>
+<li><strong>Reason:</strong> These are the most detailed tables ONS releases at LSOA that answer the catalogue definitions exactly.</li>
+<li><strong>Effect on outputs:</strong> Census proportions are internally consistent: a numerator never exceeds its base.</li>
+</ul>
+<h2 id="d-0040-pip-uses-march-2025-not-january-2025">D-0040: PIP uses March 2025, not January 2025</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> F4 takes PIP cases with entitlement for March 2025. UC households are also March 2025; DLA is February 2025, the closest quarter.</li>
+<li><strong>Reason:</strong> SPEC 3 says to take the period closest to 31 March 2025. PIP is published monthly in Stat-Xplore, so March 2025 is available.</li>
+<li><strong>Effect on outputs:</strong> The PIP reference date is 31 March 2025.</li>
+</ul>
+<h2 id="d-0041-police-data-archive-lsoa-vintage-and-assignment">D-0041: Police data: archive, LSOA vintage and assignment</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - The 2026-08 bulk archive is used: the latest archive covering April 2024 – March 2025, so it includes late resubmissions.</li>
+<li>Open item 14.4 is resolved: the archive's LSOA codes are LSOA 2021 (all 34,363 distinct codes match).</li>
+<li>A record's published LSOA code is its primary assignment. It is cross-checked against an independent point-in-polygon assignment on full-resolution boundaries, with the agreement rate reported.</li>
+<li>Records with no coordinates, or outside England (Welsh forces, PSNI), go to <code>reject_point_assignment</code> with a reason.</li>
+<li>British Transport Police files for February and March 2025 are missing from the archive. This is reported, not imputed.</li>
+<li>Result: 5,966,690 records; 86,121 without coordinates. All 5,434,030 records with an English LSOA code were assigned (gate 11: 100%). The published code agrees with the full-resolution point-in-polygon for 96.5% of them. The 3.5% that differ are expected: published coordinates are snapped to anonymised map points, so a snapped point can fall in a neighbouring LSOA. That is why the publisher's code is used.</li>
+<li><strong>Reason:</strong> SPEC T4, principle 6 (published assignment first), and principle 8 (no imputation).</li>
+<li><strong>Effect on outputs:</strong> Police counts at LSOA (<code>point_assigned</code>), aggregated up the hierarchy.</li>
+</ul>
+<h2 id="d-0042-rate-denominators">D-0042: Rate denominators</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - Population denominators are the published estimate for the level: SAPE for LSOA and MSOA, MYE for LAD, service area and England.</li>
+<li>The denominator band is the exact sum of the single years covering the numerator band; <code>all_ages</code> uses the published total. Below LA level, persons = female + male (D-0030).</li>
+<li>Other denominators (Census households and residents) come from the same table and area.</li>
+<li>Stock numerators are compared with the denominator date at their period end; flow numerators at their period mid-point. A gap above <code>max_denominator_gap_days</code> gives no rate (<code>denominator_period_gap</code>).</li>
+<li><strong>Reason:</strong> SPEC 3 (timing) and T7. Using a published figure at every level avoids building LA denominators from LSOA sums.</li>
+<li><strong>Effect on outputs:</strong> Every rate's parameters record the denominator indicator, the CI method and the timing rule.</li>
+</ul>
+<h2 id="d-0043-truncated-stat-xplore-captures-replaced-exception-to-write-once">D-0043: Truncated Stat-Xplore captures replaced (exception to write-once)</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> The first F2–F4 captures held only the first 100 areas of each geography: the Stat-Xplore schema endpoint pages values and my code read only one page. Those 12 files were deleted from L0 before anything was staged or derived from them, and re-captured with paging followed (<code>Link: rel="next"</code>). Staging checks that every requested area is present, for both Stat-Xplore and Census sources.</li>
+<li><strong>Reason:</strong> They were defective captures caused by my code, not source data. Keeping them would have registered incomplete data. This is the only exception to write-once so far, and it is recorded here.</li>
+<li><strong>Effect on outputs:</strong> None. Nothing was built from the defective files.</li>
+</ul>
+<h2 id="d-0044-iod-2025-catalogue-corrections-after-inspection">D-0044: IoD 2025 catalogue corrections after inspection</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - Removed <code>mhclg_iod25_idaci_la_extent</code> and <code>mhclg_iod25_idaci_la_local_concentration</code>: IoD 2025 Files 10 and 11 publish extent and local concentration for the IMD only.</li>
+<li>Polarity of the IMD and IDACI average rank and the IMD local concentration changed to <code>higher_worse</code>. In the 2025 summaries a higher value means more deprived (e.g. Hartlepool's IMD average rank is 23,076, ranked 30th most deprived).</li>
+<li>Changed indicators carry <code>reviewed_date</code> 2026-10-20. The catalogue now has 121 indicators.</li>
+<li><strong>Reason:</strong> The catalogue must describe what is published (principle 11).</li>
+<li><strong>Effect on outputs:</strong> Dashboard colour direction for these measures.</li>
+</ul>
+<h2 id="d-0045-ons-blocked-census-areas-are-suppressed">D-0045: ONS-blocked Census areas are suppressed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Where the ONS API withholds an area for disclosure (<code>blocked_areas</code> in the response), every affected indicator row for that area is NULL with <code>null_reason = 'suppressed'</code> and <code>source_code = 'blocked_by_ons'</code>. At LSOA: P4 1,015 areas, F7a 40, F7b 570, F6 none. MSOA and higher levels have no blocked areas. Staging checks that returned + blocked = requested, matching ONS's reported count.</li>
+<li><strong>Reason:</strong> Principle 7: never zero-fill or back-calculate a suppressed cell.</li>
+<li><strong>Effect on outputs:</strong> Those LSOAs show "suppressed" for the affected Census indicators. Published MSOA/LA values are unaffected.</li>
+</ul>
+<h2 id="d-0046-census-indicator-counts-are-exact-sums-of-cells-within-one-table">D-0046: Census indicator counts are exact sums of cells within one table</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> A Census indicator count, e.g. households with dependent children (four composition categories × all occupancy ratings), is the exact sum of the listed cells of one published table for one area. The cell lists are data in <code>config/category_maps.yaml</code>. The count is stored in L2 as <code>observed</code> with <code>n_components</code> = cells summed and a lineage hash of the component rows. No geography changes.</li>
+<li><strong>Reason:</strong> The indicator definitions combine published categories. Doing it within one table and area adds no modelling. Using one table keeps numerator ≤ base.</li>
+<li><strong>Effect on outputs:</strong> Census facts carry <code>n_components</code>. Census perturbation means these sums can differ slightly from a separately published total; reconciliation records any such difference.</li>
+</ul>
+<h2 id="d-0047-iod-reference-periods">D-0047: IoD reference periods</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> IoD 2025 index values (scores, ranks, deciles, LA summaries) are dated 1 April 2022 – 31 March 2023. MHCLG states most inputs are from 2022/23. The IoD population denominators are dated 30 June 2022 ("mid 2022" in File 7).</li>
+<li><strong>Reason:</strong> SPEC 3 asks for the actual period on every row.</li>
+<li><strong>Effect on outputs:</strong> Period labels for IoD measures.</li>
+</ul>
+<h2 id="d-0048-police-zero-counts-are-observed-zeros">D-0048: Police zero counts are observed zeros</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> An LSOA with no assigned records of a crime type gets count 0 (<code>point_assigned</code>), not NULL.</li>
+<li><strong>Reason:</strong> The archive enumerates every located record for every English force-month in the period except BTP Feb/Mar 2025 (D-0041). No records in an area is an observed zero, not a suppressed cell (principle 7 concerns suppression).</li>
+<li><strong>Effect on outputs:</strong> Complete LSOA coverage for police indicators.</li>
+</ul>
+<h2 id="d-0049-low-validity-denominators-for-crime-rates">D-0049: Low-validity denominators for crime rates</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided (user sign-off, 2026-10-20). Evidence: the rule flags 338 LSOAs (cut-off 432 crimes per 1,000 residents against a median of 54). They are city and town centres and transport hubs: Westminster West End (18 LSOAs, up to 6,538 per 1,000), Camden, Birmingham, Liverpool, Brighton, Doncaster town centres, the City of London, and Hillingdon 031A (Heathrow).</li>
+<li><strong>Decision:</strong> All five police rates are flagged <code>low_validity_denominator</code> in LSOAs and MSOAs whose all-crime rate (excluding ASB) is at or above England's 99th percentile at that level. These are mostly town centres and transport hubs, where the resident population understates who is present.</li>
+<li><strong>Reason:</strong> SPEC T8 asks for a documented method. No daytime or workplace population is in scope for v1, so a transparent rank rule is used.</li>
+<li><strong>Effect on outputs:</strong> About 1% of areas carry the flag on crime measures. A better exposure measure could replace this rule later.</li>
+</ul>
+<h2 id="d-0050-dwp-figures-requested-as-dwp-produced-groups">D-0050: DWP figures requested as DWP-produced groups</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Combined categories (UC families with children, DLA under 16, PIP 16–24) are requested from Stat-Xplore as single groups, so DWP's own disclosure perturbation is applied to the combined cell. Component bands are also requested.</li>
+<li><strong>Reason:</strong> Principle 6: a figure produced by the publisher is preferred to a sum of separately perturbed cells.</li>
+<li><strong>Effect on outputs:</strong> Published totals at every level, with no sums of perturbed cells.</li>
+</ul>
+<h2 id="d-0051-census-and-dwp-published-levels-and-t6-for-the-rest">D-0051: Census and DWP published levels, and T6 for the rest</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - Census and DWP figures are loaded as published at LSOA, MSOA, LA and England. Census LAs come from <code>ltla23</code>/<code>utla23</code>, with Barnsley/Sheffield relabelled per D-0036.</li>
+<li>LSOA sums never replace a published level; they only fill <code>reconciliation</code>.</li>
+<li>T6 aggregation fills only areas the publisher does not cover: police at every level above LSOA, and DWP county councils (summed from published LADs).</li>
+<li><strong>Reason:</strong> Principle 6 and SPEC 8 ("never sum to a level the Census publishes").</li>
+<li><strong>Effect on outputs:</strong> <code>method_flag</code> shows <code>observed</code>, <code>relabelled</code> or <code>aggregated</code> per row.</li>
+</ul>
+<h2 id="d-0052-undefined-rates-are-null-with-a-specific-reason-never-capped">D-0052: Undefined rates are NULL with a specific reason, never capped</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> A derived rate is NULL, with the published counts kept in L2, when:</li>
+<li><strong><code>zero_denominator</code>:</strong> the published denominator is 0. Three LSOAs have an SAPE estimate of 0 people aged 16–19.</li>
+<li><strong><code>numerator_exceeds_denominator</code>:</strong> a person-based (Wilson) measure has its numerator above its denominator. This happens where two independently produced sources disagree in a tiny cell, e.g. DWP's perturbed claimant count against ONS's modelled population: one LSOA has 6 DLA claimants aged 11–15 against 5 estimated children; another has 34 PIP claimants aged 20–24 against 21.</li>
+<li><strong>Reason:</strong> A share above 100% is meaningless. Capping it, or replacing either input, would be imputation (principle 8).</li>
+<li><strong>Effect on outputs:</strong> A handful of LSOA cells show these reasons instead of a rate. Gate 10 (proportions within 0–1) holds.</li>
+</ul>
+<h2 id="d-0053-a-stat-xplore-0-means-0-to-4-and-is-treated-as-suppressed">D-0053: A Stat-Xplore 0 means "0 to 4" and is treated as suppressed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> In every DWP Stat-Xplore output (F2–F4), a published 0 is stored as NULL with <code>null_reason = 'suppressed'</code>, <code>source_code = 'statx_0_means_0_to_4'</code> and bounds <code>count_lower = 0</code>, <code>count_upper = 4</code>. The rule is configured in <code>suppression_codes.yaml</code> (<code>max_hidden: 4</code>). T6 aggregates of such cells are NULL with lower and upper bounds. Reconciliation compares only complete sums. The published LSOA, MSOA, LA and England figures remain the values used (principle 6).</li>
+<li><strong>Reason:</strong>   - <strong>Evidence:</strong> across all twelve DWP files (about 330,000 cells), the values 1, 2, 3 and 4 never occur, while 0 and 5+ are common. For example, the DLA LSOA cells have 34,573 zeros and 11,142 fives. Real counts would have many 1–4s, so Stat-Xplore publishes counts below 5 as 0.</li>
+<li><strong>Effect seen in Phase 2 reconciliation:</strong> under-5 DLA summed from LSOAs was 21% below the published England figure, and about 30% of DLA and PIP LA cells fell outside the draft tolerance.</li>
+<li><strong>DWP guidance</strong> (<a href="https://stat-xplore.dwp.gov.uk/webapi/metadata/Data%20Confidentiality.html">Data Confidentiality</a>): cells are randomly adjusted, "no reliance should be placed on small cells", and "published data for the larger area should be used wherever possible". The note does not state the below-5 rule; the data do.</li>
+<li>Census outputs do not show this pattern (values 1–4 are frequent), so Census zeros remain observed zeros.</li>
+<li><strong>Effect on outputs:</strong> DWP LSOA cells that were 0 now show "suppressed (0–4)" rather than a false zero: about 73% of LSOAs for DLA under-5, 2.4% for DLA under-16 and 0.2% for UC households with children. Their rates are NULL. Sums of LSOAs for custom areas carry bounds instead of a biased total.</li>
+</ul>
+<h2 id="d-0035-exact-overlay-method-for-nesting-tests">D-0035: Exact overlay method for nesting tests</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-19</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Polygon shares are computed by subdividing each parent polygon into pieces of at most 1,000 vertices (recursive halving with robust box intersection, as PostGIS ST_Subdivide does), then intersecting each child only with the touching pieces. The earlier fast path (<code>shapely.clip_by_rect</code>) is not used: GEOS documents that it may not return the exact intersection, and it reported 0% for three LSOAs that lie fully inside their MSOA.</li>
+<li><strong>Reason:</strong> A proof test must be exact. Unit tests confirm the subdivision partitions area exactly.</li>
+<li><strong>Effect on outputs:</strong> <code>nesting_evidence</code> values. A full run takes about 4–5 minutes.</li>
+</ul>
+<h2 id="d-0054-phase-3-sources-and-how-they-are-taken">D-0054: Phase 3 sources and how they are taken</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Each DfE source (C1–C4, E1–E6, P7) is ingested as the release's own "download all files" zip from Explore Education Statistics. Only the LA tables the catalogue needs are staged, at the reference period. The other sources:</li>
+<li><strong>F1:</strong> two routes.<ul>
+<li>The published ODS gives LA counts and percentages for ages 0–15.</li>
+<li>Stat-Xplore (CILIF_REL, CILIF_ABS, year 2024/25) gives the age bands 0–4, 5–10, 11–15 and 16–19, plus all ages 0–19 including unknown age, as DWP-produced groups at LA and country level.</li>
+</ul>
+</li>
+<li><strong>H2:</strong> one Fingertips CSV export (<code>all_data/csv/by_indicator_id</code>, area type 502, parent England).</li>
+<li><strong>Ho1:</strong> the January–March 2025 detailed LA tables (TA1), the additional TA tables (TA8) and the corrected 2024-25 annual tables (A5P, A5R, A6).</li>
+<li><strong>C5:</strong> Ofsted's two underlying-data files.</li>
+<li><strong>S5:</strong> Asy_D11 from the June 2026 support local authority dataset, at the 31 March 2025 quarter.</li>
+<li><strong>Reason:</strong> One file per release keeps provenance simple and lets every table be checked against the publisher's own files (principle 11). CiLIF age bands exist only on Stat-Xplore. The ODS is the official table for 0–15 counts and percentages.</li>
+<li><strong>Effect on outputs:</strong> 21 L0 files. H3 is not loaded (D-0055).</li>
+</ul>
+<h2 id="d-0055-ndtms-parents-in-treatment-h3-is-blocked">D-0055: NDTMS parents in treatment (H3) is blocked</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided (user, 2026-10-21)</li>
+<li><strong>Decision:</strong> H3 is not loaded. No machine-readable LA file was found:</li>
+<li><code>ndtms.net</code> ViewIt/Adult has no download.</li>
+<li>The ViewIt archive CSV ends in 2023.</li>
+<li>The parent and child figures are only in the interactive "Prevalence and unmet need toolkit" (<code>reportId=parental</code>).</li>
+<li>Fingertips has no "living with children" indicator.</li>
+<li>Scraping a web report is excluded (principle 11).</li>
+<li><strong>Reason:</strong> No verified file exists to ingest.</li>
+<li><strong>Effect on outputs:</strong> Two indicators are empty. The SPEC 12.1 LA need index loses one input until the user places an NDTMS LA extract (2024-25) in <code>data/raw/manual/H3/</code>, or chooses another source.</li>
+</ul>
+<h2 id="d-0056-cin-assessment-factors-exact-columns-same-table-base-alcohol-and-drugs-kept-apart">D-0056: CIN assessment factors: exact columns, same-table base, alcohol and drugs kept apart</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided (user, 2026-10-21)</li>
+<li><strong>Decision:</strong> The catalogue's factor indicators are built from DfE CIN table C3 as follows:</li>
+<li><strong>Factors used:</strong> the parent-related columns, as the "toxic trio" framing intends: <code>Domestic_Abuse_parent</code> ("concerns parent is victim"), <code>Mental_Health_parent</code>, <code>Alcohol_Misuse_parent</code> and <code>Drug_Misuse_parent</code>. The <code>_child</code> and <code>_person</code> variants are not added in, because one episode can carry several factors and adding columns would double-count.</li>
+<li><strong>Denominator:</strong> the table's own <code>Episodes_with_assessment_factor</code>, as DfE uses, not assessments completed. It is a new catalogue entry, <code>dfe_cin_episodes_with_assessment_factors</code>.</li>
+<li><strong>Substance misuse split:</strong> <code>dfe_cin_factor_parental_substance_misuse</code> is replaced by <code>dfe_cin_factor_parental_alcohol_misuse</code> and <code>dfe_cin_factor_parental_drug_misuse</code>, because the two cannot be added without double-counting episodes. <code>config/composites.yaml</code> lists both.</li>
+<li><strong>Reason:</strong> Each proportion must count episodes once (Wilson CI). The DfE file publishes no "alcohol or drugs" column.</li>
+<li><strong>Effect on outputs:</strong> Four factor proportions on DfE's own base, and one more indicator in the catalogue. The composite domain needs sign-off on whether both substance indicators enter it or only one.</li>
+</ul>
+<h2 id="d-0057-placement-distance-and-stability-use-same-table-denominators">D-0057: Placement distance and stability use same-table denominators</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Placed more than 20 miles from home:</strong> divided by children whose distance is known. That base is the exact sum of the two published cells "20 miles or less" and "more than 20 miles" in the same table (new denominator <code>dfe_cla_distance_known_at_31mar</code>), as DfE excludes unknown distances.</li>
+<li><strong>3+ placements:</strong> divided by the same table's "Total children" for "CLA on 31 March" (new denominator <code>dfe_cla_stability_base_at_31mar</code>).</li>
+<li><strong>Reason:</strong> The catalogue's verify note. A same-table base removes cross-table mismatch.</li>
+<li><strong>Effect on outputs:</strong> Two new denominator indicators. These proportions match DfE's published percentages, rounding aside.</li>
+</ul>
+<h2 id="d-0058-free-school-meals-by-la-of-school-pupils-indicator-renamed">D-0058: Free school meals by LA of school; pupils indicator renamed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided (user, 2026-10-21)</li>
+<li><strong>Decision:</strong> The 2024/25 SPC release publishes LA FSM eligibility by school location only. Its residence-based table (<code>spc_cbm</code>) has headcounts and no FSM. So:</li>
+<li><code>dfe_fsm_eligible_pupils</code> uses the FSM performance-table pair from <code>spc_pupils_fsm</code>: the "known to be eligible …" headcount over the "number of pupils (used for FSM in Performance Tables)" headcount, by LA of school.</li>
+<li>The denominator <code>dfe_pupils_on_roll_residence</code> is renamed <code>dfe_pupils_on_roll</code>, with its definition corrected.</li>
+<li>SEN (E1), absence (E3) and exclusions (E4) are also by LA of school (the headline LA tables).</li>
+<li><strong>Reason:</strong> The residence basis assumed in Phase 0 is not published. Numerator and denominator must share one basis.</li>
+<li><strong>Effect on outputs:</strong> In LAs with large cross-border pupil flows, FSM and SEN rates describe the LA's schools rather than resident children.</li>
+</ul>
+<h2 id="d-0059-units-and-published-values-in-phase-3">D-0059: Units and published values in Phase 3</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>CiLIF percentages</strong> are published as fractions (0.27) and are stored ×100, so that every <code>percent_published</code> value is on the 0–100 scale. This is an exact rescale.</li>
+<li><strong>Section 251 spend</strong> is DfE's unrounded <code>net_current_expenditure</code> in GBP, from the total lines 5.0.2 (all CYP services excluding CERA), 3.1.11 (children looked after), 3.4.6 (family support) and 3.5.3 (services for young people).</li>
+<li><strong>Workforce rates</strong> (vacancy, agency, turnover; FTE basis) and the average caseload per case-holding FTE are stored as published (one decimal place).</li>
+<li><strong>EHCP 20-week timeliness</strong> uses DfE's headline basis, excluding exceptions.</li>
+<li><strong>Reason:</strong> Principle 6 (published first) and D-0016.</li>
+<li><strong>Effect on outputs:</strong> Spend per child is derived with MYE denominators (D-0017).</li>
+</ul>
+<h2 id="d-0060-la-codes-successors-joint-reporting-and-defunct-counties">D-0060: LA codes: successors, joint reporting and defunct counties</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Successor codes:</strong> DfE, Fingertips, H-CLIC, Ofsted and asylum data still use E08000016 (Barnsley) and E08000019 (Sheffield). These are relabelled to E08000038 and E08000039, as in D-0036. Some DfE tables (S251 spend, EHC plans) also still use the pre-unitary county codes for Buckinghamshire (E10000002), North Yorkshire (E10000023) and Somerset (E10000027). Each unitary covers exactly the former county's area, so these are added to <code>code_successors</code> and relabelled to E06000060, E06000065 and E06000066. Relabelling is decided per indicator, and only where the new code is absent. <code>code_successors</code> no longer forms part of the geography cache key, because the geography build never reads it.</li>
+<li><strong>Joint services:</strong> the social work workforce release reports two joint services: North Northamptonshire with West Northamptonshire, and Kingston upon Thames with Richmond upon Thames. Each member LA gets a NULL row with <code>null_reason = 'not_published'</code> and <code>source_code = 'reported_jointly:&lt;codes&gt;'</code>. The joint figure is not split or copied (principle 8).</li>
+<li><strong>Defunct counties:</strong> codes not in the April 2025 hierarchy (CLA rows for the former counties of Cumbria and Northamptonshire) are dropped. The build reports every dropped code (<code>_harmonise_report.json</code>, <code>phase3.tables.dropped_codes</code>).</li>
+<li><strong>Reason:</strong> No figure can be invented for one member of a joint service. Former counties no longer exist.</li>
+<li><strong>Effect on outputs:</strong> Four UTLAs have no workforce figures.</li>
+</ul>
+<h2 id="d-0061-h-clic-symbols-missing-authorities-and-counties">D-0061: H-CLIC symbols, missing authorities and counties</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong><code>..</code></strong> (authority with missing data) is <code>not_published</code>.</li>
+<li><strong><code>-</code></strong> (breakdown suppressed below 5) is <code>suppressed</code> with <code>count_upper = 4</code>. In TA8, every <code>-</code> row has a total of 0–4.</li>
+<li><strong>LAD figures</strong> are loaded as published.</li>
+<li><strong>Counties</strong> (service areas) are T6 sums of their districts, NULL where any district is missing or suppressed.</li>
+<li><strong>England totals</strong> are MHCLG's published figures. They include estimates for missing authorities and are rounded to 10. TA8 has no England row, so England is the T6 sum and is NULL when any authority is missing.</li>
+<li><strong>Reason:</strong> SPEC 8.4 (non-submission is <code>not_published</code>; national totals include imputation). The table footnotes give the symbol meanings.</li>
+<li><strong>Effect on outputs:</strong> LA sums do not equal published England totals. The gap is shown in <code>reconciliation</code> (D-0065).</li>
+</ul>
+<h2 id="d-0062-ofsted-childrens-homes-and-ilacs">D-0062: Ofsted children's homes and ILACS</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Children's homes:</strong> follows Ofsted's own "All Children's Homes" total (Table 6a): children's homes (two spellings occur in the file), secure children's homes, and residential special schools registered as children's homes, at any registration status.</li>
+<li><strong>LA matching:</strong> the provider file names LAs but gives no codes. Names are matched to UTLA names, with four aliases (Bristol, Durham, Herefordshire, Kingston upon Hull). Welsh LA names are excluded.</li>
+<li><strong>National check:</strong> the build stops unless LA sums equal Ofsted's published national 4,009 homes and 15,742 places.</li>
+<li><strong>Zeros:</strong> LAs with no home get an observed 0, because the file lists every registered provider.</li>
+<li><strong>ILACS:</strong> the overall effectiveness label is coded 1–4 (<code>categories.yaml</code>), with the inspection date as the period.</li>
+<li><strong>Level and safeguarding:</strong> everything goes to <code>fact_service_area</code> only (gate 14). Provider names, addresses and postcodes are not staged (principle 13).</li>
+<li><strong>Reason:</strong> Using the publisher's own definition makes the national check exact.</li>
+<li><strong>Effect on outputs:</strong> Counts of homes and places for all 153 UTLAs.</li>
+</ul>
+<h2 id="d-0063-fingertips-series-and-notes">D-0063: Fingertips series and notes</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> For each H2 indicator, the latest period ending on or before 31 March 2025 is used:</li>
+<li><strong>Reason:</strong> The rule in <code>sources.yaml</code> ("latest period ending on or before 31 March 2025"). Fingertips publishes combined values for the two smallest LAs.</li>
+<li><strong>Effect on outputs:</strong> H2 periods differ by indicator. Each is recorded in <code>period_start</code> and <code>period_end</code>.</li>
+</ul>
+<h2 id="d-0064-neet-1617-reference-period">D-0064: NEET 16–17 reference period</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20 (confirmed 2026-10-21)</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> In the 2024/25 NEET release, <code>time_period = 2025</code> is the average of December 2024, January 2025 and February 2025, stored as 1 December 2024 to 28 February 2025. This was inferred in Phase 3 and is now confirmed from two sources:</li>
+<li>The DfE methodology page: "We therefore take an average estimate from Dec/Jan/Feb for the NEET figures to give an end of year estimate."</li>
+<li>The release page, which describes its figures as "at the end of 2024/start of 2025" and gives Dudley as 21.5% NEET or not known (2.4% + 19.1%). Our <code>time_period = 2025</code> row for Dudley has 2.35% + 19.10% = 21.45%.</li>
+<li><strong>Reason:</strong> Closest measure to 31 March 2025.</li>
+<li><strong>Effect on outputs:</strong> NEET period labels. No change to values.</li>
+</ul>
+<h2 id="d-0065-phase-3-reconciliation-la-sums-against-england">D-0065: Phase 3 reconciliation: LA sums against England</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Phase 3 has no LSOA data, so each summable count is reconciled as follows: the sum of service-area figures (published, or T6 sums of published LADs) against the published England figure, written to <code>reconciliation</code> with <code>area_level = 'nation'</code>. Sums with a suppressed or missing component are not computable and are counted in <code>phase3.reconciliation_not_computable</code>.</li>
+<li><strong>Reason:</strong> Evidence for the draft SDC tolerances. Most publishers round England to 10 and secondary-suppress LA cells. H-CLIC also imputes missing LAs.</li>
+<li><strong>Effect on outputs:</strong> Reconciliation rows for Phase 3 counts. Gaps are reported, not corrected.</li>
+</ul>
+<h2 id="d-0066-ehcp-cla-and-cilif-age-bands">D-0066: EHCP, CLA and CiLIF age bands</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>EHC plans</strong> are published by single year (under 3, 3 … 25). Standard bands 0–4 to 21–24 are exact sums of those cells (the D-0046 rule). The 0–25 total is DfE's own.</li>
+<li><strong>CLA at 31 March</strong> uses DfE's age groups. Under 1, 1–4, 5–9 and 10–15 are new source bands. "16 years and over" is stored as 16–17, because looked-after children are under 18.</li>
+<li><strong>CiLIF:</strong><ul>
+<li>The DWP bands 0–4, 5–10 and 11–15 are standard.</li>
+<li>16–19 stays a source band (dependent children only).</li>
+<li>0–19 includes unknown age.</li>
+<li>The ODS 0–15 count is <code>src_0_15</code>.</li>
+</ul>
+</li>
+<li><strong>Ward and small-area CiLIF:</strong> ward counts (May 2024 wards) wait for Phase 4 (other geographies). LSOA and MSOA CiLIF exist on Stat-Xplore (open item 14.2) but are outside the approved catalogue.</li>
+<li><strong>Missing single-year EHCP rows:</strong> DfE leaves out single years with no plans. In every one of the 153 LAs (and England), the published single-year rows sum exactly to DfE's "All EHC plans" total, so an absent year is 0. The build re-proves this every run before treating an absent row as 0 (<code>absent_rows_zero</code>, <code>source_code = 'absent_row_zero'</code> where a whole band is absent).</li>
+<li><strong>Reason:</strong> SPEC 3: never split or trim a source band.</li>
+<li><strong>Effect on outputs:</strong> Rates by age band use exact MYE single-year sums.</li>
+</ul>
+<h2 id="d-0067-neet-uses-dfes-published-proportions">D-0067: NEET uses DfE's published proportions</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-20</li>
+<li><strong>Status:</strong> decided (user, 2026-10-21)</li>
+<li><strong>Decision:</strong>   - <strong>Published proportions:</strong> <code>dfe_neet_16_17</code> and <code>dfe_neet_or_not_known_16_17</code> change from derived Wilson proportions to <code>percent_published</code>, using DfE's own NEETprop and NEETNKprop. They have no CI and cannot be aggregated.</li>
+<li><strong>Cohort:</strong> <code>dfe_neet_cohort_16_17</code> keeps DfE's average cohort, stored in <code>value</code> (not <code>count</code>) and marked not summable.</li>
+<li><strong>Reason:</strong> DfE publishes NEET counts as averages of three monthly snapshots (e.g. a cohort of 7,034.33), so they are not whole numbers. Rounding them to build a Wilson interval would alter published data. DfE's own proportion is the published figure (principle 6).</li>
+<li><strong>Effect on outputs:</strong> No confidence intervals for NEET. Custom regions get no NEET value. Values match DfE's tables exactly.</li>
+</ul>
+<h2 id="d-0068-section-251-spend-per-child-uses-ons-population-not-dfes-per-capita-figures">D-0068: Section 251 spend per child uses ONS population, not DfE's per-capita figures</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided (user, 2026-10-21)</li>
+<li><strong>Decision:</strong> Per-child spend stays as derived (D-0017): DfE net current expenditure divided by the ONS mid-2024 estimate of 0–17 year olds (13–19 for youth services). DfE's own <code>per_capita_net_current_spend</code> column is not loaded.</li>
+<li><strong>Reason:</strong> The same population basis as every other LA rate keeps measures comparable. The Phase 3 spot-check found the following:</li>
+<li>Spend matches DfE exactly in all five LAs checked.</li>
+<li>DfE's implied populations are within about 1% of ONS for Barnsley, Kent and North Northamptonshire, and 4.6% higher for Bristol.</li>
+<li>For Camden, DfE divides by about 54,900 children, but the ONS mid-2024 estimate of 0–17 year olds is 35,300.</li>
+<li><strong>Effect on outputs:</strong> Camden's per-child spend is about 56% higher than DfE's published figure. This is noted on the indicators and is to be reported to DfE (statistics.development@education.gov.uk) and recorded in the methodology pack.</li>
+</ul>
+<h2 id="d-0069-phase-4-sources-and-access">D-0069: Phase 4 sources and access</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>G3:</strong> LSOA21 to Sub-ICB location to ICB lookup, April 2024 configuration (106 SICBLs, 42 ICBs), the one MHSDS 2024/25 reports on.</li>
+<li><strong>G8:</strong> LAD to CSP to PFA lookup, April 2025 (296 LADs, 39 English PFAs).</li>
+<li><strong>G3b:</strong> NHS England GP registrations at 1 April 2025, two files: single year of age by SICBL, and practice × LSOA21 (all ages).</li>
+<li><strong>H1:</strong> the MHSDS end-of-year final March 2025 file.</li>
+<li><strong>S3:</strong> youth justice statistics 2024-25 local open data and supplementary tables.</li>
+<li><strong>S4:</strong> the four quarterly NRM table releases for April 2024 to March 2025.</li>
+<li><strong>G7:</strong> constructed (D-0071).</li>
+<li><strong>G9:</strong> not needed (police and GP data use LSOA21).</li>
+<li><strong>Access to digital.nhs.uk:</strong> pages refuse scripted requests (Cloudflare 403), so publication pages were read through the public mirror <code>nhsd-proxy.openprescribing.net</code>. Every file is downloaded directly from <code>files.digital.nhs.uk</code>; the manifest records that URL and its hash.</li>
+<li><strong>Reason:</strong> Principle 11: each file is verified from its publisher's page.</li>
+<li><strong>Effect on outputs:</strong> 11 L0 files.</li>
+</ul>
+<h2 id="d-0070-gp-registered-population-sub-icb-by-age-lsoa-all-ages-for-weights-only">D-0070: GP-registered population: Sub-ICB by age; LSOA all ages for weights only</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> NHS England publishes no LSOA × age file (the LSOA files are practice × LSOA × sex, all ages). Therefore:</li>
+<li><strong>Denominator:</strong> <code>nhse_gp_registered_patients</code> is loaded as published by SICBL, single year of age by sex (ages 90–94 and 95+ summed to <code>y90plus</code>). It is the H1 denominator.</li>
+<li><strong>England total:</strong> the exact sum of the 106 SICBLs (aggregated, <code>fact_nation</code>), because SICBLs partition England.</li>
+<li><strong>T5 weights:</strong> the LSOA21 all-ages file is used only for T5 weights (<code>lkp_apportion_weights</code>, basis <code>gp_registered_all_ages_20250401</code>).</li>
+<li><strong>Denominators are never apportioned:</strong> all-ages weights cannot spread an age-specific population.</li>
+<li><strong>Reason:</strong> SPEC 4.4 requires a GP-registered basis for health, and this is the finest published form.</li>
+<li><strong>Effect on outputs:</strong> The H1 rates use the published registered population. Overlap estimates use all-ages weights for a 0–17 measure, which is stated in <code>parameters</code>.</li>
+</ul>
+<h2 id="d-0071-youth-justice-service-composition-g7-is-constructed">D-0071: Youth justice service composition (G7) is constructed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> There is no published YJS-to-LA lookup. <code>config/yjs_composition.yaml</code> maps each of the 138 English YJSs in the 2024-25 data to UTLAs, with evidence on every row:</li>
+<li>By exact name or a short-name alias (Bristol, Durham, Hull, Leicester City).</li>
+<li>Members named in the YJS name: Bury and Rochdale; Cheshire East, Cheshire West, Halton and Warrington; Kingston and Richmond; Tower Hamlets and City of London; and Cornwall and the Isles of Scilly (GOV.UK South West contact page).</li>
+<li>By elimination, every UTLA belonging to exactly one YJS: Bedfordshire (Bedford, Central Bedfordshire), Dorset Combined (Dorset, BCP), Northamptonshire (North, West), South Tees (Middlesbrough, Redcar and Cleveland), West Mercia (four UTLAs) and Leicestershire (with Rutland).</li>
+<li><strong>Reason:</strong> SPEC 8.1 G7: the composition is constructed, with the method recorded.</li>
+<li><strong>Effect on outputs:</strong> 127 YJSs are coterminous with one UTLA and relabelled. The rest contain several UTLAs, so those UTLAs see a labelled fallback.</li>
+</ul>
+<h2 id="d-0072-mhsds-measures-and-their-handling">D-0072: MHSDS measures and their handling</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Children with 1+ contact:</strong> MHS95 (CYP under 18 with at least one contact, 12 months to 31 March 2025, "Sub ICB of GP Practice or Residence").</li>
+<li><strong>Open referrals:</strong> CYP23 (open referrals to CYP mental health services at 31 March 2025). Its age band is <code>na</code>, because it counts referrals to CYP services, not people of a stated age.</li>
+<li><strong>Rounding and suppression:</strong> Sub-ICB values are rounded to 5; <code>*</code> is suppressed. England figures are unrounded and loaded as published.</li>
+<li><strong>UNKNOWN rows:</strong> MHS95 4,825, CYP23 5,375. They have no area and are excluded.</li>
+<li><strong>MHS95 is not summable:</strong> the Sub-ICB sum (847,920) exceeds England (840,063), because a child can be counted in two Sub-ICBs. It is never aggregated or apportioned.</li>
+<li><strong>Reason:</strong> These are the catalogue's MHSDS measures, and these are the publisher's rules.</li>
+<li><strong>Effect on outputs:</strong> MHS95 rates per 10,000 GP-registered 0–17 at SICBL, England (673.5) and coterminous UTLAs and LADs. CYP23 counts at SICBL, with T6b and T5 conversions.</li>
+</ul>
+<h2 id="d-0073-first-time-entrants-are-la-level-published-rates-calendar-2024">D-0073: First-time entrants are LA-level published rates, calendar 2024</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> <code>yjb_first_time_entrants_10_17</code> changes from a derived YJS rate to YJB/MoJ's published rate per 100,000 aged 10–17, by LA of residence, for the year ending December 2024 (supplementary table 2.11; FTE are not published by YJS or for years to March).</li>
+<li><strong>Model-based:</strong> counts are allocated to LAs by PNC home address, and by a model where there is no address. That is why counts have decimals, and the estimate type is <code>model_based</code>.</li>
+<li><strong>Symbols:</strong> <code>..</code> = fewer than 10 (suppressed, at most 9). <code>*</code> = a former area after a boundary change. A <code>*</code> row gives way to the current area's published figure where both carry one name (Dorset).</li>
+<li><strong>Name aliases:</strong> five aliases match spelling slips in the table ("West Morland and Furness", "... and the Humber").</li>
+<li><strong>Reason:</strong> Principle 6 (published first), and the published geography is LA, which sits directly on the hierarchy.</li>
+<li><strong>Effect on outputs:</strong> 149 of 153 UTLAs have a value; 4 are suppressed.</li>
+</ul>
+<h2 id="d-0074-nrm-child-referrals-are-at-police-force-area-level">D-0074: NRM child referrals are at police force area level</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Open item 14.7 is resolved. The NRM tables have no LA-of-residence breakdown, so <code>ho_nrm_referrals_under18</code> is the "Child (17 or under)" column of Table 10, by police force responsible for investigation.</li>
+<li><strong>Period:</strong> the exact sum of the four quarterly releases for April 2024 to March 2025, as first published (later revisions are not captured).</li>
+<li><strong>Forces:</strong> force names are mapped to PFA25 (<code>category_maps.yaml</code>). British Transport Police has no area and is excluded.</li>
+<li><strong>Reason:</strong> The police force table is the only one that places a child referral in an area. The first-responder table records who referred, not where the child lives.</li>
+<li><strong>Effect on outputs:</strong> Rates per 10,000 children for 39 PFAs. The 8 UTLAs coterminous with a PFA get relabelled values. Other UTLAs see a labelled PFA fallback, so the indicator cannot enter the LA system pressure composite as planned (Phase 6 to decide).</li>
+</ul>
+<h2 id="d-0075-relationship-classification-t6b-t5-and-fallbacks">D-0075: Relationship classification, T6b, T5 and fallbacks</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Classification:</strong> each other-area / hierarchy-area pair is classified from shared membership units: LSOA21 for SICBL (G3, exact because LSOA nesting is proven), LAD25 for PFA (G8), and UTLA for YJS (G7).<ul>
+<li><strong>coterminous:</strong> the shared count equals both sizes.</li>
+<li><strong>nests_within:</strong> it equals the other area's size.</li>
+<li><strong>contains:</strong> it equals the hierarchy area's size.</li>
+<li><strong>overlaps:</strong> otherwise.</li>
+</ul>
+</li>
+<li><strong>Reason:</strong> SPEC 4.4 and T5/T6b. Open item 14.6 is resolved.</li>
+<li><strong>Effect on outputs:</strong> Relationship pairs at service-area level:</li>
+</ul>
+<h2 id="d-0076-police-point-assignment-is-cached-and-runs-first">D-0076: Police point assignment is cached and runs first</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> The S1 point-in-polygon step (5.4 million records) runs before the large fact frames are built, and its output is cached in <code>data/harmonised/police_cache/&lt;key&gt;</code>. The key hashes the S1, G5 and geography source files, the <code>phase2.py</code> code and the crime-type map. The snapshot ID is restamped on reuse.</li>
+<li><strong>Reason:</strong> As the build grew, the step failed intermittently with memory allocation errors on this 16 GB machine. Its inputs rarely change.</li>
+<li><strong>Effect on outputs:</strong> None on content. Builds are faster and more reliable.</li>
+</ul>
+<h2 id="d-0077-ward-level-child-poverty-f1-is-not-loaded">D-0077: Ward-level child poverty (F1) is not loaded</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> DWP's ward tables (children 0–15, May 2024 wards, no percentages) are not loaded. The hierarchy's ward layer is May 2025 (WD25), and there is no published lookup between the two ward vintages here.</li>
+<li><strong>Reason:</strong> Loading would mean either a code-matching approximation or a new lookup, for counts the LA and LSOA layers already cover.</li>
+<li><strong>Effect on outputs:</strong> No CiLIF at ward level. LSOA and MSOA CiLIF exist on Stat-Xplore if wanted later (open item 14.2).</li>
+</ul>
+<h2 id="d-0078-release-boundaries">D-0078: Release boundaries</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> <code>boundaries.gpkg</code> holds the ONS generalised (BGC) layers for LSOA21, MSOA21 (with House of Commons Library names), LAD25 and UTLA25, filtered to England and keyed on <code>dim_geography.area_code</code>.</li>
+<li><strong>Other geographies are dissolved, not downloaded:</strong> each is an exact union of hierarchy areas (Sub-ICB = LSOAs via G3; PFA = LADs via G8; YJS = UTLAs via G7), so the layers are dissolved from those BGC layers. No April 2024 Sub-ICB boundary file exists on the ONS portal; the published PFA boundary vintage (December 2024) differs from the April 2025 lookup.</li>
+<li><strong>No PMTiles:</strong> the toolchain (tippecanoe or similar) is not installed, and SPEC 11 makes tiles optional.</li>
+<li><strong>Reason:</strong> SPEC 11 (BGC for display; one-to-one with <code>dim_geography</code>). Dissolving keeps every layer consistent with the relationships used in the data.</li>
+<li><strong>Effect on outputs:</strong> Seven layers (33,755 / 6,856 / 296 / 153 / 106 / 39 / 138 features). Gate 15 checks the hierarchy layers against <code>dim_geography</code>.</li>
+</ul>
+<h2 id="d-0079-serving-layer-and-profile-views">D-0079: Serving layer and profile views</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Serving views:</strong> <code>serve_&lt;level&gt;</code> is rendered from <code>sql/serving.sql</code>, one row per area × profile column used at that level. The display value is:<ul>
+<li>the derived rate for indicators with a rate multiplier;</li>
+<li>the count for counts;</li>
+<li>otherwise the published or derived value (IoD MSOA summaries, overlap estimates);</li>
+<li>for ordinal indicators, a category code with its label.</li>
+</ul>
+</li>
+<li><strong>Rows without a value:</strong> a pair with no value carries the stored reason, or <code>not_published</code> (e.g. DfE measures for district councils at <code>lad</code> level).</li>
+<li><strong>Fallbacks:</strong> fallback rows come only from <code>fallback_other_geography</code>.</li>
+<li><strong>Profile views:</strong> <code>profile_&lt;level&gt;</code> is generated at serve time from <code>dim_profile_column</code>, using native values only, so its columns depend on the data. The generated SQL is published in the release.</li>
+<li><strong>Population bands:</strong> profile population bands (0–17, 0–24, 0–25) are added to L2 as exact sums of the published single years (the D-0046 rule). Rates still build their own denominators from single years.</li>
+<li><strong>Profile columns:</strong> the CiLIF percentage columns use ages 0–15, the band DWP publishes, and a profile column was added for proven offences.</li>
+<li><strong>Reason:</strong> SPEC 7.2 and 7.3. Gate 15 checks that every row has a value or a reason, that fallbacks stay out of profiles and derived tables, and that boundaries match.</li>
+<li><strong>Effect on outputs:</strong> Serving rows are about 7,800 at service-area level and 14,800 at LAD level; about 970 are fallback rows.</li>
+</ul>
+<h2 id="d-0080-reproducibility-check-gate-17">D-0080: Reproducibility check (gate 17)</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>How it runs:</strong> <code>cypneed verify-rebuild</code> hashes every table of the working DB (logical content hashes: rows sorted by primary key, fixed serialisation), rebuilds from L0 (stage, then harmonise with the geography and police caches switched off by <code>CYPNEED_NO_CACHE</code>, then derive and serve), and hashes again. The report is <code>data/qa/reproducibility.json</code>.</li>
+<li><strong>How it is published:</strong> <code>cypneed release</code> publishes the report only if it is for the same snapshot and every table hash equals the release's <code>content_hashes.json</code>. Gate 17 then requires it.</li>
+<li><strong>Reason:</strong> SPEC gate 17: a clean rebuild at the same commit gives identical logical content. Turning the caches off proves they do not change content.</li>
+<li><strong>Effect on outputs:</strong> A release needs a verify-rebuild at its commit first (about an hour on this machine).</li>
+</ul>
+<h2 id="d-0081-release-package-format">D-0081: Release package format</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-21</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Contents:</strong> the release directory holds a copy of the working DuckDB (all tables and views), Parquet (zstd) and CSV for every table and public view, sorted by primary key, and the serving views as Parquet with <code>serve_indicator_meta.json</code>.</li>
+<li><strong>Data dictionary:</strong> <code>data_dictionary.csv</code> (<code>dim_indicator</code>) and <code>data_dictionary_columns.csv</code> (every column of every table and view, with descriptions from the schema comments).</li>
+<li><strong>Other files:</strong> <code>sources.csv</code>, <code>coverage.csv</code>, <code>reconciliation.csv</code>, <code>qa_report.md</code>, <code>README.md</code>, <code>content_hashes.json</code> and <code>methodology/</code>.</li>
+<li><strong>Methodology pack:</strong> Markdown, plus a static HTML build rendered with Python-Markdown (no MkDocs), with links rewritten to the HTML pages.</li>
+<li><strong>Build safety:</strong> the package is built in <code>&lt;snapshot&gt;.building</code> and renamed only after every step has succeeded.</li>
+<li><strong>Reason:</strong> SPEC 11 and 11.1, with the smallest toolchain that renders the pack.</li>
+<li><strong>Effect on outputs:</strong> One self-contained directory per snapshot.</li>
+</ul>
+<h2 id="d-0082-exports-for-microsoft-fabric-and-power-bi">D-0082: Exports for Microsoft Fabric and Power BI</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided (user, 2026-10-22: items 1–4)</li>
+<li><strong>Decision:</strong> The dashboard will be built in Microsoft Fabric / Power BI, so the release adds:
+  1. <strong>Delta tables:</strong> <code>delta/</code> holds one Delta table per exported table and view, written with delta-rs, for Direct Lake.
+  2. <strong>Single-column keys:</strong><ul>
+<li><code>geo_key</code> (<code>'&lt;level&gt;|&lt;code&gt;'</code>, or <code>'&lt;geography type&gt;|&lt;code&gt;'</code> for other geographies) on every exported table and view with an area. The lookup also has <code>other_geo_key</code>.</li>
+<li><code>serve_dim_area</code>: one row per area and other area, with parent keys.</li>
+<li><code>serve_dim_measure</code>: one row per profile column, key <code>column_prefix</code>. Power BI relationships cannot join on two columns, and a unitary council is both a <code>lad</code> and a <code>service_area</code>.
+  3. <strong>Numerator and denominator in serving:</strong> <code>numerator</code> and <code>denominator</code> are added to every serving view (NULL for values, categories and fallbacks), so DAX can aggregate custom selections correctly.
+  4. <strong>TopoJSON maps:</strong> <code>maps/</code> holds TopoJSON in WGS84, simplified for Power BI map visuals:</li>
+<li>whole-England files for UTLA, LAD, MSOA, Sub-ICB, PFA and YJS;</li>
+<li>MSOAs and LSOAs per children's services authority.</li>
+</ul>
+</li>
+<li><strong>Reason:</strong> Power BI cannot read DuckDB, GeoPackage or composite keys, and it limits map file sizes. Delta is Fabric's native table format.</li>
+<li><strong>Effect on outputs:</strong> More files in the release, and three columns added to serving views. There is no change to any value. Methodology links stay relative until a hosting address is chosen.</li>
+</ul>
+<h2 id="d-0083-iod-domain-summaries-for-councils">D-0083: IoD domain summaries for councils</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Fourteen indicators are added from MHCLG's published LAD and UTLA summaries (IoD 2025 Files 10 and 11, the domain sheets of the D1b workbook): for each of the seven domains, the population-weighted average score (<code>mhclg_iod25_&lt;domain&gt;_la_avg_score</code>) and the proportion of LSOAs in the most deprived 10% nationally (<code>..._la_prop_most_deprived_10pct</code>).</li>
+<li><strong>Domains:</strong> income, employment, education, health, crime, barriers, living environment.</li>
+<li><strong>Profiles:</strong> each domain's average score becomes a profile column.</li>
+<li><strong>Reason:</strong> The domain indicators were LSOA-only, so a council-only view had no value for them. MHCLG publishes the LA summaries, so no calculation is needed (the same rule as IDACI and IMD, D1b).</li>
+<li><strong>Effect on outputs:</strong> 139 indicators. Seven domains now have council values.</li>
+</ul>
+<h2 id="d-0084-asylum-support-councils-absent-from-asy_d11-are-zero">D-0084: Asylum support: councils absent from Asy_D11 are zero</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong> Asy_D11 lists only LAs with at least one person supported: no row has 0, and there are no suppression symbols. At 31 March 2025, 17 England LADs are absent (for example Isles of Scilly, Fenland, Derbyshire Dales, Mid Devon, Torridge, West Devon, Rother, Maldon, Cotswold, Hart). Each absent England LAD is stored as an observed 0 (<code>source_code = 'absent_area_zero'</code>), but only after the workbook proves that every person in England is assigned to a listed LA:</li>
+<li>The workbook's own pivot (<code>Asy_D11</code> sheet, filters Support Type and Accommodation Type both "(All)") gives published totals by UK region. The nine English regions sum to 94,754, exactly the sum of the England LA rows.</li>
+<li>The "N/A - Subsistence Only" row (people with no LA) is 0 at 31 March 2025.</li>
+<li>Harmonise checks both of these and stops if either fails. Staging checks the pivot filters.</li>
+<li>Barnsley and Sheffield appear under their pre-2025 codes and are relabelled as before (D-0036).</li>
+<li><strong>Reason:</strong> Absent here means nobody was supported in that LA on that date. Leaving these LAs NULL made 13 county totals and the England total <code>incomplete</code>.</li>
+<li><strong>Effect on outputs:</strong> <code>ho_asylum_support_recipients</code> has a value for all 296 LADs, 153 service areas and England (94,754).</li>
+</ul>
+<h2 id="d-0085-county-child-poverty-percentages-by-dwps-method">D-0085: County child poverty percentages by DWP's method</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided (replaces the "no rate" position on the CiLIF percentages for areas DWP does not cover)</li>
+<li><strong>Decision:</strong> DWP publishes CiLIF percentages for lower-tier and unitary councils, but not for the 21 county councils. DWP's note 3 states the method: children aged 0-15 in low income families / mid-2024 ONS population aged 0-15. For a county, the percentage is computed by that method from the summed published district counts and our ONS mid-2024 single years:</li>
+<li><strong>Proof first:</strong> before anything is filled, derive recomputes every published percentage by the same method and requires agreement within 1e-9. All 428 published values (296 LAD, 132 service area) agree exactly. Any miss stops the build.</li>
+<li><strong>Stored as derived:</strong> rows are derived (<code>derivation = 'published_method'</code>), never L2 facts, with numerator and denominator kept. They are filled only where DWP publishes no value.</li>
+<li><strong>Serving:</strong> the value is shown in the same column as the published percentages, with <code>estimate_type</code> = <code>survey_calibrated (derived by the publisher's method)</code> and the profile flag <code>publisher_method</code>.</li>
+<li><strong>Percentiles:</strong> percentiles rank the published and derived values together.</li>
+<li><strong>Generic:</strong> this is the catalogue field <code>publisher_method_fill</code>, which other indicators can use only with the same proof.</li>
+<li><strong>Reason:</strong> The method is DWP's own and is shown to reproduce DWP's figures exactly, so the county value is what DWP would publish. Flagging keeps it distinguishable from published figures.</li>
+<li><strong>Effect on outputs:</strong> CiLIF percentages at service-area level cover 153 of 153 councils (was 132).</li>
+</ul>
+<h2 id="d-0086-l5-composite-build-where-it-reads-writes-and-shows">D-0086: L5 composite build: where it reads, writes and shows</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Reads:</strong> <code>cypneed composite</code> reads the snapshot's L2 facts and L3 derived values from the working DB, after <code>serve</code>. It writes only <code>l5_*</code> tables, so L0-L4 never change. SPEC 12 says "reads L4 only"; the serving views don't carry EB-smoothed rates or the indicators without a profile column (the CIN assessment factors), so L5 reads the same frozen L2/L3 values that L4 is built from.</li>
+<li><strong>Inputs (12.2):</strong><ul>
+<li>indicators with a derived rate: the L3 rate built from L2 counts, EB-smoothed at LSOA and MSOA;</li>
+<li>other indicators: the L2 published value, or, where none is published, an L3 value made by the publisher's own method (IoD MSOA summaries, D-0085 county percentages).</li>
+<li>Never used: fallback, apportioned, converted or recoded values.</li>
+<li>Age band: the indicator's profile column band, or its only band.</li>
+</ul>
+</li>
+<li><strong>Tables (12.6):</strong><ul>
+<li><code>l5_composite_&lt;level&gt;</code> and <code>l5_domain_&lt;level&gt;</code> for small_area, intermediate_area and service_area. Columns as SPEC 12.6, plus <code>rank_median</code>.</li>
+<li><code>l5_eligibility</code>, <code>l5_runs</code> (Monte Carlo design per run), <code>l5_sensitivity</code> (results per choice) and <code>l5_criterion_residuals</code>.</li>
+<li>Per-area, per-run ranks are not stored (34 million rows at LSOA); they are reproducible from the seed.</li>
+</ul>
+</li>
+<li><strong>Catalogue:</strong> every composite and domain score is generated into <code>dim_indicator</code> from <code>composites.yaml</code> (theme <code>composite</code>, estimate type <code>composite_experimental</code>, framework role <code>composite</code>), so the catalogue cannot drift from the definitions. Each has a profile column and appears in the serving views through the <code>l5_scores</code> view.</li>
+<li><strong>QA:</strong><ul>
+<li>Gate 19 reports SPEC 12.8: eligible inputs only; weights sum to 1; a seeded recomputation of the LA composites equals the stored tables exactly; the median rank lies within the interval; NULLs have a reason; the validation report exists.</li>
+<li><code>verify-rebuild</code> now runs <code>composite</code>, so gate 17 also covers the neighbourhood composites.</li>
+</ul>
+</li>
+<li><strong>Release:</strong> the release refuses to run unless the L5 tables and reports are for the same snapshot. It writes <code>l5/</code> (tables, <code>l5_validation.md</code>, <code>l5_report.json</code>), and the methodology pack takes the validation write-up.</li>
+<li><strong>Reason:</strong> SPEC 12 and 12.8, with one reproducible build path.</li>
+<li><strong>Effect on outputs:</strong> 16 more <code>dim_indicator</code> rows and profile columns, ten <code>l5_*</code> tables, gate 19, and a <code>composite</code> step between <code>serve</code> and <code>release</code>.</li>
+</ul>
+<h2 id="d-0087-composite-domain-assignment-and-eligibility-phase-6">D-0087: Composite domain assignment and eligibility (Phase 6)</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided (user accepted, 2026-10-23)</li>
+<li><strong>Decision:</strong> The SPEC 12.1 starting point, with these changes. Eligibility is re-tested at every level for every release, so the indicators that are ineligible today stay listed and enter once they qualify.</li>
+<li><strong>Removed:</strong><ul>
+<li><code>dwp_uc_households_with_children</code> (neighbourhood economic hardship): a count with no same-period denominator. Census 2021 households are four years older than the counts, beyond the 366-day rule. IDACI already measures benefit-based income deprivation.</li>
+<li>The LA pressure <code>spend</code> domain (<code>dfe_s251_cyp_services_net</code>): its polarity is neutral, because high spend can mean high demand or high investment, so it cannot be aligned.</li>
+</ul>
+</li>
+<li><strong>Added:</strong> the four CIN assessment factors (domestic abuse, parental mental health, alcohol, drugs) to LA family risk, as signed off in D-0056. Alcohol and drugs have weight 0.5 each.</li>
+<li><strong>Reviewed out:</strong> <code>ohid_low_birthweight_term</code> from LA health. Its fit with the rest of the domain is negative (rho -0.39), and the domain's alpha was 0.30 with it in. At LA level, term birthweight mainly reflects the population's ethnic composition.</li>
+<li><strong>Ineligible today, kept listed:</strong><ul>
+<li>PIP 16-24 at LSOA (92.0% coverage; it is eligible at MSOA);</li>
+<li>NDTMS parents in treatment (not loaded);</li>
+<li>children in temporary accommodation (92.8%);</li>
+<li>NRM referrals (95% of council values are fallbacks);</li>
+<li>social worker agency rate (94.8%).</li>
+</ul>
+</li>
+<li><strong>Redundancy (|rho| &gt; 0.9):</strong> only parental alcohol and drug misuse (rho 0.92). The pair is kept on purpose, because the 0.5 weights already make it count once (<code>redundancy_accepted</code>). Any other redundant pair stops the build.</li>
+<li><strong>Weak fits kept (rho &lt; 0.2 with the rest of the domain, but positive):</strong><ul>
+<li>lone-parent households in family risk (+0.17): the CIN factors are shares of assessment episodes, not population rates, so they measure something different;</li>
+<li>average caseload in capacity (+0.07): workload rather than workforce instability.</li>
+<li>The drop-one stability check shows how much each matters.</li>
+</ul>
+</li>
+<li><strong>Polarity:</strong> EHCP 20-week timeliness is higher-is-better, so it is flipped.</li>
+<li><strong>Reason:</strong> SPEC 12.2 and 12.3 step 1. The build makes each choice explicit and repeats the checks on every release.</li>
+<li><strong>Effect on outputs:</strong>   - Neighbourhood need: 4 domains (8 indicators at MSOA, 7 at LSOA).</li>
+<li>LA need: 6 domains, 17 eligible indicators.</li>
+<li>LA system pressure: 3 domains, 8 eligible indicators.</li>
+</ul>
+<h2 id="d-0088-composite-method-details-and-monte-carlo-design">D-0088: Composite method details and Monte Carlo design</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> decided</li>
+<li><strong>Decision:</strong>   - <strong>Normal scores:</strong> rank-based inverse normal, using Blom's formula (r - 3/8)/(n + 1/4), with average ranks for ties.</li>
+<li><strong>Domain score:</strong> the weighted mean of the normal scores of the indicators present (indicator weights 1, except D-0056).</li>
+<li><strong>Missing data:</strong><ul>
+<li>LA: a domain needs at least two-thirds of its indicator weight present.</li>
+<li>LSOA and MSOA: a domain is scored when any of its indicators is present. SPEC 12.3 gives the two-thirds rule for LA only, and applying it at LSOA left 1,237 LSOAs unscored because of suppressed DLA counts.</li>
+<li>Every composite needs every domain.</li>
+</ul>
+</li>
+<li><strong>Ranks:</strong> rank 1 and decile 1 are the most need or pressure, as in the IoD. Ties are broken by area code, so every output is deterministic.</li>
+<li><strong>Monte Carlo:</strong> 1,000 runs per composite and level. The seed stream is (20250331, composite index, level index). Each run draws uniformly from the options for:<ul>
+<li>normalisation: normal scores, z-scores or min-max;</li>
+<li>aggregation:</li>
+<li>IoD exponential;</li>
+<li>arithmetic mean of the re-normalised domain scores;</li>
+<li>geometric mean of domain ranks scaled to (0, 1];</li>
+<li>missing threshold (LA only): 0.5, 0.6667 or 0.75;</li>
+<li>inclusion: all indicators, drop one, or drop the practice-sensitive indicators.</li>
+<li>A drop never removes the last indicator of a domain.</li>
+</ul>
+</li>
+<li><strong>Domain weights:</strong> a symmetric Dirichlet with each weight's coefficient of variation at 0.25 (concentration = (D - 1)/0.25^2 - 1). That is about +/-25% of the equal weight (one standard deviation) whatever the number of domains, in line with common composite-audit practice. The skeleton's concentration of 20 gave about +/-50%.</li>
+<li><strong>Per area:</strong><ul>
+<li>median rank;</li>
+<li>5th and 95th percentile ranks;</li>
+<li>P(decile 1);</li>
+<li><code>decile_robust</code>: in the same decile as the primary method in at least 80% of runs.</li>
+</ul>
+</li>
+<li><strong>Sensitivity:</strong> first-order Sobol' shares of rank variance for each discrete choice (variance of the conditional mean rank, summed over areas). The weights are a vector, so they get a lower bound (the largest single domain weight, binned into deciles) and an upper bound (the sum over domains).</li>
+<li><strong>Reason:</strong> SPEC 12.3 and 12.4, made exact and reproducible.</li>
+<li><strong>Effect on outputs:</strong> As described in the methodology pack (<code>composites/methodology_composite.md</code>).</li>
+</ul>
+<h2 id="d-0089-composite-results-and-findings-composites-version-01-experimental">D-0089: Composite results and findings (composites version 0.1-experimental)</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-22</li>
+<li><strong>Status:</strong> recorded (results are not adjusted to fit expectations; SPEC 12.5)</li>
+<li><strong>Decision:</strong> —</li>
+<li><strong>Reason:</strong> SPEC 12.5: write up every check and say what the results do and do not support.</li>
+<li><strong>Effect on outputs:</strong> Recorded in the methodology pack (per-composite results) and <code>l5/l5_validation.md</code>. For review before the composites are shown publicly.</li>
+</ul>
+<h2 id="d-0090-la-system-pressure-published-as-domains-only-within-one-decile-stability">D-0090: LA system pressure published as domains only; within-one-decile stability</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-23</li>
+<li><strong>Status:</strong> decided (user, 2026-10-23: "proceed with your other recommendations")</li>
+<li><strong>Decision:</strong>   - <strong>Pressure published as domains only:</strong> <code>la_system_pressure</code> is published as its three domain scores (demand, capacity, SEND). The combined index is withheld (<code>publish_index: false</code>).<ul>
+<li>It is still computed, so that its robustness and its correlation with LA need are documented in the methodology.</li>
+<li>It has no <code>dim_indicator</code> row, profile column, serving rows or <code>l5_composite_service_area</code> rows. Gate 19 checks that none exist.</li>
+</ul>
+</li>
+<li><strong>New stability measure:</strong> every composite and domain row now carries <code>p_within_one_decile</code>, the share of Monte Carlo runs in which the area's decile is within one decile of the primary decile. The validation report gives, for each composite and domain, the share of areas within one decile in at least 80% of runs, next to the strict <code>decile_robust</code> share.</li>
+<li><strong>Dashboard emphasis (release README):</strong> lead with the domain scores, and show the combined need indices in broad bands with their rank interval rather than as exact deciles. The aggregation choice is not narrowed: that would hide real model uncertainty.</li>
+<li><strong>Reason:</strong>   - The combined pressure index is the least stable output. Only 13.9% of councils keep their decile even under the primary aggregation, and 52.8% stay within one decile.</li>
+<li>Its capacity domain is weak (alpha 0.39), with the agency rate ineligible at 94.8% coverage.</li>
+<li>The pressure domains are steadier: within one decile for 97.4% (demand) and 88.4% (capacity) of councils.</li>
+<li>The need indices stay within one decile for 91.3% (LSOA), 92.0% (MSOA) and 70.5% (LA) of areas. That supports banded display.</li>
+<li><strong>Effect on outputs:</strong>   - 154 indicators (the pressure index row is removed).</li>
+<li>A new column <code>p_within_one_decile</code> on every <code>l5_composite_*</code> and <code>l5_domain_*</code> table.</li>
+<li>Domain stability tables in the validation report.</li>
+</ul>
+<h2 id="d-0091-ndtms-parents-in-treatment-h3-unavailable">D-0091: NDTMS parents in treatment (H3) unavailable</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-23</li>
+<li><strong>Status:</strong> decided (user, 2026-10-23)</li>
+<li><strong>Decision:</strong>   - <strong>Access:</strong> council-level NDTMS figures on parents in treatment exist only in OHID's login-protected "Treatment and recovery unmet need toolkit" (checked 2026-10-23). The user cannot get NDTMS.net access, because registration requires a commissioning or provider purpose. None of the public sources checked has council figures:<ul>
+<li>the GOV.UK adult treatment statistics are England-only;</li>
+<li>the data.gov.uk listing is a 2012 national bulletin.</li>
+</ul>
+</li>
+<li><strong>Composite:</strong> <code>ohid_ndtms_adults_in_treatment_living_with_children</code> is removed from <code>la_need</code> family risk, which applies the D-0055 resolution.</li>
+<li><strong>Catalogue:</strong> both NDTMS indicators stay in the catalogue with no facts, so the gap stays visible.</li>
+<li><strong>Reason:</strong> Principle 11 (no scraping or guessed URLs). There is no lawful public route to the data.</li>
+<li><strong>Effect on outputs:</strong>   - None on values: the indicator was already ineligible.</li>
+<li>LA family risk remains the least stable domain (D-0090), because it relies on practice-sensitive CIN assessment factors plus lone-parent households.</li>
+<li>Revisit if OHID publishes council figures, or if a partner commissioner can share an extract under licence.</li>
+</ul>
+<h2 id="d-0092-methodology-hosted-on-github-pages-from-its-own-public-repo">D-0092: Methodology hosted on GitHub Pages from its own public repo</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-23</li>
+<li><strong>Status:</strong> decided (user, 2026-10-23)</li>
+<li><strong>Decision:</strong>   - <strong>Hosting:</strong> the rendered methodology pack is published with GitHub Pages from a separate public repo, <code>andy-nfpstack/cyp-database-methodology</code>, at https://andy-nfpstack.github.io/cyp-database-methodology/. The code repo stays private; on a free account, Pages serves public repos only.</li>
+<li><strong>Settings:</strong> <code>config/publication.yaml</code> holds the repo, branch and base URL. It also has placeholders for the contact inbox and DOI, which are still open.</li>
+<li><strong>Versioning (SPEC 11.1):</strong> each release is published under <code>&lt;snapshot_id&gt;/</code> and kept. <code>latest/</code> is a copy of the newest release, and the site root redirects to it and lists every release.</li>
+<li><strong>Publishing:</strong> <code>cypneed publish-methodology [--snapshot S] [--push]</code> copies a release's <code>methodology/</code> into a checkout at <code>data/pages/</code> and commits. It pushes only with <code>--push</code>.</li>
+<li><strong>Links:</strong> <code>serve_indicator_meta.methodology_url</code> gives each indicator's page for the release, and the release README links to the online pack.</li>
+<li><strong>Reason:</strong> SPEC 11.1 ("published ... alongside the dashboard"; versioned) without making the code public or upgrading the account.</li>
+<li><strong>Effect on outputs:</strong> <code>methodology_url</code> in <code>serve_indicator_meta</code>, and an online link in the README.</li>
+</ul>
+<h2 id="d-0093-fabric-files-shipped-as-a-private-github-release">D-0093: Fabric files shipped as a private GitHub release</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-24</li>
+<li><strong>Status:</strong> decided (user, 2026-10-24)</li>
+<li><strong>Decision:</strong>   - <strong>Why a GitHub release:</strong> the dashboard is built in another organisation's Microsoft Fabric. Its machines cannot reach the build machine's storage or take the D: drive, but the user can sign in to GitHub there.</li>
+<li><strong>Command:</strong> <code>cypneed package-release [--snapshot S] [--upload]</code> zips only what Fabric needs into <code>dist/&lt;snapshot&gt;/&lt;snapshot&gt;_fabric.zip</code>:<ul>
+<li>the Delta tables (every table and view);</li>
+<li>the TopoJSON maps;</li>
+<li><code>serve_indicator_meta.json</code>, the data dictionaries, <code>sources.csv</code> and the README.</li>
+</ul>
+</li>
+<li><strong>Checksums:</strong> it writes <code>SHA256SUMS.txt</code> alongside the zip.</li>
+<li><strong>Upload:</strong> with <code>--upload</code>, it creates a release <code>data-&lt;snapshot&gt;</code> in the private code repo, tagged at the release's own commit.</li>
+<li><strong>Left out:</strong> the CSV, Parquet and DuckDB copies, which Fabric does not need.</li>
+<li><strong>Reason:</strong> GitHub limits release assets to 2 GiB per file with no total limit; the Fabric zip is about 0.26 GB. The private repo keeps the data off the public web until the user decides to publish it, and the checksum lets the receiving organisation verify the download.</li>
+<li><strong>Effect on outputs:</strong> one zip and one checksum file per release in <code>dist/</code> (not committed), and a GitHub release when uploaded.</li>
+</ul>
+<h2 id="d-0094-final-rigour-review-disclosure-control-confirmed-references-open-items-closed">D-0094: Final rigour review: disclosure control confirmed, references, open items closed</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-24</li>
+<li><strong>Status:</strong> decided (user request, 2026-10-24: "full final review ... academic rigour")</li>
+<li><strong>Decision:</strong>   - <strong>Disclosure control (closes D-0009):</strong> every loaded source's SDC profile in <code>config/sources.yaml</code> is now stated from its publisher's own data guidance, as read at inspection and recorded in <code>config/suppression_codes.yaml</code>, and marked confirmed.<ul>
+<li>The Census tables (P4, F6, F7) cite ONS's Census 2021 disclosure control page.</li>
+<li>The population estimates (P1) cite the ONS small area population estimates quality and methodology information.</li>
+<li>Method lists are corrected where the guidance says nothing is suppressed: E1–E4, E6, P7, S4 and S5 are <code>none</code>; C4 is suppression only.</li>
+<li>The "DRAFT" wording no longer appears anywhere in the config or the published methodology.</li>
+</ul>
+</li>
+<li><strong>Tolerances unchanged:</strong> tolerances were set in advance and are not changed, so they are not fitted to the results. The F2–F4 exception (set from observed differences, D-0053) is stated in the methodology. The technical methodology now shows, for each source, the publisher's disclosure control and what this release checked (totals compared, within tolerance, largest difference). The results are generated at release from <code>reconciliation</code>.</li>
+<li><strong>References:</strong> a References page cites every method used:<ul>
+<li>confidence intervals: Wilson; Byar, via Breslow and Day;</li>
+<li>smoothing and transformation: Marshall's empirical Bayes; Blom's normal scores;</li>
+<li>consistency checks: Cronbach's alpha;</li>
+<li>composites: the OECD/JRC handbook; Saisana, Saltelli and Tarantola; Sobol';</li>
+<li>deprivation: the IoD 2025 technical report;</li>
+<li>inference: the ecological fallacy (Robinson); the modifiable areal unit problem (Openshaw);</li>
+<li>the hotspot statistic and false discovery rate in the README guidance;</li>
+<li>official sources: the ONS disclosure and population pages; the Code of Practice for Statistics, version 3.0.</li>
+<li>Every URL was verified on 2026-10-24.</li>
+</ul>
+</li>
+<li><strong>Limitations:</strong> the technical methodology adds that confidence intervals cover random variation only, and that the release is a single point in time.</li>
+<li><strong>Open items closed:</strong><ul>
+<li>five <code>needs_decision</code> notes resolved by D-0085, D-0087 and D-0091 (youth services spend keeps the 13–19 band it was built with);</li>
+<li>H3's verified landing page recorded;</li>
+<li>D-0009 and D-0025 marked decided;</li>
+<li>D-0087 marked accepted.</li>
+</ul>
+</li>
+<li><strong>Composite titles:</strong> "LA" is capitalised (it had been rendered as "La need").</li>
+<li><strong>Reason:</strong> SPEC 11.1 and the Code of Practice: every number traceable, every method cited, no draft wording in published outputs, and promised checks (D-0009) actually done.</li>
+<li><strong>Effect on outputs:</strong> No change to data values. The methodology pack gains <code>references.md</code> and the evidence columns in the disclosure-control table.</li>
+</ul>
+<h2 id="d-0095-fabric-ready-release-long-serving-tables-england-level-kit-single-file-methodology-transformation-specification">D-0095: Fabric-ready release: long serving tables, England level, kit, single-file methodology, transformation specification</h2>
+<ul>
+<li><strong>Date:</strong> 2026-10-24</li>
+<li><strong>Status:</strong> decided (user request, 2026-10-24)</li>
+<li><strong>Decision:</strong>   - <strong>England comparator:</strong> <code>nation</code> is added as a serving level (<code>serve_nation</code>, <code>profile_nation</code>).</li>
+<li><strong><code>serve_all</code></strong> stacks every serving level and the other geographies into one fact table, so the Power BI model is a star on two keys (<code>geo_key</code>, <code>column_prefix</code>).</li>
+<li><strong><code>l5_area_scores</code></strong> holds every composite and domain score with:<ul>
+<li>a fifth band and its label;</li>
+<li>the number of deciles its 5th–95th rank interval spans;</li>
+<li><code>show_exact_rank</code> (the interval spans two deciles or fewer, the SPEC 12.6 display rule);</li>
+<li>the stability measures.</li>
+</ul>
+</li>
+<li><strong>Area labels:</strong> <code>serve_dim_area</code> gains <code>level_label</code> and <code>level_order</code>.</li>
+<li><strong>Fabric kit (<code>release/fabric_kit.py</code>):</strong> one definition of the model is used to write everything else:<ul>
+<li>the six model tables, five relationships and 18 DAX measures;</li>
+<li>a load notebook (unzip, save each Delta table, check row counts against <code>manifest.json</code>; an optional cell builds the Direct Lake model with semantic-link-labs);</li>
+<li><code>measures.dax</code>;</li>
+<li><code>FABRIC_GUIDE.md</code>: setup, the manual modelling steps, six report pages field by field, rules for every visual.</li>
+<li>The notebook's model cell and the DAX were not run in Fabric or Power BI from the build machine; the guide gives a manual fallback.</li>
+</ul>
+</li>
+<li><strong>Council GeoJSON:</strong> written beside the TopoJSON, for Azure Maps reference layers.</li>
+<li><strong><code>methodology_complete.md</code>:</strong> the whole methodology pack in one Markdown file. It has a table of contents, an anchor for each page and internal links rewritten to those anchors. It is published with the pack and attached to the GitHub release.</li>
+<li><strong>Transformation specification (<code>transformations.md</code>):</strong> generated from config and DECISIONS.md. It covers:<ul>
+<li>layers, invariants and the stage table (T1–T12 with code and QA gates);</li>
+<li>the shared rules, with the exact formulas used (Wilson, Byar, Marshall's empirical Bayes, percentiles, IoD summaries);</li>
+<li>every source: files, staging and harmonise code, symbols, disclosure control, decisions;</li>
+<li>every indicator: formula, the exact category-map entry or the code that builds it, decisions;</li>
+<li>guidance for moving to live pipelines.</li>
+</ul>
+</li>
+<li><strong>Reason:</strong> least work in Fabric (one upload, one notebook), clear modelling and report steps, and documentation complete enough to rebuild the pipelines from (user request).</li>
+<li><strong>Effect on outputs:</strong>   - England rows in serving.</li>
+<li><code>serve_all</code>, <code>l5_area_scores</code> and the new <code>serve_dim_area</code> columns in every export.</li>
+<li><code>transformations.md</code>, <code>references.md</code> and <code>methodology_complete.md</code> in the pack.</li>
+<li>The Fabric bundle carries the kit; the GitHub release carries the guide, notebook and methodology as separate files.</li>
+</ul>
+<hr />
+<p><a href="index.html">Methodology index</a></p>
+</body></html>

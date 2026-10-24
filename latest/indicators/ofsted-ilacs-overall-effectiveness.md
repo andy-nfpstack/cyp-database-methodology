@@ -1,6 +1,6 @@
 # Ofsted judgement: children's services
 
-Release `abffebbd490b-19eda0e60019` · indicator `ofsted_ilacs_overall_effectiveness` · concept `ofsted_ilacs`
+Release `2dda583978fb-19eda0e60019` · indicator `ofsted_ilacs_overall_effectiveness` · concept `ofsted_ilacs`
 
 
 Ofsted's most recent overall judgement of the council's children's services, from Outstanding to Inadequate.

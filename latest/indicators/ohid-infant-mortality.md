@@ -1,6 +1,6 @@
 # Infant mortality
 
-Release `abffebbd490b-19eda0e60019` · indicator `ohid_infant_mortality` · concept `infant_mortality`
+Release `2dda583978fb-19eda0e60019` · indicator `ohid_infant_mortality` · concept `infant_mortality`
 
 
 Deaths of babies under one year old, per 1,000 live births, pooled over three years.

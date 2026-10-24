@@ -1,6 +1,6 @@
 # England Children and Young People (0–24) Need and System Pressure Database: methodology
 
-Release `abffebbd490b-19eda0e60019` · composites version `0.1-experimental`
+Release `2dda583978fb-19eda0e60019` · composites version `0.1-experimental`
 
 ## What this is
 
@@ -216,21 +216,21 @@ value comes from an official published statistic, or is calculated from one by a
 - [Neighbourhood need: health disability domain](indicators/l5-neighbourhood-need-health-disability.md)
 - [Neighbourhood need: family housing domain](indicators/l5-neighbourhood-need-family-housing.md)
 - [Neighbourhood need: safety domain](indicators/l5-neighbourhood-need-safety.md)
-- [La need index](indicators/l5-la-need.md)
-- [La need: economic hardship domain](indicators/l5-la-need-economic-hardship.md)
-- [La need: family risk domain](indicators/l5-la-need-family-risk.md)
-- [La need: health domain](indicators/l5-la-need-health.md)
-- [La need: education domain](indicators/l5-la-need-education.md)
-- [La need: housing domain](indicators/l5-la-need-housing.md)
-- [La need: safety domain](indicators/l5-la-need-safety.md)
-- [La system pressure: demand domain](indicators/l5-la-system-pressure-demand.md)
-- [La system pressure: capacity domain](indicators/l5-la-system-pressure-capacity.md)
-- [La system pressure: send domain](indicators/l5-la-system-pressure-send.md)
+- [LA need index](indicators/l5-la-need.md)
+- [LA need: economic hardship domain](indicators/l5-la-need-economic-hardship.md)
+- [LA need: family risk domain](indicators/l5-la-need-family-risk.md)
+- [LA need: health domain](indicators/l5-la-need-health.md)
+- [LA need: education domain](indicators/l5-la-need-education.md)
+- [LA need: housing domain](indicators/l5-la-need-housing.md)
+- [LA need: safety domain](indicators/l5-la-need-safety.md)
+- [LA system pressure: demand domain](indicators/l5-la-system-pressure-demand.md)
+- [LA system pressure: capacity domain](indicators/l5-la-system-pressure-capacity.md)
+- [LA system pressure: send domain](indicators/l5-la-system-pressure-send.md)
 
 ## How to cite
 
 > England Children and Young People Need and System Pressure Database, release
-> `abffebbd490b-19eda0e60019`. Contains public sector information licensed under the Open
+> `2dda583978fb-19eda0e60019`. Contains public sector information licensed under the Open
 > Government Licence v3.0. Source attributions are listed in `sources.csv`.
 
 ## Applying the Code of Practice for Statistics (voluntarily)

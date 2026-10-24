@@ -1,6 +1,6 @@
 # Pupils with autism as their main need
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_sen_primary_need_asd` · concept `send_primary_need`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_sen_primary_need_asd` · concept `send_primary_need`
 
 
 The share of all pupils whose main special educational need is autism.
@@ -40,7 +40,7 @@ Largest and fastest-growing EHCP primary need; drives SEND system demand.
 ## Sources
 
 - **E1: Special educational needs in England, January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

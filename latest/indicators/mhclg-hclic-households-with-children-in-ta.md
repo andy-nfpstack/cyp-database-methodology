@@ -1,6 +1,6 @@
 # Households with children in temporary accommodation
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_hclic_households_with_children_in_ta` · concept `temporary_accommodation`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_hclic_households_with_children_in_ta` · concept `temporary_accommodation`
 
 
 The number of homeless families with children living in temporary accommodation arranged by the council.

@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation: extent
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_la_extent` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_la_extent` · concept `imd`
 
 
 The share of the authority's population living in the most deprived areas of England.

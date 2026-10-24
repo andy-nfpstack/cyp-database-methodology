@@ -1,6 +1,6 @@
 # Spending on children's services per child
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_s251_cyp_services_net` · concept `childrens_services_spend`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_s251_cyp_services_net` · concept `childrens_services_spend`
 
 
 How much the council spent, after income, on children's and young people's services in the year, per child.
@@ -40,7 +40,7 @@ Spending reflects both need and pressure; used in the system-pressure index (spe
 ## Sources
 
 - **C4: LA and school expenditure (Section 251 outturn) 2024-25** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: rounding; additivity approximate;
+  Disclosure control: suppression; additivity approximate;
   tolerance 1000 absolute / 0.001 relative.
 
 ## Quality and known biases

@@ -1,6 +1,6 @@
 # Pupils
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_pupils_on_roll` · concept `pupils`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_pupils_on_roll` · concept `pupils`
 
 
 The number of pupils at schools in each local authority.
@@ -40,7 +40,7 @@ Same-source denominator for free school meal eligibility.
 ## Sources
 
 - **E6: Schools, pupils and their characteristics, January 2025 (FSM by pupil residence)** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

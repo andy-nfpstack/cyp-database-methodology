@@ -1,6 +1,6 @@
 # Health deprivation and disability (score)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_health_score` · concept `iod_health`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_health_score` · concept `iod_health`
 
 
 How far people in the neighbourhood are at risk of early death or poor quality of life through poor health or disability.

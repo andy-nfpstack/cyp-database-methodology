@@ -1,6 +1,6 @@
 # QA summary
 
-Release `abffebbd490b-19eda0e60019`
+Release `2dda583978fb-19eda0e60019`
 
 | Gate | Check | Result |
 |---|---|---|

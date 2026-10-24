@@ -1,6 +1,6 @@
 # Assessments with factors recorded
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_episodes_with_assessment_factors` · concept `assessment_factors`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_episodes_with_assessment_factors` · concept `assessment_factors`
 
 
 The number of completed assessments in the year where at least one factor was recorded; the base for the assessment factor shares.

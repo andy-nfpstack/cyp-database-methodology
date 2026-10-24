@@ -1,6 +1,6 @@
 # Permanent exclusions from school
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_permanent_exclusions` · concept `exclusions`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_permanent_exclusions` · concept `exclusions`
 
 
 Pupils permanently excluded from school during the year, per 10,000 pupils.
@@ -40,7 +40,7 @@ The most serious school sanction; strong risk marker.
 ## Sources
 
 - **E4: Suspensions and permanent exclusions in England** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

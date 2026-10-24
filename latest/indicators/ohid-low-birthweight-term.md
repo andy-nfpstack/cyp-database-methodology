@@ -1,6 +1,6 @@
 # Low birth weight (full-term babies)
 
-Release `abffebbd490b-19eda0e60019` · indicator `ohid_low_birthweight_term` · concept `low_birthweight`
+Release `2dda583978fb-19eda0e60019` · indicator `ohid_low_birthweight_term` · concept `low_birthweight`
 
 
 The share of babies born at full term who weigh under 2.5 kg.

@@ -1,6 +1,6 @@
 # Income deprivation affecting children: average score
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_idaci_la_avg_score` · concept `child_poverty`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_idaci_la_avg_score` · concept `child_poverty`
 
 
 The average share of children in income-deprived families across the authority.

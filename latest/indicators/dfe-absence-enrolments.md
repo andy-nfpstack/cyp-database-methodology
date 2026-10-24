@@ -1,6 +1,6 @@
 # Pupil enrolments
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_absence_enrolments` · concept `pupils`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_absence_enrolments` · concept `pupils`
 
 
 The number of pupil enrolments used to calculate absence rates.
@@ -40,7 +40,7 @@ Same-file denominator for persistent and severe absence.
 ## Sources
 
 - **E3: Pupil absence in schools in England, 2024/25** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

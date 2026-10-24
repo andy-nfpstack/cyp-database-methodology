@@ -1,6 +1,6 @@
 # Children in need
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_at_31mar` · concept `children_in_need`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_at_31mar` · concept `children_in_need`
 
 
 Children the council's social care service was supporting because they need help to be safe or healthy, per 10,000 children.

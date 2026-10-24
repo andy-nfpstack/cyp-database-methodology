@@ -1,6 +1,6 @@
 # EHC plans (ages 0-25)
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_ehcps_0_25` · concept `send`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_ehcps_0_25` · concept `send`
 
 
 The number of young people aged 0 to 25 with an EHC plan the council is responsible for, per 10,000 young people.
@@ -40,7 +40,7 @@ Total SEND statutory demand; runs to age 25, hence the 0_25 total.
 ## Sources
 
 - **E2: Education, health and care plans (SEN2), January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

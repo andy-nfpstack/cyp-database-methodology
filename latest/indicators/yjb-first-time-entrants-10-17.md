@@ -1,6 +1,6 @@
 # First-time entrants to youth justice
 
-Release `abffebbd490b-19eda0e60019` · indicator `yjb_first_time_entrants_10_17` · concept `first_time_entrants`
+Release `2dda583978fb-19eda0e60019` · indicator `yjb_first_time_entrants_10_17` · concept `first_time_entrants`
 
 
 Children aged 10 to 17 receiving their first caution or conviction during the year, per 10,000 children of that age.

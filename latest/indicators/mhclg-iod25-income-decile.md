@@ -1,6 +1,6 @@
 # Income deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_income_decile` · concept `iod_income`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_income_decile` · concept `iod_income`
 
 
 Which tenth of neighbourhoods this one falls in for income deprivation; 1 is the most deprived.

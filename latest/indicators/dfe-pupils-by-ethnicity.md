@@ -1,6 +1,6 @@
 # Pupils by ethnic group
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_pupils_by_ethnicity` · concept `population_by_ethnicity`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_pupils_by_ethnicity` · concept `population_by_ethnicity`
 
 
 The number of pupils in each local authority by ethnic group, from the January school census.
@@ -40,7 +40,7 @@ Same-classification denominator for DfE ethnicity-disaggregated measures (princi
 ## Sources
 
 - **P7: Schools, pupils and their characteristics: pupils by ethnicity and local authority** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases

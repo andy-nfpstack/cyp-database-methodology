@@ -1,6 +1,6 @@
 # Domestic abuse identified at assessment
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_factor_domestic_abuse` · concept `assessment_factors`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_factor_domestic_abuse` · concept `assessment_factors`
 
 
 Of completed social care assessments, the share where domestic abuse against a parent or carer was identified as a concern.

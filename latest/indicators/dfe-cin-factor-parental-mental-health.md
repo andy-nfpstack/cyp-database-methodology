@@ -1,6 +1,6 @@
 # Parental mental health identified at assessment
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_cin_factor_parental_mental_health` · concept `assessment_factors`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_cin_factor_parental_mental_health` · concept `assessment_factors`
 
 
 Of completed social care assessments, the share where a parent's or carer's mental health was identified as a concern.

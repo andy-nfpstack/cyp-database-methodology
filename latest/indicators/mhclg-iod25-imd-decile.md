@@ -1,6 +1,6 @@
 # Index of Multiple Deprivation (decile)
 
-Release `abffebbd490b-19eda0e60019` · indicator `mhclg_iod25_imd_decile` · concept `imd`
+Release `2dda583978fb-19eda0e60019` · indicator `mhclg_iod25_imd_decile` · concept `imd`
 
 
 Which tenth of neighbourhoods in England this one falls in; 1 is the most deprived 10%.

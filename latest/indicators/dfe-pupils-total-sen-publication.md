@@ -1,6 +1,6 @@
 # Pupils (SEN publication)
 
-Release `abffebbd490b-19eda0e60019` · indicator `dfe_pupils_total_sen_publication` · concept `pupils`
+Release `2dda583978fb-19eda0e60019` · indicator `dfe_pupils_total_sen_publication` · concept `pupils`
 
 
 The number of pupils, used to calculate the share with special educational needs.
@@ -40,7 +40,7 @@ Same-file denominator for SEN proportions.
 ## Sources
 
 - **E1: Special educational needs in England, January 2025** (Department for Education). Licence: Open Government Licence v3.0.
-  Disclosure control: suppression; additivity approximate;
+  Disclosure control: none; additivity approximate;
   tolerance 0 absolute / 0.001 relative.
 
 ## Quality and known biases
